@@ -1,0 +1,12 @@
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'flip',
+    }
+}
+
+DEBUG = TEMPLATE_DEBUG = True
+
+
+SECRET_KEY = 'secret'

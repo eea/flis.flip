@@ -1,0 +1,7 @@
+django-braces==1.4.0
+Django==1.6.3
+psycopg2==2.5.2
+pytz==2014.2
+six==1.6.1
+South==0.8.4
+webassets==0.9
