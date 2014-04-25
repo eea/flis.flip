@@ -1,0 +1,10 @@
+[
+  {
+    "model": "flip.language",
+    "pk": 1,
+    "fields": {
+      "code": "en",
+      "title": "English"
+    }
+  }
+]
