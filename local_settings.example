@@ -8,5 +8,6 @@ DATABASES = {
 
 DEBUG = TEMPLATE_DEBUG = True
 
-
 SECRET_KEY = 'secret'
+
+# FRAME_URL = 'path/to/frame/url'
