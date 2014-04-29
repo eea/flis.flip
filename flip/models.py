@@ -66,4 +66,4 @@ class Language(Model):
     title = CharField(max_length=32)
 
     def __unicode__(self):
-        return '{0} ({1})'.format(self.title, self.code)
+        return self.title

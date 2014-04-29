@@ -1,0 +1,55 @@
+
+{% extends '_layout.html' %}
+{% load widget_tweaks %}
+
+
+{% block content %}
+
+  <form role="form" method="POST">
+
+    {% csrf_token %}
+
+    <div class="form-group">
+      {{ form.title.label_tag }}
+      {% render_field form.title class='form-control' %}
+      {% if form.title.errors %}
+        <p class="text-danger">
+          <small>{{ form.title.errors.0 }}</small></p>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      {{ form.language.label_tag }}
+      {% render_field form.language class='form-control' %}
+      {% if form.language.errors %}
+        <p class="text-danger">
+          <small>{{ form.language.errors.0 }}</small></p>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      {{ form.title_original.label_tag }}
+      {% render_field form.title_original class='form-control' %}
+      {% if form.title_original.errors %}
+        <p class="text-danger">
+          <small>{{ form.title_original.errors.0 }}</small></p>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      {{ form.url.label_tag }}
+      {% render_field form.url class='form-control' %}
+      {% if form.url.errors %}
+        <p class="text-danger">
+          <small>{{ form.url.errors.0 }}</small></p>
+      {% endif %}
+    </div>
+
+     <button type="submit" name="save" value="final"
+             class="btn btn-primary">Publish</button>
+     <button type="submit" name="save" value="draft"
+             class="btn btn-default">Save as draft</button>
+
+  </form>
+
+{% endblock %}

@@ -6,7 +6,7 @@ DATABASES = {
     }
 }
 
-DEBUG = TEMPLATE_DEBUG = True
+DEBUG = TEMPLATE_DEBUG = ASSETS_DEBUG = True
 
 SECRET_KEY = 'secret'
 

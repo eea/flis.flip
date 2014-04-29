@@ -1,12 +1,33 @@
 {% extends 'frame.html' %}
+{% load assets %}
 
 
 {% block head %}
+
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+  {% assets "css" %}
+    <link rel="stylesheet" href="{{ ASSET_URL }}" />
+  {% endassets %}
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+  {% block extra_head %}{% endblock %}
+
 {% endblock %}
 
 
 {% block zope_content %}
 
-  {% block content %}{% endblock %}
+  <div class="container">
+
+    <div class="col-md-9 center-block">
+
+      <h1>Use of Forward Looking Information in Policy</h1>
+
+      {% block content %}{% endblock %}
+
+    </div>
+
+  </div>
 
 {% endblock %}
