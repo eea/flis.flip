@@ -1,0 +1,37 @@
+[
+  {
+    "model": "flip.phasesofpolicy",
+    "pk": 1,
+    "fields": {
+      "title": "Problem definition"
+    }
+  },
+  {
+    "model": "flip.phasesofpolicy",
+    "pk": 2,
+    "fields": {
+      "title": "Agenda setting"
+    }
+  },
+  {
+    "model": "flip.phasesofpolicy",
+    "pk": 3,
+    "fields": {
+      "title": "Policy development"
+    }
+  },
+  {
+    "model": "flip.phasesofpolicy",
+    "pk": 4,
+    "fields": {
+      "title": "Policy implementation"
+    }
+  },
+  {
+    "model": "flip.phasesofpolicy",
+    "pk":5,
+    "fields": {
+      "title": "Policy evaluation"
+    }
+  }
+]

@@ -3,6 +3,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'flip',
+        'USER': 'edw',                      # Not used with sqlite3.
+        'PASSWORD': 'edw',                  # Not used with sqlite3.
     }
 }
 

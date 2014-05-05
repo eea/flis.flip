@@ -1,0 +1,94 @@
+[
+  {
+    "pk": "al",
+    "model": "flip.country",
+    "fields": {
+      "name": "Albania"
+    }
+  },
+  {
+    "pk": "at",
+    "model": "flip.country",
+    "fields": {
+      "name": "Austria"
+    }
+  },
+  {
+    "pk": "be",
+    "model": "flip.country",
+    "fields": {
+      "name": "Belgium"
+    }
+  },
+  {
+    "pk": "cz",
+    "model": "flip.country",
+    "fields": {
+      "name": "Czech Republic"
+    }
+  },
+  {
+    "pk": "ch",
+    "model": "flip.country",
+    "fields": {
+      "name": "Switzerland"
+    }
+  },
+  {
+    "pk": "hu",
+    "model": "flip.country",
+    "fields": {
+      "name": "Hungary"
+    }
+  },
+  {
+    "pk": "ir",
+    "model": "flip.country",
+    "fields": {
+      "name": "Ireland"
+    }
+  },
+  {
+    "pk": "me",
+    "model": "flip.country",
+    "fields": {
+      "name": "Montenegro"
+    }
+  },
+  {
+    "pk": "mk",
+    "model": "flip.country",
+    "fields": {
+      "name": "FYR Macedonia"
+    }
+  },
+  {
+    "pk": "pt",
+    "model": "flip.country",
+    "fields": {
+      "name": "Portugal"
+    }
+  },
+  {
+    "pk": "ro",
+    "model": "flip.country",
+    "fields": {
+      "name": "Romania"
+    }
+  },
+  {
+    "pk": "sk",
+    "model": "flip.country",
+    "fields": {
+      "name": "Slovakia"
+    }
+  },
+  {
+    "pk": "xk",
+    "model": "flip.country",
+    "fields": {
+      "name": "Kosovo"
+    }
+  }
+]
+

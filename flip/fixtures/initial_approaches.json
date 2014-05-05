@@ -1,0 +1,135 @@
+[
+  {
+    "model": "flip.foresightapproaches",
+    "pk": 1,
+    "fields": {
+      "title": "Backcasting"
+    }
+  },
+  {
+    "model": "flip.foresightapproaches",
+    "pk": 2,
+    "fields": {
+      "title": "Environment scanning"
+    }
+  },
+  {
+    "model": "flip.foresightapproaches",
+    "pk": 3,
+    "fields": {
+      "title": "Explorative scenario"
+    }
+  },
+  {
+    "model": "flip.foresightapproaches",
+    "pk": 4,
+    "fields": {
+      "title": "Forecasting"
+    }
+  },
+  {
+    "model": "flip.foresightapproaches",
+    "pk":5,
+    "fields": {
+      "title": "Impact assessment"
+    }
+  },
+  {
+    "model": "flip.foresightapproaches",
+    "pk":6,
+    "fields": {
+      "title": "Normative scenario"
+    }
+  },
+  {
+    "model": "flip.foresightapproaches",
+    "pk":7,
+    "fields": {
+      "title": "Pathways"
+    }
+  },
+  {
+    "model": "flip.foresightapproaches",
+    "pk":8,
+    "fields": {
+      "title": "Qualitative"
+    }
+  },
+  {
+    "model": "flip.foresightapproaches",
+    "pk":9,
+    "fields": {
+      "title": "Quantitative"
+    }
+  },
+  {
+    "model": "flip.foresightapproaches",
+    "pk":10,
+    "fields": {
+      "title": "Roadmapping"
+    }
+  },
+  {
+    "model": "flip.foresightapproaches",
+    "pk":11,
+    "fields": {
+      "title": "Strategy"
+    }
+  },
+  {
+    "model": "flip.foresightapproaches",
+    "pk":12,
+    "fields": {
+      "title": "SWOT"
+    }
+  },
+  {
+    "model": "flip.foresightapproaches",
+    "pk":13,
+    "fields": {
+      "title": "Tipping points"
+    }
+  },
+  {
+    "model": "flip.foresightapproaches",
+    "pk":14,
+    "fields": {
+      "title": "Trends analysis"
+    }
+  },
+  {
+    "model": "flip.foresightapproaches",
+    "pk":15,
+    "fields": {
+      "title": "Uncertainties"
+    }
+  },
+  {
+    "model": "flip.foresightapproaches",
+    "pk":16,
+    "fields": {
+      "title": "Visions"
+    }
+  },
+  {
+    "model": "flip.foresightapproaches",
+    "pk":17,
+    "fields": {
+      "title": "Weak signals"
+    }
+  },
+  {
+    "model": "flip.foresightapproaches",
+    "pk":18,
+    "fields": {
+      "title": "Wild cards"
+    }
+  },
+  {
+    "model": "flip.foresightapproaches",
+    "pk":19,
+    "fields": {
+      "title": "Wind tunneling"
+    }
+  }
+]

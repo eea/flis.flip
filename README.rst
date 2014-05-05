@@ -52,3 +52,12 @@ be run as an unprivileged user in the product directory::
 6. Sync and migrate the database::
 
     ./manage.py syncdb
+
+7. Load fixtures::
+
+    ./manage.py loaddata initial_approaches
+    ./manage.py loaddata initial_countries
+    ./manage.py loaddata initial_geo_scope
+    ./manage.py loaddata initial_phases
+    ./manage.py loaddata initial_themes
+

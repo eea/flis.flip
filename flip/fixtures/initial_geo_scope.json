@@ -1,0 +1,37 @@
+[
+  {
+    "model": "flip.geographicalscope",
+    "pk": 1,
+    "fields": {
+      "title": "Beyond Europe"
+    }
+  },
+  {
+    "model": "flip.geographicalscope",
+    "pk": 2,
+    "fields": {
+      "title": "European"
+    }
+  },
+  {
+    "model": "flip.geographicalscope",
+    "pk": 3,
+    "fields": {
+      "title": "Regional"
+    }
+  },
+  {
+    "model": "flip.geographicalscope",
+    "pk": 4,
+    "fields": {
+      "title": "Country"
+    }
+  },
+  {
+    "model": "flip.geographicalscope",
+    "pk":5,
+    "fields": {
+      "title": "Sub-national"
+    }
+  }
+]
