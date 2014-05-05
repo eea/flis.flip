@@ -3,6 +3,20 @@
 {% load widget_tweaks %}
 
 
+{% block scripts %}
+
+  <script>
+    $(function () {
+      $('#id_blossom').on('change', function () {
+        $('[data-show-if=blossom]')
+            .toggleClass('hide', !$(this).is(':checked'));
+      }).change();
+    });
+  </script>
+
+{% endblock %}
+
+
 {% block content %}
 
   <form role="form" method="POST">
@@ -45,10 +59,76 @@
       {% endif %}
     </div>
 
-     <button type="submit" name="save" value="final"
-             class="btn btn-primary">Publish</button>
-     <button type="submit" name="save" value="draft"
-             class="btn btn-default">Save as draft</button>
+    <div class="panel panel-default">
+      <div class="panel-heading"><b>Approach used</b></div>
+      <div class="panel-body">
+        <div class="row">
+
+          <div class="col-md-8">
+            <div class="checkbox">
+              <label>
+                {% render_field form.blossom %} {{ form.blossom.label }}
+              </label>
+            </div>
+
+            <div class="form-group hide" data-show-if="blossom">
+              {{ form.requested_by.label_tag }}
+              <div class="row">
+                <div class="col-md-7">
+                  {% render_field form.requested_by class='form-control' %}
+                </div>
+              </div>
+              {% if form.requested_by.errors %}
+                <p class="text-danger">
+                  <small>{{ form.requested_by.errors.0 }}</small></p>
+              {% endif %}
+            </div>
+
+          </div> {# col-md-6 #}
+
+          <div class="col-md-4">
+            <div class="well well-sm hide" data-show-if="blossom">
+              <h5>BLOSSOM ressources</h5>
+              <ul>
+                <li><a href="">Guidelines</a></li>
+                <li><a href="">Checklist for study</a></li>
+              </ul>
+            </div>
+          </div> {# col-md-6 #}
+
+        </div>
+      </div> {# panel-body #}
+    </div> {# panel #}
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><b>Timing of study production</b></div>
+      <div class="panel-body">
+
+        <div class="form-group">
+          {{ form.start_date.label_tag }}
+          {% render_field form.start_date class='form-control' %}
+          {% if form.start_date.errors %}
+            <p class="text-danger">
+              <small>{{ form.start_date.errors.0 }}</small></p>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          {{ form.end_date.label_tag }}
+          {% render_field form.end_date class='form-control' %}
+          {% if form.end_date.errors %}
+            <p class="text-danger">
+              <small>{{ form.end_date.errors.0 }}</small></p>
+          {% endif %}
+        </div>
+
+      </div> {# panel-body #}
+    </div> {# panel #}
+
+    <button type="submit" name="save" value="final"
+            class="btn btn-primary">Publish</button>
+    <button type="submit" name="save" value="draft"
+            class="btn btn-default">Save as draft</button>
 
   </form>
 
