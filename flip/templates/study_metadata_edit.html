@@ -13,6 +13,17 @@
       }).change();
       $('#id_start_date').datetimepicker({pickTime: false});
       $('#id_end_date').datetimepicker({pickTime: false});
+
+      var title_original = $('#id_title_original');
+      var title = $('#id_title');
+
+      $('#id_language').on('change', function () {
+        if($.inArray('en', $(this).val()) >= 0 &&
+           $.trim(title_original.val()) == '') {
+          title_original.val(title.val());
+        }
+      });
+
     });
   </script>
 
