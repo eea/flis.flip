@@ -6,9 +6,14 @@
 
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
   {% assets "css" %}
-    <link rel="stylesheet" href="{{ ASSET_URL }}" />
+    <link href="{{ ASSET_URL }}" rel="stylesheet">
   {% endassets %}
 
+  <title>
+    {% block title %}
+      Use of Forward Looking Information in Policy
+    {% endblock %}
+  </title>
   {% block extra_head %}{% endblock %}
 
 {% endblock %}
