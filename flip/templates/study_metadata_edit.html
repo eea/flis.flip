@@ -11,6 +11,8 @@
         $('[data-show-if=blossom]')
             .toggleClass('hide', !$(this).is(':checked'));
       }).change();
+      $('#id_start_date').datetimepicker({pickTime: false});
+      $('#id_end_date').datetimepicker({pickTime: false});
     });
   </script>
 
@@ -94,7 +96,7 @@
                 <li><a href="">Checklist for study</a></li>
               </ul>
             </div>
-          </div> {# col-md-6 #}
+          </div> {# col-md-4 #}
 
         </div>
       </div> {# panel-body #}
@@ -105,20 +107,63 @@
       <div class="panel-body">
 
         <div class="form-group">
-          {{ form.start_date.label_tag }}
-          {% render_field form.start_date class='form-control' %}
-          {% if form.start_date.errors %}
+          <div class="row">
+            <div class="col-md-3">
+              {{ form.start_date.label_tag }}
+              <div class="input-group">
+                {% render_field form.start_date class='form-control' data-date-format="DD/MM/YY" %}
+                <span class="input-group-addon">
+                  <i class="glyphicon glyphicon glyphicon-calendar"></i>
+                </span>
+              </div>
+              {% if form.start_date.errors %}
+                <p class="text-danger">
+                  <small>{{ form.start_date.errors.0 }}</small></p>
+              {% endif %}
+            </div> {# col-md-3 #}
+          </div> {# row #}
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-3">
+              {{ form.end_date.label_tag }}
+              <div class="input-group">
+                {% render_field form.end_date class='form-control' data-date-format="DD/MM/YY" %}
+                <span class="input-group-addon">
+                  <i class="glyphicon glyphicon glyphicon-calendar"></i>
+                </span>
+              </div>
+              {% if form.end_date.errors %}
+                <p class="text-danger">
+                  <small>{{ form.end_date.errors.0 }}</small></p>
+              {% endif %}
+            </div> {# col-md-3 #}
+          </div> {# row #}
+        </div>
+
+      </div> {# panel-body #}
+    </div> {# panel #}
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><b>References and contact information</b></div>
+      <div class="panel-body">
+
+        <div class="form-group">
+          {{ form.lead_author.label_tag }}
+          {% render_field form.lead_author class='form-control' rows=3 %}
+          {% if form.lead_author.errors %}
             <p class="text-danger">
-              <small>{{ form.start_date.errors.0 }}</small></p>
+              <small>{{ form.lead_author.errors.0 }}</small></p>
           {% endif %}
         </div>
 
         <div class="form-group">
-          {{ form.end_date.label_tag }}
-          {% render_field form.end_date class='form-control' %}
-          {% if form.end_date.errors %}
+          {{ form.other.label_tag }}
+          {% render_field form.other class='form-control' rows=3 %}
+          {% if form.other.errors %}
             <p class="text-danger">
-              <small>{{ form.end_date.errors.0 }}</small></p>
+              <small>{{ form.other.errors.0 }}</small></p>
           {% endif %}
         </div>
 
