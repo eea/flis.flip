@@ -55,6 +55,7 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 )
 
+
 ROOT_URLCONF = 'flip.urls'
 
 WSGI_APPLICATION = 'flip.wsgi.application'
@@ -82,7 +83,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/

@@ -1,9 +1,16 @@
 
+from django.forms import DateField, DateInput
 from django.forms import ModelForm
 from flip.models import Study
 
 
 class StudyMetadataForm(ModelForm):
+
+    start_date = DateField(widget=DateInput(format='%d/%m/%Y'),
+                           input_formats=('%d/%m/%Y',))
+
+    end_date = DateField(widget=DateInput(format='%d/%m/%Y'),
+                         input_formats=('%d/%m/%Y',))
 
     class Meta:
         model = Study
@@ -31,3 +38,9 @@ class StudyMetadataForm(ModelForm):
                 del cleaned_data['start_date']
 
         return cleaned_data
+
+    def save(self):
+        study = super(StudyMetadataForm, self).save(commit=False)
+        study.save()
+        return study
+

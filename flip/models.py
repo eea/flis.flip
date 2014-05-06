@@ -53,7 +53,7 @@ class Study(Model):
         blank=True
     )
 
-    start_date = DateField('start date', blank=True)
+    start_date = DateField('start date', null=True, blank=True)
 
     end_date = DateField('end date')
 
@@ -78,6 +78,7 @@ class Study(Model):
     phases_of_policy = ForeignKey(
         'PhasesOfPolicy',
         verbose_name='phases of policy cycle',
+        null=True,
         blank=True)
 
     additional_information_phase = TextField(
@@ -88,6 +89,7 @@ class Study(Model):
     foresight_approaches = ForeignKey(
         'ForesightApproaches',
         verbose_name='foresight approaches used',
+        null=True,
         blank=True)
 
     stakeholder_participation = BooleanField(
@@ -106,6 +108,7 @@ class Study(Model):
     geographical_scope = ForeignKey(
         'GeographicalScope',
         verbose_name='Geographical scope',
+        null=True,
         blank=True)
 
     country = ManyToManyField(
