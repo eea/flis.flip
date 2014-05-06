@@ -10,3 +10,8 @@ h1 {
 .center-block {
     float: none;
 }
+
+
+.label-container .popover {
+    margin-top: 0;
+}

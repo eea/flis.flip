@@ -11,8 +11,9 @@ CSS_ASSETS = (
 JS_ASSETS = (
     'js/lib/moment.js',
     'js/lib/bootstrap-datetimepicker.min.js',
-
+    'js/main.js',
 )
+
 
 css = Bundle(*CSS_ASSETS, filters='cssmin', output='packed.css')
 js = Bundle(*JS_ASSETS, filters='jsmin', output='packed.js')
