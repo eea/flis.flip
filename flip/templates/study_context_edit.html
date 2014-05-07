@@ -5,27 +5,38 @@
 {% block content %}
 
   {% include '_messages.html' %}
+  {% include '_study_nav.html' %}
 
   <form role="form" method="POST">
     {% csrf_token %}
 
-    <div class="form-group">
-      {{ form.purpose_and_target.label_tag }}
-      {% render_field form.purpose_and_target class='form-control' %}
-      {% if form.purpose_and_target.errors %}
-        <p class="text-danger">
-          <small>{{ form.purpose_and_target.errors.0 }}</small></p>
-      {% endif %}
-    </div>
+    <div class="panel panel-default">
+      <div class="panel-body">
 
-    <div class="form-group">
-      {{ form.additional_information.label_tag }}
-      {% render_field form.additional_information class='form-control' %}
-      {% if form.additional_information.errors %}
-        <p class="text-danger">
-          <small>{{ form.additional_information.errors.0 }}</small></p>
-      {% endif %}
-    </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-5">
+              {{ form.purpose_and_target.label_tag }}
+              {% render_field form.purpose_and_target class='form-control' %}
+              {% if form.purpose_and_target.errors %}
+                <p class="text-danger">
+                  <small>{{ form.purpose_and_target.errors.0 }}</small></p>
+              {% endif %}
+            </div> {# col-md-5 #}
+          </div> {# row #}
+        </div>
+
+        <div class="form-group">
+          {{ form.additional_information.label_tag }}
+          {% render_field form.additional_information class='form-control' %}
+          {% if form.additional_information.errors %}
+            <p class="text-danger">
+              <small>{{ form.additional_information.errors.0 }}</small></p>
+          {% endif %}
+        </div>
+
+      </div> {# panel-body #}
+    </div> {# panel #}
 
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -34,26 +45,23 @@
       <div class="panel-body">
 
         <div class="form-group">
-          <span data-container="#phases-of-policy-label"
-                data-toggle="popover"
-                data-placement="top"
-                data-content=""
-                data-trigger="hover"
-                id="lead-author-label">
-            {{ form.phases_of_policy.label_tag }}
-          </span>
-          {% render_field form.phases_of_policy class='form-control' rows=3 %}
-          {% if form.phases_of_policy.errors %}
-            <p class="text-danger">
-              <small>{{ form.phases_of_policy.errors.0 }}</small></p>
-          {% endif %}
+          <div class="row">
+            <div class="col-md-4">
+              {{ form.phases_of_policy.label_tag }}
+              {% render_field form.phases_of_policy class='form-control' rows=3 %}
+              {% if form.phases_of_policy.errors %}
+                <p class="text-danger">
+                  <small>{{ form.phases_of_policy.errors.0 }}</small></p>
+              {% endif %}
+            </div> {# col-md-4 #}
+          </div> {# row #}
         </div>
 
         <div class="form-group">
           <span data-container="#additional-information-phase-label"
                 data-toggle="popover"
                 data-placement="top"
-                data-content=""
+                data-content='Indicate application areas of the forward-looking information in the study (e.g. "strategies, working programmes, etc."), possible use of the forward-looking information, what is added value and impact.'
                 data-trigger="hover"
                 id="additional-information-phase-label">
             {{ form.additional_information_phase.label_tag }}
@@ -68,14 +76,24 @@
       </div> {# panel-body #}
     </div> {# panel #}
 
-    <div class="form-group">
-      {{ form.foresight_approaches.label_tag }}
-      {% render_field form.foresight_approaches class='form-control' %}
-      {% if form.foresight_approaches.errors %}
-        <p class="text-danger">
-          <small>{{ form.foresight_approaches.errors.0 }}</small></p>
-      {% endif %}
-    </div>
+    <div class="panel panel-default">
+      <div class="panel-body">
+
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-4">
+              {{ form.foresight_approaches.label_tag }}
+              {% render_field form.foresight_approaches class='form-control' %}
+              {% if form.foresight_approaches.errors %}
+                <p class="text-danger">
+                  <small>{{ form.foresight_approaches.errors.0 }}</small></p>
+              {% endif %}
+            </div> {# col-md-4 #}
+          </div> {# row #}
+        </div>
+
+      </div> {# panel-body #}
+    </div> {# panel #}
 
     <div class="panel panel-default">
       <div class="panel-body">
@@ -94,7 +112,14 @@
         </div>
 
         <div class="form-group">
-          {{ form.additional_information_stakeholder.label_tag }}
+          <span data-container="#additional-information-stakeholder-label"
+                data-toggle="popover"
+                data-placement="top"
+                data-content="Explain type of stakeholders involved (research, policy, sectors, NGOs) and their role, or any other information about the participatory aspect of the study process."
+                data-trigger="hover"
+                id="additional-information-stakeholder-label">
+              {{ form.additional_information_stakeholder.label_tag }}
+          </span>
           {% render_field form.additional_information_stakeholder class='form-control' %}
           {% if form.additional_information_stakeholder.errors %}
             <p class="text-danger">
@@ -112,30 +137,42 @@
       <div class="panel-body">
 
         <div class="form-group">
-          {{ form.environmental_themes.label_tag }}
-          {% render_field form.environmental_themes class='form-control' %}
-          {% if form.environmental_themes.errors %}
-            <p class="text-danger">
-              <small>{{ form.environmental_themes.errors.0 }}</small></p>
-          {% endif %}
+          <div class="row">
+            <div class="col-md-4">
+              {{ form.environmental_themes.label_tag }}
+              {% render_field form.environmental_themes class='form-control' %}
+              {% if form.environmental_themes.errors %}
+                <p class="text-danger">
+                  <small>{{ form.environmental_themes.errors.0 }}</small></p>
+              {% endif %}
+            </div> {# col-md-4 #}
+          </div> {# row #}
         </div>
 
         <div class="form-group">
-          {{ form.geographical_scope.label_tag }}
-          {% render_field form.geographical_scope class='form-control' %}
-          {% if form.geographical_scope.errors %}
-            <p class="text-danger">
-              <small>{{ form.geographical_scope.errors.0 }}</small></p>
-          {% endif %}
+          <div class="row">
+            <div class="col-md-4">
+              {{ form.geographical_scope.label_tag }}
+              {% render_field form.geographical_scope class='form-control' %}
+              {% if form.geographical_scope.errors %}
+                <p class="text-danger">
+                  <small>{{ form.geographical_scope.errors.0 }}</small></p>
+              {% endif %}
+            </div> {# col-md-4 #}
+          </div> {# row #}
         </div>
 
         <div class="form-group">
-          {{ form.country.label_tag }}
-          {% render_field form.country class='form-control' %}
-          {% if form.country.errors %}
-            <p class="text-danger">
-              <small>{{ form.country.errors.0 }}</small></p>
-          {% endif %}
+          <div class="row">
+            <div class="col-md-4">
+              {{ form.country.label_tag }}
+              {% render_field form.country class='form-control' %}
+              {% if form.country.errors %}
+                <p class="text-danger">
+                  <small>{{ form.country.errors.0 }}</small></p>
+              {% endif %}
+            </div> {# col-md-4 #}
+          </div> {# row #}
         </div>
 
       </div> {# panel-body #}

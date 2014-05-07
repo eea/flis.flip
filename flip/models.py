@@ -167,4 +167,4 @@ class Country(Model):
     name = CharField(max_length=128)
 
     def __unicode__(self):
-        return self.iso
+        return self.name
