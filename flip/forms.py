@@ -44,3 +44,8 @@ class StudyMetadataForm(ModelForm):
         study.save()
         return study
 
+
+class StudyContextForm(ModelForm):
+
+    class Meta:
+        model = Study
