@@ -55,3 +55,8 @@ class StudyContextForm(ModelForm):
 
     class Meta:
         model = Study
+        fields = ('purpose_and_target', 'additional_information',
+                  'phases_of_policy', 'additional_information_phase',
+                  'foresight_approaches', 'stakeholder_participation',
+                  'additional_information_stakeholder', 'environmental_themes',
+                  'geographical_scope', 'country')

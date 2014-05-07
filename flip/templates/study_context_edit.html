@@ -6,4 +6,148 @@
 
   {% include '_messages.html' %}
 
+  <form role="form" method="POST">
+    {% csrf_token %}
+
+    <div class="form-group">
+      {{ form.purpose_and_target.label_tag }}
+      {% render_field form.purpose_and_target class='form-control' %}
+      {% if form.purpose_and_target.errors %}
+        <p class="text-danger">
+          <small>{{ form.purpose_and_target.errors.0 }}</small></p>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      {{ form.additional_information.label_tag }}
+      {% render_field form.additional_information class='form-control' %}
+      {% if form.additional_information.errors %}
+        <p class="text-danger">
+          <small>{{ form.additional_information.errors.0 }}</small></p>
+      {% endif %}
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+          <b>Support to policy-making cycle and domain of application</b>
+      </div>
+      <div class="panel-body">
+
+        <div class="form-group">
+          <span data-container="#phases-of-policy-label"
+                data-toggle="popover"
+                data-placement="top"
+                data-content=""
+                data-trigger="hover"
+                id="lead-author-label">
+            {{ form.phases_of_policy.label_tag }}
+          </span>
+          {% render_field form.phases_of_policy class='form-control' rows=3 %}
+          {% if form.phases_of_policy.errors %}
+            <p class="text-danger">
+              <small>{{ form.phases_of_policy.errors.0 }}</small></p>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          <span data-container="#additional-information-phase-label"
+                data-toggle="popover"
+                data-placement="top"
+                data-content=""
+                data-trigger="hover"
+                id="additional-information-phase-label">
+            {{ form.additional_information_phase.label_tag }}
+          </span>
+          {% render_field form.additional_information_phase class='form-control' rows=3 %}
+          {% if form.additional_information_phase.errors %}
+            <p class="text-danger">
+              <small>{{ form.additional_information_phase.errors.0 }}</small></p>
+          {% endif %}
+        </div>
+
+      </div> {# panel-body #}
+    </div> {# panel #}
+
+    <div class="form-group">
+      {{ form.foresight_approaches.label_tag }}
+      {% render_field form.foresight_approaches class='form-control' %}
+      {% if form.foresight_approaches.errors %}
+        <p class="text-danger">
+          <small>{{ form.foresight_approaches.errors.0 }}</small></p>
+      {% endif %}
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-body">
+
+        <div class="form-group">
+            <div class="checkbox">
+              <label>
+                {% render_field form.stakeholder_participation %}
+                {{ form.stakeholder_participation.label }}
+              </label>
+              {% if form.stakeholder_participation.errors %}
+                <p class="text-danger">
+                  <small>{{ form.stakeholder_participation.errors.0 }}</small></p>
+              {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+          {{ form.additional_information_stakeholder.label_tag }}
+          {% render_field form.additional_information_stakeholder class='form-control' %}
+          {% if form.additional_information_stakeholder.errors %}
+            <p class="text-danger">
+              <small>{{ form.additional_information_stakeholder.errors.0 }}</small></p>
+          {% endif %}
+        </div>
+
+      </div> {# panel-body #}
+    </div> {# panel #}
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+          <b>Scope of the study</b>
+      </div>
+      <div class="panel-body">
+
+        <div class="form-group">
+          {{ form.environmental_themes.label_tag }}
+          {% render_field form.environmental_themes class='form-control' %}
+          {% if form.environmental_themes.errors %}
+            <p class="text-danger">
+              <small>{{ form.environmental_themes.errors.0 }}</small></p>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          {{ form.geographical_scope.label_tag }}
+          {% render_field form.geographical_scope class='form-control' %}
+          {% if form.geographical_scope.errors %}
+            <p class="text-danger">
+              <small>{{ form.geographical_scope.errors.0 }}</small></p>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          {{ form.country.label_tag }}
+          {% render_field form.country class='form-control' %}
+          {% if form.country.errors %}
+            <p class="text-danger">
+              <small>{{ form.country.errors.0 }}</small></p>
+          {% endif %}
+        </div>
+
+      </div> {# panel-body #}
+    </div> {# panel #}
+
+    <div class="form-group">
+      <button type="submit" name="save" value="final"
+              class="btn btn-primary">Publish</button>
+      <button type="submit" name="save" value="draft"
+              class="btn btn-default">Save as draft</button>
+    </div>
+
+  </form>
+
 {% endblock %}
