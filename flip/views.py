@@ -21,6 +21,12 @@ class StudyMetadataAddView(CreateView, SuccessMessageMixin):
     def get_success_message(self):
         return '{} study was successfully added'.format(self.object.title)
 
+    def get_form_kwargs(self):
+        kwargs = super(StudyMetadataAddView, self).get_form_kwargs()
+        save = self.request.POST.get('save', 'final')
+        kwargs['is_draft'] = True if save == 'draft' else False
+        return kwargs
+
 
 class StudyMetadataEditView(UpdateView):
 

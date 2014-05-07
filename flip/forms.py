@@ -7,7 +7,8 @@ from flip.models import Study
 class StudyMetadataForm(ModelForm):
 
     start_date = DateField(widget=DateInput(format='%d/%m/%Y'),
-                           input_formats=('%d/%m/%Y',))
+                           input_formats=('%d/%m/%Y',),
+                           required=False)
 
     end_date = DateField(widget=DateInput(format='%d/%m/%Y'),
                          input_formats=('%d/%m/%Y',))
@@ -17,6 +18,10 @@ class StudyMetadataForm(ModelForm):
         fields = ('title', 'language', 'title_original', 'url', 'blossom',
                   'requested_by', 'start_date', 'end_date', 'lead_author',
                   'other')
+
+    def __init__(self, *args, **kwargs):
+        self.is_draft = kwargs.pop('is_draft', None)
+        super(StudyMetadataForm, self).__init__(*args, **kwargs)
 
     def clean(self):
         cleaned_data = super(StudyMetadataForm, self).clean()
@@ -31,16 +36,17 @@ class StudyMetadataForm(ModelForm):
             if requested_by_data in requested_by.empty_values:
                 self._errors['requested_by'] = self.error_class(
                     [requested_by.error_messages['required']])
-                del cleaned_data['requested_by']
+                cleaned_data.pop('requested_by', None)
             if start_date_data in start_date.empty_values:
                 self._errors['start_date'] = self.error_class(
                     [start_date.error_messages['required']])
-                del cleaned_data['start_date']
+                cleaned_data.pop('start_date', None)
 
         return cleaned_data
 
     def save(self):
         study = super(StudyMetadataForm, self).save(commit=False)
+        study.draft = self.is_draft
         study.save()
         return study
 
