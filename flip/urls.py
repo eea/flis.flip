@@ -22,6 +22,10 @@ urlpatterns = patterns(
         views.StudyContextEditView.as_view(),
         name='study_context_edit'),
 
+    url(r'^study/(?P<pk>\d+)/outcomes/edit$',
+        views.StudyOutcomesEditView.as_view(),
+        name='study_outcomes_edit'),
+
     url(r'^admin/', include(admin.site.urls)),
 
 )

@@ -165,11 +165,11 @@
         <div class="form-group">
           <div class="row">
             <div class="col-md-4">
-              {{ form.country.label_tag }}
-              {% render_field form.country class='form-control' %}
-              {% if form.country.errors %}
+              {{ form.countries.label_tag }}
+              {% render_field form.countries class='form-control' %}
+              {% if form.countries.errors %}
                 <p class="text-danger">
-                  <small>{{ form.country.errors.0 }}</small></p>
+                  <small>{{ form.countries.errors.0 }}</small></p>
               {% endif %}
             </div> {# col-md-4 #}
           </div> {# row #}

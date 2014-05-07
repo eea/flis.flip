@@ -32,7 +32,7 @@ class Study(Model):
         'study title in English',
         max_length=255)
 
-    language = ManyToManyField(
+    languages = ManyToManyField(
         'Language',
         verbose_name='language of the study')
 
@@ -102,18 +102,18 @@ class Study(Model):
 
     environmental_themes = ManyToManyField(
         'EnvironmentalTheme',
-        verbose_name='Environmental themes',
+        verbose_name='environmental themes',
         blank=True)
 
     geographical_scope = ForeignKey(
         'GeographicalScope',
-        verbose_name='Geographical scope',
+        verbose_name='geographical scope',
         null=True,
         blank=True)
 
-    country = ManyToManyField(
+    countries = ManyToManyField(
         'Country',
-        verbose_name='Country',
+        verbose_name='country',
         blank=True)
 
     def __unicode__(self):

@@ -17,7 +17,7 @@
       var title_original = $('#id_title_original');
       var title = $('#id_title');
 
-      $('#id_language').on('change', function () {
+      $('#id_languages').on('change', function () {
         if($.inArray('en', $(this).val()) >= 0 &&
            $.trim(title_original.val()) == '') {
           title_original.val(title.val());
@@ -33,7 +33,10 @@
 {% block content %}
 
   {% include '_messages.html' %}
-  {% include '_study_nav.html' %}
+
+  {% if object %}
+    {% include '_study_nav.html' %}
+  {% endif %}
 
   <form role="form" method="POST">
 
@@ -49,11 +52,11 @@
     </div>
 
     <div class="form-group">
-      {{ form.language.label_tag }}
-      {% render_field form.language class='form-control' %}
-      {% if form.language.errors %}
+      {{ form.languages.label_tag }}
+      {% render_field form.languages class='form-control' %}
+      {% if form.languages.errors %}
         <p class="text-danger">
-          <small>{{ form.language.errors.0 }}</small></p>
+          <small>{{ form.languages.errors.0 }}</small></p>
       {% endif %}
     </div>
 

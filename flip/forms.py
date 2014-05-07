@@ -15,7 +15,7 @@ class StudyMetadataForm(ModelForm):
 
     class Meta:
         model = Study
-        fields = ('title', 'language', 'title_original', 'url', 'blossom',
+        fields = ('title', 'languages', 'title_original', 'url', 'blossom',
                   'requested_by', 'start_date', 'end_date', 'lead_author',
                   'other')
 
@@ -48,10 +48,16 @@ class StudyMetadataForm(ModelForm):
         study = super(StudyMetadataForm, self).save(commit=False)
         study.draft = self.is_draft
         study.save()
+        # save relations like languages
+        self.save_m2m()
         return study
 
 
 class StudyContextForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        self.is_draft = kwargs.pop('is_draft', None)
+        super(StudyContextForm, self).__init__(*args, **kwargs)
 
     class Meta:
         model = Study
@@ -59,4 +65,4 @@ class StudyContextForm(ModelForm):
                   'phases_of_policy', 'additional_information_phase',
                   'foresight_approaches', 'stakeholder_participation',
                   'additional_information_stakeholder', 'environmental_themes',
-                  'geographical_scope', 'country')
+                  'geographical_scope', 'countries')

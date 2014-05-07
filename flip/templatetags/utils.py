@@ -1,4 +1,5 @@
 import re
+import markup
 
 from django import template
 from django.conf import settings
@@ -24,3 +25,20 @@ def active(context, pattern):
 @register.assignment_tag
 def assign(value):
     return value
+
+
+@register.simple_tag()
+def active_if_blossom(object):
+    if not object.blossom:
+        return 'disabled'
+    return ''
+
+
+@register.simple_tag()
+def url_if_blossom(object, url, text):
+    page = markup.page()
+    opt = {}
+    if object.blossom:
+        opt['href'] = url
+    page.a(text, **opt)
+    return page

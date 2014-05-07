@@ -7,14 +7,17 @@
       Study metadata</a>
   </li>
 
-  <li class="{% active 'study/\d/context/edit$' %}">
-    <a href="{% url 'study_context_edit' pk=object.pk %}">
-      Study context</a>
+  {% url 'study_context_edit' pk=object.pk as study_context_url %}
+  {% url 'study_outcomes_edit' pk=object.pk as study_outcomes_url %}
+
+  <li class="{% active 'study/\d/context/edit$' %}
+             {% active_if_blossom object %}">
+    {% url_if_blossom object study_context_url 'Study context' %}
   </li>
 
-  <li>
-    <a href="">
-      Outcomes and activities</a>
+  <li class="{% active 'study/\d/outcomes/edit$' %}
+             {% active_if_blossom object %}">
+    {% url_if_blossom object study_outcomes_url 'Outcomes and activities' %}
   </li>
 
 </ul>
