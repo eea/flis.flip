@@ -1,0 +1,21 @@
+{% load utils %}
+
+<ul class="nav nav-tabs nav-study">
+
+  <li class="{% active 'study/\d/edit$' %}">
+    <a href="{% url 'study_metadata_edit' pk=object.pk %}">
+      Study metadata</a>
+  </li>
+
+  <li class="{% active 'study/\d/context/edit$' %}">
+    <a href="{% url 'study_context_edit' pk=object.pk %}">
+      Study context</a>
+  </li>
+
+  <li>
+    <a href="">
+      Outcomes and activities</a>
+  </li>
+
+</ul>
+
