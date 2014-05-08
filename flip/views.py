@@ -18,16 +18,7 @@ class StudyBlossomRequiredMixin(object):
             request, *args, **kwargs)
 
 
-class SaveWithDraftOption(object):
-
-    def get_form_kwargs(self):
-        kwargs = super(SaveWithDraftOption, self).get_form_kwargs()
-        save = self.request.POST.get('save', 'final')
-        kwargs['is_draft'] = True if save == 'draft' else False
-        return kwargs
-
-
-class StudyMetadataAddView(SaveWithDraftOption, CreateView,
+class StudyMetadataAddView(CreateView,
                            SuccessMessageMixin):
 
     model = Study
@@ -43,7 +34,7 @@ class StudyMetadataAddView(SaveWithDraftOption, CreateView,
         return '{} study was successfully added'.format(self.object.title)
 
 
-class StudyMetadataEditView(SaveWithDraftOption, UpdateView):
+class StudyMetadataEditView(UpdateView):
 
     model = Study
     form_class = StudyMetadataForm
@@ -55,7 +46,7 @@ class StudyMetadataEditView(SaveWithDraftOption, UpdateView):
                        kwargs={'pk': self.object.pk})
 
 
-class StudyContextEditView(StudyBlossomRequiredMixin, SaveWithDraftOption,
+class StudyContextEditView(StudyBlossomRequiredMixin,
                            UpdateView):
 
     model = Study
@@ -68,7 +59,7 @@ class StudyContextEditView(StudyBlossomRequiredMixin, SaveWithDraftOption,
                        kwargs={'pk': self.object.pk})
 
 
-class StudyOutcomesEditView(StudyBlossomRequiredMixin, SaveWithDraftOption,
+class StudyOutcomesEditView(StudyBlossomRequiredMixin,
                             UpdateView):
 
     model = Study

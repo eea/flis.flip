@@ -1,4 +1,5 @@
 
+from django.forms import BooleanField
 from django.forms import DateField, DateInput
 from django.forms import ModelForm
 from flip.models import Study
@@ -13,15 +14,13 @@ class StudyMetadataForm(ModelForm):
     end_date = DateField(widget=DateInput(format='%d/%m/%Y'),
                          input_formats=('%d/%m/%Y',))
 
+    draft = BooleanField(required=False)
+
     class Meta:
         model = Study
         fields = ('title', 'languages', 'title_original', 'url', 'blossom',
-                  'requested_by', 'start_date', 'end_date', 'lead_author',
-                  'other')
-
-    def __init__(self, *args, **kwargs):
-        self.is_draft = kwargs.pop('is_draft', None)
-        super(StudyMetadataForm, self).__init__(*args, **kwargs)
+                  'requested_by', 'start_date', 'end_date', 'draft',
+                  'lead_author', 'other')
 
     def clean(self):
         cleaned_data = super(StudyMetadataForm, self).clean()
@@ -46,7 +45,6 @@ class StudyMetadataForm(ModelForm):
 
     def save(self):
         study = super(StudyMetadataForm, self).save(commit=False)
-        study.draft = self.is_draft
         study.save()
         # save relations like languages
         self.save_m2m()
@@ -55,13 +53,11 @@ class StudyMetadataForm(ModelForm):
 
 class StudyContextForm(ModelForm):
 
-    def __init__(self, *args, **kwargs):
-        self.is_draft = kwargs.pop('is_draft', None)
-        super(StudyContextForm, self).__init__(*args, **kwargs)
+    draft = BooleanField(required=False)
 
     class Meta:
         model = Study
-        fields = ('purpose_and_target', 'additional_information',
+        fields = ('draft', 'purpose_and_target', 'additional_information',
                   'phases_of_policy', 'additional_information_phase',
                   'foresight_approaches', 'stakeholder_participation',
                   'additional_information_stakeholder', 'environmental_themes',

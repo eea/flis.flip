@@ -1,0 +1,17 @@
+
+<div class="form-group">
+
+  <button type="submit" name="draft" value="false"
+          class="btn btn-primary">Publish</button>
+
+  {% if object %}
+    {% if object.draft %}
+      <button type="submit" name="draft" value="true"
+              class="btn btn-default">Save as draft</button>
+    {% endif %}
+  {% else %}
+    <button type="submit" name="draft" value="true"
+            class="btn btn-default">Save as draft</button>
+  {% endif %}
+
+</div>
