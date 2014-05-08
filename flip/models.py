@@ -34,11 +34,8 @@ class Study(Model):
 
     languages = ManyToManyField(
         'Language',
-        verbose_name='language of the study')
-
-    title_original = CharField(
-        'study title in original language',
-        max_length=255)
+        verbose_name='language of the study',
+        through='StudyLanguage')
 
     url = URLField(blank=True)
 
@@ -124,6 +121,20 @@ class Language(Model):
 
     code = CharField(max_length=3, primary_key=True)
     title = CharField(max_length=32)
+
+    def __unicode__(self):
+        return self.title
+
+
+class StudyLanguage(Model):
+
+    language = ForeignKey(
+        Language,
+        verbose_name='language of the study')
+    study = ForeignKey(Study)
+    title = CharField(
+        'study title in original languge',
+        max_length=255)
 
     def __unicode__(self):
         return self.title

@@ -6,5 +6,13 @@
       "code": "en",
       "title": "English"
     }
+  },
+  {
+    "model": "flip.language",
+    "pk": 2,
+    "fields": {
+      "code": "ro",
+      "title": "Romanian"
+    }
   }
 ]

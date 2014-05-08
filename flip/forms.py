@@ -18,9 +18,13 @@ class StudyMetadataForm(ModelForm):
 
     class Meta:
         model = Study
-        fields = ('title', 'languages', 'title_original', 'url', 'blossom',
+        fields = ('title', 'url', 'blossom',
                   'requested_by', 'start_date', 'end_date', 'draft',
                   'lead_author', 'other')
+
+    def __init__(self, *args, **kwargs):
+        self.formset = kwargs.pop('formset', None)
+        super(StudyMetadataForm, self).__init__(*args, **kwargs)
 
     def clean(self):
         cleaned_data = super(StudyMetadataForm, self).clean()
