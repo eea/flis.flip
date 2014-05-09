@@ -9,7 +9,7 @@
     $(function () {
       $('#id_blossom').on('change', function () {
         $('[data-show-if=blossom]')
-            .toggleClass('hide', !$(this).is(':checked'));
+            .toggleClass('hide', $(this).val() != 'yes');
       }).change();
       $('#id_start_date').datetimepicker({pickTime: false});
       $('#id_end_date').datetimepicker({pickTime: false});
@@ -72,6 +72,9 @@
 
     <div class="form-group">
       {{ form.title.label_tag }}
+      {% if form.title.field.required %}
+        <span class="required">*</span>
+      {% endif %}
       {% render_field form.title class='form-control' %}
       {% if form.title.errors %}
         <p class="text-danger">
@@ -125,6 +128,9 @@
 
     <div class="form-group">
       {{ form.url.label_tag }}
+      {% if form.url.field.required %}
+        <span class="required">*</span>
+      {% endif %}
       {% render_field form.url class='form-control' %}
       {% if form.url.errors %}
         <p class="text-danger">
@@ -135,12 +141,10 @@
     <div class="panel panel-default">
       <div class="panel-heading"><b>Approach used</b></div>
       <div class="panel-body">
-        <div class="row">
 
           <div class="col-md-8">
-            <div class="checkbox">
-              <label>
-                {% render_field form.blossom %}
+            <div class="row">
+              <div class="form-group">
                 <span data-container="#blossom-label"
                       data-toggle="popover"
                       data-placement="top"
@@ -149,24 +153,39 @@
                       data-trigger="hover"
                       id="blossom-label"
                       class="label-container">
-                  {{ form.blossom.label }}</span>
-              </label>
-            </div>
+                  {{ form.blossom.label_tag }}
+                  {% if form.blossom.field.required %}
+                    <span class="required">*</span>
+                  {% endif %}
+                </span>
+                <div class="row">
+                  <div class="col-md-3">
+                    {% render_field form.blossom class='form-control' %}
+                    {% if form.blossom.errors %}
+                      <p class="text-danger">
+                        <small>{{ form.blossom.errors.0 }}</small></p>
+                    {% endif %}
+                  </div> {# col-md-3 #}
+                </div> {# row #}
+              </div> {# form-group #}
+            </div> {# row #}
 
-            <div class="form-group hide" data-show-if="blossom">
-              {{ form.requested_by.label_tag }}
-              <div class="row">
-                <div class="col-md-7">
-                  {% render_field form.requested_by class='form-control' %}
-                </div>
-              </div>
-              {% if form.requested_by.errors %}
-                <p class="text-danger">
-                  <small>{{ form.requested_by.errors.0 }}</small></p>
-              {% endif %}
-            </div>
-
-          </div> {# col-md-6 #}
+            <div class="row">
+              <div class="form-group hide" data-show-if="blossom">
+                {{ form.requested_by.label_tag }}
+                <span class="required">*</span>
+                <div class="row">
+                  <div class="col-md-7">
+                    {% render_field form.requested_by class='form-control' %}
+                    {% if form.requested_by.errors %}
+                      <p class="text-danger">
+                        <small>{{ form.requested_by.errors.0 }}</small></p>
+                    {% endif %}
+                  </div> {# col-md-7 #}
+                </div> {# row #}
+              </div> {# form-group #}
+            </div> {# row #}
+          </div> {# col-md-8 #}
 
           <div class="col-md-4">
             <div class="well well-sm hide" data-show-if="blossom">
@@ -178,7 +197,6 @@
             </div>
           </div> {# col-md-4 #}
 
-        </div>
       </div> {# panel-body #}
     </div> {# panel #}
 
@@ -190,6 +208,7 @@
           <div class="row">
             <div class="col-md-3">
               {{ form.start_date.label_tag }}
+              <span class="required hide" data-show-if="blossom">*</span>
               <div class="input-group">
                 {% render_field form.start_date class='form-control' data-date-format="DD/MM/YYYY" %}
                 <span class="input-group-addon">
@@ -208,6 +227,9 @@
           <div class="row">
             <div class="col-md-3">
               {{ form.end_date.label_tag }}
+              {% if form.end_date.field.required %}
+                <span class="required">*</span>
+              {% endif %}
               <div class="input-group">
                 {% render_field form.end_date class='form-control' data-date-format="DD/MM/YYYY" %}
                 <span class="input-group-addon">
@@ -237,6 +259,9 @@
                 data-trigger="hover"
                 id="lead-author-label">
             {{ form.lead_author.label_tag }}
+            {% if form.lead_author.field.required %}
+              <span class="required">*</span>
+            {% endif %}
           </span>
           {% render_field form.lead_author class='form-control' rows=3 %}
           {% if form.lead_author.errors %}

@@ -13,6 +13,13 @@ class Study(Model):
         (EEA, 'EEA'),
     )
 
+    YES = 'yes'
+    NO = 'no'
+    YES_NO_CHOICES = (
+        (YES, 'Yes'),
+        (NO, 'No'),
+    )
+
     POLICY = 'policy'
     NON_POLICY = 'non_policy'
     PURPOSE_CHOICES = (
@@ -39,9 +46,11 @@ class Study(Model):
 
     url = URLField(blank=True)
 
-    blossom = BooleanField(
+    blossom = CharField(
         'is it a BLOSSOM study?',
-        default=False)
+        max_length=8,
+        choices=YES_NO_CHOICES,
+    )
 
     requested_by = CharField(
         'who requested the study?',

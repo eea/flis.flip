@@ -1,11 +1,27 @@
 {% extends '_layout.html' %}
 {% load widget_tweaks %}
 
+{% block scripts %}
+
+  <script>
+    $(function () {
+      $('#id_geographical_scope').on('change', function () {
+        $('[data-show-if=geographical_scope]')
+            .toggleClass('hide', $(this).val() != '4' && $(this).val() != '5');
+      }).change();
+    });
+  </script>
+
+{% endblock %}
 
 {% block content %}
 
   {% include '_messages.html' %}
   {% include '_study_nav.html' %}
+
+  {% if form.errors %}
+    <p class="text-danger">There were errors while saving this study. Please observer error messages below.</p>
+  {% endif %}
 
   <form role="form" method="POST">
     {% csrf_token %}
@@ -17,6 +33,9 @@
           <div class="row">
             <div class="col-md-5">
               {{ form.purpose_and_target.label_tag }}
+              {% if form.purpose_and_target.field.required %}
+                <span class="required">*</span>
+              {% endif %}
               {% render_field form.purpose_and_target class='form-control' %}
               {% if form.purpose_and_target.errors %}
                 <p class="text-danger">
@@ -28,6 +47,9 @@
 
         <div class="form-group">
           {{ form.additional_information.label_tag }}
+          {% if form.additional_information.field.required %}
+            <span class="required">*</span>
+          {% endif %}
           {% render_field form.additional_information class='form-control' %}
           {% if form.additional_information.errors %}
             <p class="text-danger">
@@ -48,6 +70,9 @@
           <div class="row">
             <div class="col-md-4">
               {{ form.phases_of_policy.label_tag }}
+              {% if form.phases_of_policy.field.required %}
+                <span class="required">*</span>
+              {% endif %}
               {% render_field form.phases_of_policy class='form-control' rows=3 %}
               {% if form.phases_of_policy.errors %}
                 <p class="text-danger">
@@ -65,6 +90,9 @@
                 data-trigger="hover"
                 id="additional-information-phase-label">
             {{ form.additional_information_phase.label_tag }}
+            {% if form.additional_information_phase.field.required %}
+              <span class="required">*</span>
+            {% endif %}
           </span>
           {% render_field form.additional_information_phase class='form-control' rows=3 %}
           {% if form.additional_information_phase.errors %}
@@ -83,6 +111,9 @@
           <div class="row">
             <div class="col-md-4">
               {{ form.foresight_approaches.label_tag }}
+              {% if form.foresight_approaches.field.required %}
+                <span class="required">*</span>
+              {% endif %}
               {% render_field form.foresight_approaches class='form-control' %}
               {% if form.foresight_approaches.errors %}
                 <p class="text-danger">
@@ -103,6 +134,9 @@
               <label>
                 {% render_field form.stakeholder_participation %}
                 {{ form.stakeholder_participation.label }}
+                {% if form.stakeholder_participation.field.required %}
+                  <span class="required">*</span>
+                {% endif %}
               </label>
               {% if form.stakeholder_participation.errors %}
                 <p class="text-danger">
@@ -119,6 +153,9 @@
                 data-trigger="hover"
                 id="additional-information-stakeholder-label">
               {{ form.additional_information_stakeholder.label_tag }}
+              {% if form.additional_information_stakeholder.field.required %}
+                <span class="required">*</span>
+              {% endif %}
           </span>
           {% render_field form.additional_information_stakeholder class='form-control' %}
           {% if form.additional_information_stakeholder.errors %}
@@ -136,45 +173,56 @@
       </div>
       <div class="panel-body">
 
-        <div class="form-group">
-          <div class="row">
-            <div class="col-md-4">
-              {{ form.environmental_themes.label_tag }}
-              {% render_field form.environmental_themes class='form-control' %}
-              {% if form.environmental_themes.errors %}
-                <p class="text-danger">
-                  <small>{{ form.environmental_themes.errors.0 }}</small></p>
-              {% endif %}
-            </div> {# col-md-4 #}
-          </div> {# row #}
-        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+                {{ form.environmental_themes.label_tag }}
+                {% if form.environmental_themes.field.required %}
+                  <span class="required">*</span>
+                {% endif %}
+                {% render_field form.environmental_themes class='form-control' %}
+                {% if form.environmental_themes.errors %}
+                  <p class="text-danger">
+                    <small>{{ form.environmental_themes.errors.0 }}</small></p>
+                {% endif %}
+            </div> {# form-group #}
+          </div> {# col-md-4 #}
+        </div> {# row #}
 
-        <div class="form-group">
+        <div class="col-md-5">
           <div class="row">
-            <div class="col-md-4">
+            <div class="form-group">
               {{ form.geographical_scope.label_tag }}
-              {% render_field form.geographical_scope class='form-control' %}
-              {% if form.geographical_scope.errors %}
-                <p class="text-danger">
-                  <small>{{ form.geographical_scope.errors.0 }}</small></p>
+              {% if form.environmental_themes.field.required %}
+                <span class="required">*</span>
               {% endif %}
-            </div> {# col-md-4 #}
+              <div class="row">
+                <div class="col-md-10">
+                  {% render_field form.geographical_scope class='form-control' %}
+                  {% if form.geographical_scope.errors %}
+                    <p class="text-danger">
+                      <small>{{ form.geographical_scope.errors.0 }}</small></p>
+                  {% endif %}
+                </div> {# col-md-10 #}
+              </div> {# row #}
+            </div> {# form-group #}
           </div> {# row #}
-        </div>
-
-        <div class="form-group">
+        </div> {# col-md-4 #}
+ 
+        <div class="col-md-5">
           <div class="row">
-            <div class="col-md-4">
+            <div class="form-group">
               {{ form.countries.label_tag }}
+              <span class="required hide" data-show-if="geographical_scope">*</span>
               {% render_field form.countries class='form-control' %}
               {% if form.countries.errors %}
                 <p class="text-danger">
                   <small>{{ form.countries.errors.0 }}</small></p>
               {% endif %}
-            </div> {# col-md-4 #}
+            </div> {# form-group #}
           </div> {# row #}
-        </div>
-
+        </div> {# col-md-4 #}
+ 
       </div> {# panel-body #}
     </div> {# panel #}
 

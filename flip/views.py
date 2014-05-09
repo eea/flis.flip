@@ -61,7 +61,8 @@ class StudyMetadataAddView(CreateView,
         return kwargs
 
 
-class StudyMetadataEditView(UpdateView):
+class StudyMetadataEditView(UpdateView,
+                            SuccessMessageMixin):
 
     model = Study
     form_class = StudyMetadataForm
@@ -72,9 +73,13 @@ class StudyMetadataEditView(UpdateView):
         return reverse('study_metadata_edit',
                        kwargs={'pk': self.object.pk})
 
+    def get_success_message(self):
+        return '{} study was successfully added'.format(self.object.title)
+
 
 class StudyContextEditView(StudyBlossomRequiredMixin,
-                           UpdateView):
+                           UpdateView,
+                           SuccessMessageMixin):
 
     model = Study
     form_class = StudyContextForm
@@ -84,6 +89,9 @@ class StudyContextEditView(StudyBlossomRequiredMixin,
     def get_success_url(self):
         return reverse('study_context_edit',
                        kwargs={'pk': self.object.pk})
+
+    def get_success_message(self):
+        return '{} study was successfully added'.format(self.object.title)
 
 
 class StudyOutcomesEditView(StudyBlossomRequiredMixin,

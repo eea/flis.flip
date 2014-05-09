@@ -35,7 +35,7 @@ class StudyMetadataForm(ModelForm):
         requested_by = self.fields['requested_by']
         start_date = self.fields['start_date']
 
-        if blossom_data:
+        if blossom_data == 'yes':
             if requested_by_data in requested_by.empty_values:
                 self._errors['requested_by'] = self.error_class(
                     [requested_by.error_messages['required']])
@@ -73,8 +73,9 @@ class StudyContextForm(ModelForm):
         countries_data = cleaned_data.get('countries')
         countries = self.fields['countries']
 
-        if geographical_scope_data.title in ['Country', 'Sub-national']:
-            if countries_data in countries.empty_values:
+        if geographical_scope_data and geographical_scope_data.title in [
+                'Country', 'Sub-national']:
+            if len(countries_data) == 0:
                 self._errors['countries'] = self.error_class(
                     [countries.error_messages['required']])
                 cleaned_data.pop('countries', None)
