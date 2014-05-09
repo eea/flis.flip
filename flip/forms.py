@@ -3,8 +3,7 @@ from django.forms import BooleanField
 from django.forms import DateField, DateInput
 from django.forms import ModelForm
 from django.forms.models import BaseInlineFormSet
-
-from flip.models import Study
+from flip.models import Study, Outcome
 
 
 class StudyMetadataForm(ModelForm):
@@ -112,3 +111,10 @@ class BaseStudyLanguageInlineFormSet(BaseInlineFormSet):
             study_language.study = study
             study_language.save()
         return study_languages
+
+
+
+class OutcomeForm(ModelForm):
+
+    class Meta:
+        model = Outcome

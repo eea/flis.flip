@@ -79,6 +79,10 @@
     {% include '_study_nav.html' %}
   {% endif %}
 
+  {% if form.errors %}
+    <p class="text-danger">There were errors while saving this study. Please observer error messages below.</p>
+  {% endif %}
+
   <form role="form" method="POST">
 
     {% csrf_token %}

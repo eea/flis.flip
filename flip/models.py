@@ -1,6 +1,6 @@
 
 from django.db.models import BooleanField
-from django.db.models import CharField, URLField, TextField
+from django.db.models import CharField, URLField, TextField, FileField
 from django.db.models import DateField, DateTimeField
 from django.db.models import ManyToManyField, ForeignKey
 from django.db.models import Model
@@ -126,6 +126,33 @@ class Study(Model):
         return self.title
 
 
+class Outcome(Model):
+    study = ForeignKey(Study)
+
+    type_of_outcome = ForeignKey(
+        'TypeOfOutcome',
+        verbose_name='type of outcome or activity',
+        null=True,
+        blank=True)
+
+    document_title = CharField(
+        'document title',
+        max_length=255)
+
+    text = TextField(
+        'text',
+        null=True,
+        blank=True)
+
+    file_id = FileField(
+        upload_to='files',
+        max_length=256,
+        null=True,
+        blank=True,
+        default='',
+        verbose_name='File')
+
+
 class Language(Model):
 
     code = CharField(max_length=3, primary_key=True)
@@ -188,3 +215,11 @@ class Country(Model):
 
     def __unicode__(self):
         return self.name
+
+
+class TypeOfOutcome(Model):
+
+    title = CharField(max_length=256)
+
+    def __unicode__(self):
+        return self.title

@@ -7,7 +7,7 @@ from django.views.generic import CreateView, UpdateView
 
 from flip.forms import BaseStudyLanguageInlineFormSet
 from flip.forms import StudyMetadataForm, StudyContextForm
-from flip.models import Study, StudyLanguage, Language
+from flip.models import Study, Outcome, Language, StudyLanguage
 
 
 class StudyBlossomRequiredMixin(object):
@@ -102,7 +102,7 @@ class StudyContextEditView(StudyBlossomRequiredMixin,
 class StudyOutcomesEditView(StudyBlossomRequiredMixin,
                             UpdateView):
 
-    model = Study
+    model = Outcome
     form_class = StudyContextForm
 
     template_name = 'study_outcome_edit.html'

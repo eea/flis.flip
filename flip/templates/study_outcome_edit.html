@@ -7,6 +7,26 @@
   {% include '_messages.html' %}
   {% include '_study_nav.html' %}
 
+  {% if form.errors %}
+    <p class="text-danger">There were errors while saving this outcome. Please observer error messages below.</p>
+  {% endif %}
+
+  <form role="form" method="POST">
+
+    {% csrf_token %}
+
+    <div class="form-group">
+      {{ form.type_of_outcome.label_tag }}
+      {% if form.type_of_outcome.field.required %}
+        <span class="required">*</span>
+      {% endif %}
+      {% render_field form.type_of_outcome class='form-control' %}
+      {% if form.type_of_outcome.errors %}
+        <p class="text-danger">
+          <small>{{ form.type_of_outcome.errors.0 }}</small></p>
+      {% endif %}
+    </div>
+
   {% include '_study_footer.html' %}
 
 
