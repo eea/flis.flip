@@ -59,6 +59,28 @@ class StudyContextForm(ModelForm):
 
     draft = BooleanField(required=False)
 
+    def __init__(self, *args, **kwargs):
+        super(StudyContextForm, self).__init__(*args, **kwargs)
+
+        self.fields['purpose_and_target'].required = True
+        self.fields['phases_of_policy'].required = True
+        self.fields['environmental_themes'].required = True
+        self.fields['geographical_scope'].required = True
+
+    def clean(self):
+        cleaned_data = super(StudyContextForm, self).clean()
+        geographical_scope_data = cleaned_data.get('geographical_scope')
+        countries_data = cleaned_data.get('countries')
+        countries = self.fields['countries']
+
+        if geographical_scope_data.title in ['Country', 'Sub-national']:
+            if countries_data in countries.empty_values:
+                self._errors['countries'] = self.error_class(
+                    [countries.error_messages['required']])
+                cleaned_data.pop('countries', None)
+
+        return cleaned_data
+
     class Meta:
         model = Study
         fields = ('draft', 'purpose_and_target', 'additional_information',
