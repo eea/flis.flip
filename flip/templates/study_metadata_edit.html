@@ -24,33 +24,46 @@
       //   }
       // });
 
-    var study_languages = $('#study-languages');
+      var study_languages = $('#study-languages');
 
 
-    $('#study-languages-add').on('click', function () {
-      var max_forms = $('#id_studylanguage_set-MAX_NUM_FORMS').val();
-      var nr_forms = study_languages.find('.form-group').length;
+      $('#study-languages-add').on('click', function () {
+        var max_forms = $('#id_studylanguage_set-MAX_NUM_FORMS').val();
+        var nr_forms = study_languages.find('.form-group').length;
+        var total_forms = $('#id_studylanguage_set-TOTAL_FORMS');
 
-      if(nr_forms < max_forms) {
+        if(nr_forms < max_forms) {
 
-        var html = $($('#study-languages-empty-form').html());
+          var html = $($('#study-languages-empty-form').html());
 
-        html.find('label').each(function () {
-          var attr = $(this).attr('for');
-          $(this).attr('for', attr.replace('__prefix__', nr_forms));
+          html.find('label').each(function () {
+            var attr = $(this).attr('for');
+            $(this).attr('for', attr.replace('__prefix__', nr_forms));
+          });
+
+          html.find('select, input').each(function () {
+            var attr_id = $(this).attr('id');
+            var attr_name = $(this).attr('name');
+            $(this).attr('id', attr_id.replace('__prefix__', nr_forms));
+            $(this).attr('name', attr_name.replace('__prefix__', nr_forms));
+          });
+
+          $('#study-languages-add').before(html);
+          total_forms.val(parseInt(total_forms.val()) + 1);
+        }
+
+      });
+
+      $('#study-languages')
+        .on('click', '.language-remove a', function () {
+
+        var total_forms = $('#id_studylanguage_set-TOTAL_FORMS');
+        $(this).parents('.form-group').fadeOut('fast', function () {
+          $(this).remove();
+          total_forms.val(parseInt(total_forms.val()) - 1);
+
         });
-
-        html.find('select, input').each(function () {
-          var attr_id = $(this).attr('id');
-          var attr_name = $(this).attr('name');
-          $(this).attr('id', attr_id.replace('__prefix__', nr_forms));
-          $(this).attr('name', attr_name.replace('__prefix__', nr_forms));
-        });
-
-        $('#study-languages-add').before(html);
-      }
-
-    });
+      });
 
     });
   </script>
@@ -81,8 +94,7 @@
           <small>{{ form.title.errors.0 }}</small></p>
       {% endif %}
     </div>
-    {{ form.errors }}
-    {{ formset.errors }}
+
     <div id="study-languages-empty-form" class="hide">
       <div class="form-group">
         <div class="row">
@@ -90,9 +102,14 @@
             {{ formset.empty_form.language.label_tag }}
             {% render_field formset.empty_form.language class='form-control' %}
           </div>
-          <div class="col-md-8">
+          <div class="col-md-7">
             {{ formset.empty_form.title.label_tag }}
             {% render_field formset.empty_form.title class='form-control' %}
+          </div>
+          <div class="col-md-1 text-center language-remove">
+            <a>
+              <span class="glyphicon glyphicon-minus-sign"></span>
+            </a>
           </div>
         </div>
       </div> {# form-group #}
@@ -102,18 +119,32 @@
 
       <div class="panel-body">
         {{ formset.management_form }}
-
         {% for set in formset %}
+          {{ set.id }}
           <div class="form-group">
             <div class="row">
               <div class="col-md-4">
                 {{ set.language.label_tag }}
                 {% render_field set.language class='form-control' %}
+                {% if set.language.errors %}
+                  <p class="text-danger">{{ set.language.errors.0 }}</p>
+                {% endif %}
               </div>
-              <div class="col-md-8">
+              <div class="col-md-7">
                 {{ set.title.label_tag }}
                 {% render_field set.title class='form-control' %}
+                {% if set.title.errors %}
+                  <p class="text-danger">{{ set.title.errors.0 }}</p>
+                {% endif %}
               </div>
+
+              {% if not forloop.first %}
+                <div class="col-md-1 text-center language-remove">
+                  <a>
+                    <span class="glyphicon glyphicon-minus-sign"></span>
+                  </a>
+                </div>
+              {% endif %}
             </div>
           </div> {# form-group #}
         {% endfor %}
@@ -121,6 +152,11 @@
         <div id="study-languages-add">
           <a>Add a new language</a>
         </div>
+
+        {% if form.errors.language %}
+          <div class="text-danger" style="padding-top: 10px;">
+            <b>{{ form.errors.language.0 }}</b></div>
+        {% endif %}
 
       </div> {# panel-body #}
 

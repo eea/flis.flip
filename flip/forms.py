@@ -2,6 +2,8 @@
 from django.forms import BooleanField
 from django.forms import DateField, DateInput
 from django.forms import ModelForm
+from django.forms.models import BaseInlineFormSet
+
 from flip.models import Study
 
 
@@ -28,6 +30,11 @@ class StudyMetadataForm(ModelForm):
 
     def clean(self):
         cleaned_data = super(StudyMetadataForm, self).clean()
+
+        if not self.formset.is_valid():
+            self._errors['language'] = self.error_class(
+                ['Language and original title are required.'])
+
         requested_by_data = cleaned_data.get('requested_by')
         start_date_data = cleaned_data.get('start_date')
         blossom_data = cleaned_data.get('blossom')
@@ -50,8 +57,8 @@ class StudyMetadataForm(ModelForm):
     def save(self):
         study = super(StudyMetadataForm, self).save(commit=False)
         study.save()
-        # save relations like languages
-        self.save_m2m()
+        # save languages
+        self.formset.save(study)
         return study
 
 
@@ -89,3 +96,19 @@ class StudyContextForm(ModelForm):
                   'foresight_approaches', 'stakeholder_participation',
                   'additional_information_stakeholder', 'environmental_themes',
                   'geographical_scope', 'countries')
+
+
+class BaseStudyLanguageInlineFormSet(BaseInlineFormSet):
+
+    def __init__(self, *args, **kwargs):
+        super(BaseStudyLanguageInlineFormSet, self).__init__(*args, **kwargs)
+        for form in self.forms:
+            form.empty_permitted = False
+
+    def save(self, study):
+        study_languages = super(BaseStudyLanguageInlineFormSet, self) \
+            .save(commit=False)
+        for study_language in study_languages:
+            study_language.study = study
+            study_language.save()
+        return study_languages

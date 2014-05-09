@@ -15,12 +15,19 @@ a {
     float: none;
 }
 
-
 .label-container .popover {
     margin-top: 0;
 }
 
-
 .nav-study {
     margin-bottom: 25px;
+}
+
+.language-remove {
+    position: relative;
+    top: 34px;
+}
+
+.language-remove a {
+    color: #a71414;
 }
