@@ -35,6 +35,7 @@ INSTALLED_APPS = (
     'frame',
     'django_assets',
     'widget_tweaks',
+    'south',
     'flip',
 )
 
