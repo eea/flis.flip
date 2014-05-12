@@ -26,6 +26,7 @@ class StudyMetadataForm(ModelForm):
     def __init__(self, *args, **kwargs):
         self.formset = kwargs.pop('formset', None)
         super(StudyMetadataForm, self).__init__(*args, **kwargs)
+        self.fields['blossom'].initial = ''
 
     def clean(self):
         cleaned_data = super(StudyMetadataForm, self).clean()
@@ -41,7 +42,7 @@ class StudyMetadataForm(ModelForm):
         requested_by = self.fields['requested_by']
         start_date = self.fields['start_date']
 
-        if blossom_data == 'yes':
+        if blossom_data == Study.YES:
             if requested_by_data in requested_by.empty_values:
                 self._errors['requested_by'] = self.error_class(
                     [requested_by.error_messages['required']])
@@ -111,7 +112,6 @@ class BaseStudyLanguageInlineFormSet(BaseInlineFormSet):
             study_language.study = study
             study_language.save()
         return study_languages
-
 
 
 class OutcomeForm(ModelForm):

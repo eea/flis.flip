@@ -1,5 +1,5 @@
 
-from django.db.models import BooleanField
+from django.db.models import BooleanField, IntegerField
 from django.db.models import CharField, URLField, TextField, FileField
 from django.db.models import DateField, DateTimeField
 from django.db.models import ManyToManyField, ForeignKey
@@ -13,9 +13,10 @@ class Study(Model):
         (EEA, 'EEA'),
     )
 
-    YES = 'yes'
-    NO = 'no'
+    YES = 1
+    NO = 0
     YES_NO_CHOICES = (
+        ('', '----'),
         (YES, 'Yes'),
         (NO, 'No'),
     )
@@ -46,10 +47,10 @@ class Study(Model):
 
     url = URLField(blank=True)
 
-    blossom = CharField(
+    blossom = IntegerField(
         'is it a BLOSSOM study?',
-        max_length=8,
         choices=YES_NO_CHOICES,
+        default=NO,
     )
 
     requested_by = CharField(

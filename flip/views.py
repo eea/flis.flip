@@ -30,12 +30,12 @@ class StudyLanguageFormMixin(object):
 
     def get_formset(self, data=None):
         max_num = Language.objects.count()
-
+        extra = 0 if self.object else 1
         StudyLanguageInlineFormSet = inlineformset_factory(
             Study, StudyLanguage,
             formset=BaseStudyLanguageInlineFormSet,
             fields=('language', 'title'),
-            extra=1, max_num=max_num, validate_max=True, can_delete=False)
+            extra=extra, max_num=max_num, validate_max=True, can_delete=True)
 
         if data:
             return StudyLanguageInlineFormSet(data, instance=self.object)
