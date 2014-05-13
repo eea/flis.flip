@@ -10,4 +10,5 @@ requests==2.2.1
 six==1.6.1
 South==0.8.4
 webassets==0.8
+supervisor==3.0
 -e git://github.com/eaudeweb/eea.frame#egg=eea.frame
