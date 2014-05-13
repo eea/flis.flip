@@ -103,6 +103,20 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'handlers': {'mail_admins': {'level': 'ERROR',
+                                 'class': 'django.utils.log.AdminEmailHandler',
+                                 },
+                 },
+    'loggers': {'django.request': {'handlers': ['mail_admins'],
+                                   'level': 'ERROR',
+                                   'propagate': True,
+                                   },
+                },
+    }
+
 
 try:
     from local_settings import *
