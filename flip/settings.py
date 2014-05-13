@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'widget_tweaks',
     'south',
     'flip',
+    'gunicorn',
 )
 
 MIDDLEWARE_CLASSES = (
