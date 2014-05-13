@@ -118,3 +118,5 @@ class OutcomeForm(ModelForm):
 
     class Meta:
         model = Outcome
+        exclude = ('study',)
+

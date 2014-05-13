@@ -7,13 +7,24 @@
   {% include '_messages.html' %}
   {% include '_study_nav.html' %}
 
+  <h4>List of current documents</h4>
+
   {% if form.errors %}
     <p class="text-danger">There were errors while saving this outcome. Please observer error messages below.</p>
   {% endif %}
 
+  <hr>
+
+  <h4>
+    Add information on outcome/activity <br>
+    <small>You can enter your text directly and/or attach relevant files</small>
+  </h4>
+
+
   <form role="form" method="POST">
 
     {% csrf_token %}
+    {{ form }}
 
     <div class="form-group">
       {{ form.type_of_outcome.label_tag }}

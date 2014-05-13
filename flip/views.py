@@ -3,11 +3,13 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse
 from django.forms.models import inlineformset_factory
 from django.http import Http404
-from django.views.generic import CreateView, UpdateView
+
+from django.views.generic import CreateView, UpdateView, DetailView
+from django.views.generic import FormView
 
 from flip.forms import BaseStudyLanguageInlineFormSet
-from flip.forms import StudyMetadataForm, StudyContextForm
-from flip.models import Study, Outcome, Language, StudyLanguage
+from flip.forms import StudyMetadataForm, StudyContextForm, OutcomeForm
+from flip.models import Study, Language, StudyLanguage
 
 
 class StudyBlossomRequiredMixin(object):
@@ -100,9 +102,14 @@ class StudyContextEditView(StudyBlossomRequiredMixin,
 
 
 class StudyOutcomesEditView(StudyBlossomRequiredMixin,
-                            UpdateView):
+                            DetailView):
 
-    model = Outcome
-    form_class = StudyContextForm
+    model = Study
+    form_class = OutcomeForm
 
     template_name = 'study_outcome_edit.html'
+
+    def get_context_data(self, **kwargs):
+        data = super(StudyOutcomesEditView, self).get_context_data(**kwargs)
+        data['form'] = OutcomeForm()
+        return data
