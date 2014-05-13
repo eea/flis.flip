@@ -37,4 +37,4 @@ def deploy():
         run('python manage.py syncdb')
         run('python manage.py migrate')
         run('python manage.py loadfixtures')
-        run('supervisorctl -c %(supervisord_conf)s restart flip' % env)
+        run('supervisorctl restart flip')
