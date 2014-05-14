@@ -128,7 +128,7 @@ class Study(Model):
 
 
 class Outcome(Model):
-    study = ForeignKey(Study)
+    study = ForeignKey(Study, related_name='outcomes')
 
     type_of_outcome = ForeignKey(
         'TypeOfOutcome',
@@ -136,22 +136,15 @@ class Outcome(Model):
         null=True,
         blank=True)
 
-    document_title = CharField(
-        'document title',
-        max_length=255)
+    document_title = CharField('document title', max_length=255)
 
-    text = TextField(
-        'text',
-        null=True,
-        blank=True)
+    text = TextField('text', null=True, blank=True)
 
-    file_id = FileField(
-        upload_to='files',
-        max_length=256,
-        null=True,
-        blank=True,
-        default='',
-        verbose_name='File')
+    file_id = FileField(upload_to='ourcomes', max_length=256, null=True,
+                        blank=True, default='', verbose_name='File')
+
+    def __unicode__(self):
+        return self.document_title
 
 
 class Language(Model):
@@ -165,13 +158,11 @@ class Language(Model):
 
 class StudyLanguage(Model):
 
-    language = ForeignKey(
-        Language,
-        verbose_name='language of the study')
+    language = ForeignKey(Language, verbose_name='language of the study')
+
     study = ForeignKey(Study)
-    title = CharField(
-        'study title in original languge',
-        max_length=255)
+
+    title = CharField('study title in original languge', max_length=255)
 
     def __unicode__(self):
         return self.title

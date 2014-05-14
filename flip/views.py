@@ -3,13 +3,14 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse
 from django.forms.models import inlineformset_factory
 from django.http import Http404
+from django.shortcuts import get_object_or_404
 
 from django.views.generic import CreateView, UpdateView, DetailView
 from django.views.generic.list import ListView
 
 from flip.forms import BaseStudyLanguageInlineFormSet
 from flip.forms import StudyMetadataForm, StudyContextForm, OutcomeForm
-from flip.models import Study, Language, StudyLanguage
+from flip.models import Study, Language, StudyLanguage, Outcome
 
 
 class StudyBlossomRequiredMixin(object):
@@ -77,7 +78,7 @@ class StudyMetadataEditView(StudyLanguageFormMixin,
     template_name = 'study_metadata_edit.html'
 
     def get_success_url(self):
-        return reverse('study_metadata_edit',
+        return reverse('study_met`adata_edit',
                        kwargs={'pk': self.object.pk})
 
     def get_success_message(self, cleaned_data):
@@ -102,17 +103,34 @@ class StudyContextEditView(StudyBlossomRequiredMixin,
 
 
 class StudyOutcomesEditView(StudyBlossomRequiredMixin,
-                            DetailView):
+                            CreateView):
 
-    model = Study
+    model = Outcome
     form_class = OutcomeForm
-
     template_name = 'study_outcome_edit.html'
+
+    def dispatch(self, request, pk):
+        self._object = self.get_object()
+        return super(StudyOutcomesEditView, self).dispatch(request, pk)
+
+    def get_object(self):
+        return get_object_or_404(Study, pk=self.kwargs['pk'])
 
     def get_context_data(self, **kwargs):
         data = super(StudyOutcomesEditView, self).get_context_data(**kwargs)
-        data['form'] = OutcomeForm()
-        return datao
+        data['object'] = self._object
+        return data
+
+    def get_form_kwargs(self):
+        kwargs = super(StudyOutcomesEditView, self).get_form_kwargs()
+        kwargs['study'] = self._object
+        return kwargs
+
+    def get_success_url(self):
+        return reverse('study_outcomes_edit', kwargs={'pk': self._object.pk})
+
+    def get_success_message(self, cleaned_data):
+        return '{document_title} was successfully added'.format(**cleaned_data)
 
 
 class HomeView(ListView):

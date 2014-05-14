@@ -120,3 +120,12 @@ class OutcomeForm(ModelForm):
         model = Outcome
         exclude = ('study',)
 
+    def __init__(self, *args, **kwargs):
+        self.study = kwargs.pop('study', None)
+        super(OutcomeForm, self).__init__(*args, **kwargs)
+
+    def save(self):
+        outcome = super(OutcomeForm, self).save(commit=False)
+        outcome.study = self.study
+        outcome.save()
+        return outcome
