@@ -98,7 +98,7 @@ class StudyContextEditView(StudyBlossomRequiredMixin,
                        kwargs={'pk': self.object.pk})
 
     def get_success_message(self, cleaned_data):
-        return '"{}" study was successfully updated'.format(self.object.title)
+        return 'The study was successfully updated'
 
 
 class StudyOutcomesEditView(StudyBlossomRequiredMixin,
