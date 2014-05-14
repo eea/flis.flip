@@ -37,4 +37,5 @@ def deploy():
         run('python manage.py syncdb')
         run('python manage.py migrate')
         run('python manage.py loadfixtures')
+        run('python manage.py collectstatic --noinput')
         run('supervisorctl restart flip')
