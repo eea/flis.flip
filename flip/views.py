@@ -5,7 +5,7 @@ from django.forms.models import inlineformset_factory
 from django.http import Http404
 
 from django.views.generic import CreateView, UpdateView, DetailView
-from django.views.generic import FormView
+from django.views.generic.list import ListView
 
 from flip.forms import BaseStudyLanguageInlineFormSet
 from flip.forms import StudyMetadataForm, StudyContextForm, OutcomeForm
@@ -112,4 +112,10 @@ class StudyOutcomesEditView(StudyBlossomRequiredMixin,
     def get_context_data(self, **kwargs):
         data = super(StudyOutcomesEditView, self).get_context_data(**kwargs)
         data['form'] = OutcomeForm()
-        return data
+        return datao
+
+
+class HomeView(ListView):
+
+    model = Study
+    template_name = 'studies_overview.html'

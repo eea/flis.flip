@@ -10,6 +10,10 @@ urlpatterns = patterns(
 
     '',
 
+    url(r'^$',
+        views.HomeView.as_view(),
+        name='studies_overview'),
+
     url(r'^study/new/$',
         views.StudyMetadataAddView.as_view(),
         name='study_metadata_edit'),

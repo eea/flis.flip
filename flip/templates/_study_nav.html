@@ -2,6 +2,11 @@
 
 <ul class="nav nav-tabs nav-study">
 
+  <li class="{% active '$' %}">
+    <a href="{% url 'studies_overview' %}">
+      Studies overview</a>
+  </li>
+
   <li class="{% active 'study/\d/edit$' %}">
     <a href="{% url 'study_metadata_edit' pk=object.pk %}">
       Study metadata</a>
