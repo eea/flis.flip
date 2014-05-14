@@ -5,7 +5,7 @@ from django.forms.models import inlineformset_factory
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 
-from django.views.generic import CreateView, UpdateView, DetailView
+from django.views.generic import CreateView, UpdateView
 from django.views.generic.list import ListView
 
 from flip.forms import BaseStudyLanguageInlineFormSet
@@ -65,7 +65,7 @@ class StudyMetadataAddView(StudyLanguageFormMixin,
                        kwargs={'pk': self.object.pk})
 
     def get_success_message(self):
-        return '{} study was successfully added'.format(self.object.title)
+        return 'The study was successfully added'
 
 
 class StudyMetadataEditView(StudyLanguageFormMixin,
@@ -82,7 +82,7 @@ class StudyMetadataEditView(StudyLanguageFormMixin,
                        kwargs={'pk': self.object.pk})
 
     def get_success_message(self, cleaned_data):
-        return '"{}" study was successfully updated'.format(self.object.title)
+        return 'The study was successfully updated'
 
 
 class StudyContextEditView(StudyBlossomRequiredMixin,
