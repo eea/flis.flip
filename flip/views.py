@@ -78,7 +78,7 @@ class StudyMetadataEditView(StudyLanguageFormMixin,
     template_name = 'study_metadata_edit.html'
 
     def get_success_url(self):
-        return reverse('study_met`adata_edit',
+        return reverse('study_metadata_edit',
                        kwargs={'pk': self.object.pk})
 
     def get_success_message(self, cleaned_data):
