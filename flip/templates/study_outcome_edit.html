@@ -37,6 +37,7 @@
     <div class="panel-body">
       <ul class="list-unstyled outcome-list">
         {% for outcome in object.outcomes.all %}
+          {% url 'study_outcomes_detail' pk=object.pk outcome_pk=outcome.pk as view_url %}
           {% url 'study_outcomes_delete' pk=object.pk outcome_pk=outcome.pk as delete_url %}
           <li>
             <div class="row">
@@ -51,7 +52,8 @@
                 </p>
               </div> {# col-md-8 #}
               <div class="col-md-3 text-right">
-                <a class="btn btn-sm btn-primary">View</a>
+                <a href="{{ view_url }}" class="btn btn-sm btn-primary">
+                  View</a>
                 <a href="{{ delete_url }}" class="btn btn-sm btn-danger">
                   Delete</a>
               </div> {# col-md-4 #}

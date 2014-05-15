@@ -30,6 +30,10 @@ urlpatterns = patterns(
         views.StudyOutcomesEditView.as_view(),
         name='study_outcomes_edit'),
 
+    url(r'^study/(?P<pk>\d+)/outcomes/(?P<outcome_pk>\d+)/detail$',
+        views.StudyOutcomeView.as_view(),
+        name='study_outcomes_detail'),
+
     url(r'^study/(?P<pk>\d+)/outcomes/(?P<outcome_pk>\d+)/delete$',
         views.StudyOutcomesDeleteView.as_view(),
         name='study_outcomes_delete'),

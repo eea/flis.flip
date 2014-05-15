@@ -4,13 +4,9 @@ from django.core.urlresolvers import reverse
 from django.forms.models import inlineformset_factory
 from django.http import Http404
 from django.shortcuts import get_object_or_404
+from django.views import generic
 
-from django.views.generic import CreateView, UpdateView, DeleteView
-from django.views.generic.list import ListView
-
-from flip.forms import BaseStudyLanguageInlineFormSet
-from flip.forms import StudyMetadataForm, StudyContextForm, OutcomeForm
-from flip.models import Study, Language, StudyLanguage, Outcome
+from flip import forms, models
 
 
 class StudyBlossomRequiredMixin(object):
@@ -32,11 +28,11 @@ class StudyLanguageFormMixin(object):
         return data
 
     def get_formset(self, data=None):
-        max_num = Language.objects.count()
+        max_num = models.Language.objects.count()
         extra = 0 if self.object else 1
         StudyLanguageInlineFormSet = inlineformset_factory(
-            Study, StudyLanguage,
-            formset=BaseStudyLanguageInlineFormSet,
+            models.Study, models.StudyLanguage,
+            formset=forms.BaseStudyLanguageInlineFormSet,
             fields=('language', 'title'),
             extra=extra, max_num=max_num, validate_max=True, can_delete=True)
 
@@ -52,11 +48,11 @@ class StudyLanguageFormMixin(object):
 
 
 class StudyMetadataAddView(StudyLanguageFormMixin,
-                           CreateView,
-                           SuccessMessageMixin):
+                           SuccessMessageMixin,
+                           generic.CreateView):
 
-    model = Study
-    form_class = StudyMetadataForm
+    model = models.Study
+    form_class = forms.StudyMetadataForm
 
     template_name = 'study_metadata_edit.html'
 
@@ -70,10 +66,10 @@ class StudyMetadataAddView(StudyLanguageFormMixin,
 
 class StudyMetadataEditView(StudyLanguageFormMixin,
                             SuccessMessageMixin,
-                            UpdateView):
+                            generic.UpdateView):
 
-    model = Study
-    form_class = StudyMetadataForm
+    model = models.Study
+    form_class = forms.StudyMetadataForm
 
     template_name = 'study_metadata_edit.html'
 
@@ -87,10 +83,10 @@ class StudyMetadataEditView(StudyLanguageFormMixin,
 
 class StudyContextEditView(StudyBlossomRequiredMixin,
                            SuccessMessageMixin,
-                           UpdateView):
+                           generic.UpdateView):
 
-    model = Study
-    form_class = StudyContextForm
+    model = models.Study
+    form_class = forms.StudyContextForm
 
     template_name = 'study_context_edit.html'
 
@@ -104,10 +100,10 @@ class StudyContextEditView(StudyBlossomRequiredMixin,
 
 class StudyOutcomesEditView(StudyBlossomRequiredMixin,
                             SuccessMessageMixin,
-                            CreateView):
+                            generic.CreateView):
 
-    model = Outcome
-    form_class = OutcomeForm
+    model = models.Outcome
+    form_class = forms.OutcomeForm
     template_name = 'study_outcome_edit.html'
 
     def dispatch(self, request, pk):
@@ -115,7 +111,7 @@ class StudyOutcomesEditView(StudyBlossomRequiredMixin,
         return super(StudyOutcomesEditView, self).dispatch(request, pk)
 
     def get_object(self):
-        return get_object_or_404(Study, pk=self.kwargs['pk'])
+        return get_object_or_404(models.Study, pk=self.kwargs['pk'])
 
     def get_context_data(self, **kwargs):
         data = super(StudyOutcomesEditView, self).get_context_data(**kwargs)
@@ -134,14 +130,14 @@ class StudyOutcomesEditView(StudyBlossomRequiredMixin,
         return '{document_title} was successfully added'.format(**cleaned_data)
 
 
-class StudyOutcomesDeleteView(DeleteView):
+class StudyOutcomesDeleteView(generic.DeleteView):
 
-    model = Outcome
+    model = models.Outcome
     pk_url_kwarg = 'outcome_pk'
-    template_name = 'outcome_confirm_delete.html'
+    template_name = 'study_outcome_confirm_delete.html'
 
     def dispatch(self, request, pk, outcome_pk):
-        self.study = get_object_or_404(Study, pk=pk)
+        self.study = get_object_or_404(models.Study, pk=pk)
         return super(StudyOutcomesDeleteView, self).dispatch(request, pk)
 
     def get_success_url(self):
@@ -153,7 +149,14 @@ class StudyOutcomesDeleteView(DeleteView):
         return data
 
 
-class HomeView(ListView):
+class StudyOutcomeView(generic.DetailView):
 
-    model = Study
+    model = models.Outcome
+    pk_url_kwarg = 'outcome_pk'
+    template_name = 'study_outcome_detail.html'
+
+
+class HomeView(generic.ListView):
+
+    model = models.Study
     template_name = 'studies_overview.html'
