@@ -1,10 +1,20 @@
 {% load utils %}
 
+<div class="text-right">
+  <a class="btn btn-primary" href="study/new/">
+    New study
+  </a>
+</div>
+
 <ul class="nav nav-tabs nav-study">
 
   <li class="{% active '$' %}">
     <a href="{% url 'studies_overview' %}">
       Studies</a>
+  </li>
+
+  <li class="disabled">
+    <a>My entries</a>
   </li>
 
 </ul>
