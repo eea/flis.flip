@@ -5,7 +5,7 @@ from django.forms.models import inlineformset_factory
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 
 from flip.forms import BaseStudyLanguageInlineFormSet
@@ -103,6 +103,7 @@ class StudyContextEditView(StudyBlossomRequiredMixin,
 
 
 class StudyOutcomesEditView(StudyBlossomRequiredMixin,
+                            SuccessMessageMixin,
                             CreateView):
 
     model = Outcome
@@ -131,6 +132,25 @@ class StudyOutcomesEditView(StudyBlossomRequiredMixin,
 
     def get_success_message(self, cleaned_data):
         return '{document_title} was successfully added'.format(**cleaned_data)
+
+
+class StudyOutcomesDeleteView(DeleteView):
+
+    model = Outcome
+    pk_url_kwarg = 'outcome_pk'
+    template_name = 'outcome_confirm_delete.html'
+
+    def dispatch(self, request, pk, outcome_pk):
+        self.study = get_object_or_404(Study, pk=pk)
+        return super(StudyOutcomesDeleteView, self).dispatch(request, pk)
+
+    def get_success_url(self):
+        return reverse('study_outcomes_edit', kwargs={'pk': self.study.pk})
+
+    def get_context_data(self, **kwargs):
+        data = super(StudyOutcomesDeleteView, self).get_context_data(**kwargs)
+        data['study'] = self.study
+        return data
 
 
 class HomeView(ListView):

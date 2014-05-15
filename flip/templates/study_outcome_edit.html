@@ -14,6 +14,7 @@
 {% endblock %}
 
 
+
 {% block content %}
 
   {% include '_study_nav.html' %}
@@ -36,6 +37,7 @@
     <div class="panel-body">
       <ul class="list-unstyled outcome-list">
         {% for outcome in object.outcomes.all %}
+          {% url 'study_outcomes_delete' pk=object.pk outcome_pk=outcome.pk as delete_url %}
           <li>
             <div class="row">
               <div class="col-md-9">
@@ -50,10 +52,13 @@
               </div> {# col-md-8 #}
               <div class="col-md-3 text-right">
                 <a class="btn btn-sm btn-primary">View</a>
-                <a class="btn btn-sm btn-danger">Delete</a>
+                <a href="{{ delete_url }}" class="btn btn-sm btn-danger">
+                  Delete</a>
               </div> {# col-md-4 #}
             </div> {# row #}
           </li>
+        {% empty %}
+          <li><p>No outcomes for this study.</p></li>
         {% endfor %}
       </ul>
     </div> {# panel-body #}
@@ -91,10 +96,17 @@
         </div> {# form-group #}
 
         <div class="form-group">
-          {{ form.document_title.label_tag }}
-          {% if form.document_title.field.required %}
-             <span class="text-danger">*</span>
-          {% endif %}
+          <span data-toggle="popover"
+                data-placement="top"
+                data-content="Type in the document's title. If the document is still a draft, please mention it here."
+                data-html="true"
+                data-trigger="hover"
+                class="label-container">
+            {{ form.document_title.label_tag }}
+            {% if form.document_title.field.required %}
+              <span class="required">*</span>
+            {% endif %}
+          </span>
           {% render_field form.document_title class='form-control' %}
           {% if form.document_title.errors %}
             <p class="text-danger">
@@ -103,10 +115,18 @@
         </div> {# form-group #}
 
         <div class="form-group">
-          {{ form.text.label_tag }}
-          {% if form.text.field.required %}
-             <span class="text-danger">*</span>
-          {% endif %}
+          <span data-toggle="popover"
+                data-placement="top"
+                data-content="Here you can enter a short summary of the issue you want to communicate in relation to the study (for example Barriers). You can also enter your own opinion/evaluation of the study. You can then attach the study document, containing related content"
+                data-html="true"
+                data-trigger="hover"
+                class="label-container">
+            {{ form.text.label_tag }}
+            {% if form.text.field.required %}
+              <span class="required">*</span>
+            {% endif %}
+          </span>
+
           {% render_field form.text class='form-control' %}
           {% if form.text.errors %}
             <p class="text-danger">

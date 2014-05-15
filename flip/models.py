@@ -5,6 +5,9 @@ from django.db.models import DateField, DateTimeField
 from django.db.models import ManyToManyField, ForeignKey
 from django.db.models import Model
 
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
+
 
 class Study(Model):
 
@@ -128,6 +131,7 @@ class Study(Model):
 
 
 class Outcome(Model):
+
     study = ForeignKey(Study, related_name='outcomes')
 
     type_of_outcome = ForeignKey(
@@ -140,7 +144,7 @@ class Outcome(Model):
 
     text = TextField('text', null=True, blank=True)
 
-    file_id = FileField(upload_to='ourcomes', max_length=256, null=True,
+    file_id = FileField(upload_to='outcomes', max_length=256, null=True,
                         blank=True, default='', verbose_name='File')
 
     def __unicode__(self):
@@ -215,3 +219,9 @@ class TypeOfOutcome(Model):
 
     def __unicode__(self):
         return self.title
+
+
+@receiver(pre_delete, sender=Outcome)
+def outcome_delete_file(sender, instance, **kwargs):
+    instance.file_id.delete(save=False)
+
