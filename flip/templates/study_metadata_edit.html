@@ -81,13 +81,27 @@
 {% endblock %}
 
 
-{% block content %}
+{% block title %}
 
-  {% include '_messages.html' %}
+  {{ block.super }} - {% if object %}
+    Study metadata
+  {% else %}
+    New study
+  {% endif %}
+
+{% endblock %}
+
+
+{% block content %}
 
   {% if object %}
     {% include '_study_nav.html' %}
+    <h2 class="page-title">Study metadata</h2>
+  {% else %}
+    <h2 class="page-title">New study</h2>
   {% endif %}
+
+  {% include '_messages.html' %}
 
   {% if form.errors %}
     <div class="alert alert-danger">There were errors while saving this study. Please observer error messages below.</div>

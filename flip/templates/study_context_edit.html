@@ -1,6 +1,7 @@
 {% extends '_layout.html' %}
 {% load widget_tweaks %}
 
+
 {% block scripts %}
 
   <script>
@@ -14,10 +15,21 @@
 
 {% endblock %}
 
+
+{% block title %}
+
+  {{ block.super }} - Study context
+
+{% endblock %}
+
+
 {% block content %}
 
-  {% include '_messages.html' %}
   {% include '_study_nav.html' %}
+
+  <h2 class="page-title">Study context</h2>
+
+  {% include '_messages.html' %}
 
   {% if form.errors %}
     <p class="text-danger">There were errors while saving this study. Please observer error messages below.</p>
@@ -208,7 +220,7 @@
             </div> {# form-group #}
           </div> {# row #}
         </div> {# col-md-4 #}
- 
+
         <div class="col-md-5">
           <div class="row">
             <div class="form-group">
@@ -222,7 +234,7 @@
             </div> {# form-group #}
           </div> {# row #}
         </div> {# col-md-4 #}
- 
+
       </div> {# panel-body #}
     </div> {# panel #}
 

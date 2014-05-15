@@ -2,24 +2,18 @@
 {% load widget_tweaks %}
 
 
-{% block extra_head %}
+{% block title %}
 
-  <style type="text/css">
-    h2 {
-      margin-bottom: 35px;
-    }
-
-  </style>
+  {{ block.super }} - Outcomes and activities
 
 {% endblock %}
-
 
 
 {% block content %}
 
   {% include '_study_nav.html' %}
 
-  <h2>
+  <h2 class="page-title">
     Outcomes and activities <br>
     <small>Outcomes related to the study/activities performed, by categories</small>
   </h2>

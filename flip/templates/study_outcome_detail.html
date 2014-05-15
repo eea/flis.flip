@@ -2,8 +2,15 @@
 {% extends '_layout.html' %}
 
 
+{% block title %}
+
+  {{ block.super }} - {{ outcome.document_title }}
+
+{% endblock %}
+
+
 {% block content %}
 
-  <h2>{{ outcome.document_title }}</h2>
+  <h2 class="page-title">{{ outcome.document_title }}</h2>
 
 {% endblock %}
