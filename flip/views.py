@@ -53,15 +53,12 @@ class StudyMetadataAddView(StudyLanguageFormMixin,
 
     model = models.Study
     form_class = forms.StudyMetadataForm
-
     template_name = 'study_metadata_edit.html'
+    success_message = 'The study was successfully updated'
 
     def get_success_url(self):
         return reverse('study_metadata_edit',
                        kwargs={'pk': self.object.pk})
-
-    def get_success_message(self):
-        return 'The study was successfully added'
 
 
 class StudyMetadataEditView(StudyLanguageFormMixin,
@@ -70,15 +67,12 @@ class StudyMetadataEditView(StudyLanguageFormMixin,
 
     model = models.Study
     form_class = forms.StudyMetadataForm
-
     template_name = 'study_metadata_edit.html'
+    success_message = 'The study was successfully updated'
 
     def get_success_url(self):
         return reverse('study_metadata_edit',
                        kwargs={'pk': self.object.pk})
-
-    def get_success_message(self, cleaned_data):
-        return 'The study was successfully updated'
 
 
 class StudyContextEditView(StudyBlossomRequiredMixin,
@@ -87,44 +81,41 @@ class StudyContextEditView(StudyBlossomRequiredMixin,
 
     model = models.Study
     form_class = forms.StudyContextForm
-
     template_name = 'study_context_edit.html'
+    success_message = 'The study was successfully updated'
 
     def get_success_url(self):
         return reverse('study_context_edit',
                        kwargs={'pk': self.object.pk})
 
-    def get_success_message(self, cleaned_data):
-        return 'The study was successfully updated'
 
-
-class StudyOutcomesEditView(StudyBlossomRequiredMixin,
+class StudyOutcomesHomeView(StudyBlossomRequiredMixin,
                             SuccessMessageMixin,
                             generic.CreateView):
 
     model = models.Outcome
     form_class = forms.OutcomeForm
-    template_name = 'study_outcome_edit.html'
+    template_name = 'study_outcome.html'
 
     def dispatch(self, request, pk):
-        self._object = self.get_object()
-        return super(StudyOutcomesEditView, self).dispatch(request, pk)
+        self.study = self.get_object()
+        return super(StudyOutcomesHomeView, self).dispatch(request, pk)
 
     def get_object(self):
         return get_object_or_404(models.Study, pk=self.kwargs['pk'])
 
     def get_context_data(self, **kwargs):
-        data = super(StudyOutcomesEditView, self).get_context_data(**kwargs)
-        data['object'] = self._object
-        return data
+        context = {'study': self.study}
+        context.update(kwargs)
+        return super(StudyOutcomesHomeView, self).get_context_data(**context)
 
     def get_form_kwargs(self):
-        kwargs = super(StudyOutcomesEditView, self).get_form_kwargs()
-        kwargs['study'] = self._object
+        kwargs = super(StudyOutcomesHomeView, self).get_form_kwargs()
+        kwargs['study'] = self.study
         return kwargs
 
     def get_success_url(self):
-        return reverse('study_outcomes_edit', kwargs={'pk': self._object.pk})
+        return reverse('study_outcomes', kwargs={'pk': self.study.pk})
 
     def get_success_message(self, cleaned_data):
         return '{document_title} was successfully added'.format(**cleaned_data)
@@ -141,19 +132,54 @@ class StudyOutcomesDeleteView(generic.DeleteView):
         return super(StudyOutcomesDeleteView, self).dispatch(request, pk)
 
     def get_success_url(self):
-        return reverse('study_outcomes_edit', kwargs={'pk': self.study.pk})
+        return reverse('study_outcomes', kwargs={'pk': self.study.pk})
 
     def get_context_data(self, **kwargs):
-        data = super(StudyOutcomesDeleteView, self).get_context_data(**kwargs)
-        data['study'] = self.study
-        return data
+        context = {'study': self.study}
+        context.update(kwargs)
+        return super(StudyOutcomesDeleteView, self).get_context_data(**context)
 
 
-class StudyOutcomeView(generic.DetailView):
+class StudyOutcomesView(generic.DetailView):
 
     model = models.Outcome
     pk_url_kwarg = 'outcome_pk'
     template_name = 'study_outcome_detail.html'
+
+    def dispatch(self, request, pk, outcome_pk):
+        self.study = get_object_or_404(models.Study, pk=pk)
+        return super(StudyOutcomesView, self).dispatch(request, pk)
+
+    def get_context_data(self, **kwargs):
+        context = {'study': self.study}
+        context.update(kwargs)
+        return super(StudyOutcomesView, self).get_context_data(**context)
+
+
+class StudyOutcomesEditView(generic.UpdateView):
+
+    model = models.Outcome
+    form_class = forms.OutcomeForm
+    pk_url_kwarg = 'outcome_pk'
+    template_name = 'study_outcome_edit.html'
+    success_message = 'Outcome was successfully update'
+
+    def dispatch(self, request, pk, outcome_pk):
+        self.study = get_object_or_404(models.Study, pk=pk)
+        return super(StudyOutcomesEditView, self).dispatch(request, pk)
+
+    def get_context_data(self, **kwargs):
+        context = {'study': self.study}
+        context.update(kwargs)
+        return super(StudyOutcomesEditView, self).get_context_data(**context)
+
+    def get_form_kwargs(self):
+        kwargs = super(StudyOutcomesEditView, self).get_form_kwargs()
+        kwargs['study'] = self.study
+        return kwargs
+
+    def get_success_url(self):
+        return reverse('study_outcomes', kwargs={'pk': self.study.pk})
 
 
 class HomeView(generic.ListView):

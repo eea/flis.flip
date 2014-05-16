@@ -8,21 +8,21 @@
   </li>
 
   <li class="{% active 'study/\d/edit$' %}">
-    <a href="{% url 'study_metadata_edit' pk=object.pk %}">
+    <a href="{% url 'study_metadata_edit' pk=study.pk %}">
       Study metadata</a>
   </li>
 
-  {% url 'study_context_edit' pk=object.pk as study_context_url %}
-  {% url 'study_outcomes_edit' pk=object.pk as study_outcomes_url %}
+  {% url 'study_context_edit' pk=study.pk as study_context_url %}
+  {% url 'study_outcomes' pk=study.pk as study_outcomes_url %}
 
   <li class="{% active 'study/\d/context/edit$' %}
-             {% active_if_blossom object %}">
-    {% url_if_blossom object study_context_url 'Study context' %}
+             {% active_if_blossom study %}">
+    {% url_if_blossom study study_context_url 'Study context' %}
   </li>
 
    <li class="{% active 'study/\d/outcomes/edit$' %}
-             {% active_if_blossom object %}">
-    {% url_if_blossom object study_outcomes_url 'Outcomes and activities' %}
+             {% active_if_blossom study %}">
+    {% url_if_blossom study study_outcomes_url 'Outcomes and activities' %}
     </li>
 
 </ul>

@@ -17,16 +17,17 @@
       var title_original = $('#id_title_original');
       var title = $('#id_title');
 
-      // $('#id_languages').on('change', function () {
-      //   if($.inArray('en', $(this).val()) >= 0 &&
-      //      $.trim(title_original.val()) == '') {
-      //     title_original.val(title.val());
-      //   }
-      // });
+      $('#study-languages').on('change', 'select', function () {
+        if($(this).val() == 'en') {
+          var title_original = $(this).parents('.row').find('input[type=text]');
+          var title = $('#id_title');
+          if($.trim(title_original)) {
+            title_original.val(title.val());
+          }
+        }
+      });
 
       var study_languages = $('#study-languages');
-
-
       $('#study-languages-add').on('click', function () {
         var max_forms = $('#id_studylanguage_set-MAX_NUM_FORMS').val();
         var nr_forms = study_languages.find('.form-group').length;
@@ -35,7 +36,6 @@
         if(nr_forms < max_forms) {
 
           var html = $($('#study-languages-empty-form').html());
-
           html.find('label').each(function () {
             var attr = $(this).attr('for');
             $(this).attr('for', attr.replace('__prefix__', nr_forms));
@@ -83,7 +83,7 @@
 
 {% block title %}
 
-  {{ block.super }} - {% if object %}
+  {{ block.super }} - {% if study %}
     Study metadata
   {% else %}
     New study
@@ -94,7 +94,7 @@
 
 {% block content %}
 
-  {% if object %}
+  {% if study %}
     {% include '_study_nav.html' %}
     <h2 class="page-title">Study metadata</h2>
   {% else %}

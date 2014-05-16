@@ -1,0 +1,79 @@
+{% extends '_layout.html' %}
+
+
+{% block title %}
+
+  {{ block.super }} - Outcomes and activities
+
+{% endblock %}
+
+
+{% block content %}
+
+  {% include '_study_nav.html' %}
+
+  <h2 class="page-title">
+    Outcomes and activities <br>
+    <small>Outcomes related to the study/activities performed, by categories</small>
+  </h2>
+
+  {% include '_messages.html' %}
+
+  {% if form.errors %}
+    <p class="text-danger">There were errors while saving this outcome. Please observer error messages below.</p>
+  {% endif %}
+
+  <div class="panel panel-default">
+
+    <div class="panel-heading"><b>List of current documents</b></div>
+
+    <div class="panel-body">
+      <ul class="list-unstyled outcome-list">
+        {% for outcome in study.outcomes.all %}
+          {% url 'study_outcomes_detail' pk=study.pk outcome_pk=outcome.pk as view_url %}
+          {% url 'study_outcomes_delete' pk=study.pk outcome_pk=outcome.pk as delete_url %}
+          <li>
+            <div class="row">
+              <div class="col-md-9">
+                <p><b>{{ outcome.document_title }}</b></p>
+                <p>
+                  {% if outcome.text %}
+                    {{ outcome.text|truncatewords:'30'|linebreaks }}
+                  {% else %}
+                  <p><i>No description</i></p>
+                  {% endif %}
+                </p>
+              </div> {# col-md-8 #}
+              <div class="col-md-3 text-right">
+                <a href="{{ view_url }}" class="btn btn-sm btn-primary">
+                  View</a>
+                <a href="{{ delete_url }}" class="btn btn-sm btn-danger">
+                  Delete</a>
+              </div> {# col-md-4 #}
+            </div> {# row #}
+          </li>
+        {% empty %}
+          <li><p>No outcomes for this study.</p></li>
+        {% endfor %}
+      </ul>
+    </div> {# panel-body #}
+
+  </div> {# panel #}
+
+
+  <div class="panel panel-default">
+
+    <div class="panel-heading">
+      <b>Add information on outcome/activity</b> <br>
+      <small>You can enter your text directly and/or attach relevant files</small>
+    </div>
+
+    <div class="panel-body">
+
+      {% include "_study_outcome_form.html" %}
+
+    </div> {# panel-body #}
+
+  </div> {# panel #}
+
+{% endblock %}

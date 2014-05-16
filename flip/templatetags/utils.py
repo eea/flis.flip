@@ -1,5 +1,6 @@
 import re
 import markup
+import os
 
 from django import template
 from django.conf import settings
@@ -27,14 +28,14 @@ def assign(value):
     return value
 
 
-@register.simple_tag()
+@register.simple_tag
 def active_if_blossom(object):
     if not object.blossom:
         return 'disabled'
     return ''
 
 
-@register.simple_tag()
+@register.simple_tag
 def url_if_blossom(object, url, text):
     page = markup.page()
     opt = {}
@@ -42,3 +43,8 @@ def url_if_blossom(object, url, text):
         opt['href'] = url
     page.a(text, **opt)
     return page
+
+
+@register.filter
+def filename(file_id):
+    return os.path.basename(file_id.file.name)

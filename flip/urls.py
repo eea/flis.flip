@@ -1,5 +1,8 @@
+from django.conf import settings
 from django.conf.urls import patterns, include, url
+from django.conf.urls.static import static
 from django.contrib import admin
+
 from flip import views
 
 
@@ -27,17 +30,21 @@ urlpatterns = patterns(
         name='study_context_edit'),
 
     url(r'^study/(?P<pk>\d+)/outcomes/edit$',
-        views.StudyOutcomesEditView.as_view(),
-        name='study_outcomes_edit'),
+        views.StudyOutcomesHomeView.as_view(),
+        name='study_outcomes'),
 
     url(r'^study/(?P<pk>\d+)/outcomes/(?P<outcome_pk>\d+)/detail$',
-        views.StudyOutcomeView.as_view(),
+        views.StudyOutcomesView.as_view(),
         name='study_outcomes_detail'),
 
     url(r'^study/(?P<pk>\d+)/outcomes/(?P<outcome_pk>\d+)/delete$',
         views.StudyOutcomesDeleteView.as_view(),
         name='study_outcomes_delete'),
 
+    url(r'^study/(?P<pk>\d+)/outcomes/(?P<outcome_pk>\d+)/edit$',
+        views.StudyOutcomesEditView.as_view(),
+        name='study_outcomes_edit'),
+
     url(r'^admin/', include(admin.site.urls)),
 
-)
+) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

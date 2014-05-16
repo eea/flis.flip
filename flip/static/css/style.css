@@ -56,3 +56,8 @@ a {
 .dataTables_filter {
     float: right;
 }
+
+.actions li {
+    display: inline;
+    padding-right: 10px;
+}

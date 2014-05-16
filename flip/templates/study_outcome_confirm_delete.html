@@ -3,21 +3,21 @@
 
 {% block title %}
 
-  {{ block.super }} - Are you sure you want to delete "{{ object }}"?
+  {{ block.super }} - Are you sure you want to delete "{{ outcome }}"?
 
 {% endblock %}
 
 
 {% block content %}
 
-  <h3>Are you sure you want to delete "{{ object }}"?</h3>
+  <h3>Are you sure you want to delete "{{ outcome }}"?</h3>
   <br>
   <form method="POST">
 
     {% csrf_token %}
 
     <button class="btn btn-primary">Yes</button>
-    <a href="{% url 'study_outcomes_edit' pk=study.pk %}">Cancel</a>
+    <a href="{% url 'study_outcomes' pk=study.pk %}">Cancel</a>
   </form>
 
 {% endblock %}

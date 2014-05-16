@@ -1,0 +1,78 @@
+{% load widget_tweaks %}
+
+<form role="form" method="POST" enctype="multipart/form-data">
+
+  {% csrf_token %}
+
+  <div class="form-group">
+    <div class="row">
+      <div class="col-md-7">
+        {{ form.type_of_outcome.label_tag }}
+        {% if form.type_of_outcome.field.required %}
+           <span class="text-danger">*</span>
+        {% endif %}
+        {% render_field form.type_of_outcome class='form-control' %}
+        {% if form.type_of_outcome.errors %}
+          <p class="text-danger">
+            <small>{{ form.type_of_outcome.errors.0 }}</small></p>
+        {% endif %}
+      </div> {# col-md-7 #}
+    </div>
+  </div> {# form-group #}
+
+  <div class="form-group">
+    <span data-toggle="popover"
+          data-placement="top"
+          data-content="Type in the document's title. If the document is still a draft, please mention it here."
+          data-html="true"
+          data-trigger="hover"
+          class="label-container">
+      {{ form.document_title.label_tag }}
+      {% if form.document_title.field.required %}
+        <span class="required">*</span>
+      {% endif %}
+    </span>
+    {% render_field form.document_title class='form-control' %}
+    {% if form.document_title.errors %}
+      <p class="text-danger">
+        <small>{{ form.document_title.errors.0 }}</small></p>
+    {% endif %}
+  </div> {# form-group #}
+
+  <div class="form-group">
+    <span data-toggle="popover"
+          data-placement="top"
+          data-content="Here you can enter a short summary of the issue you want to communicate in relation to the study (for example Barriers). You can also enter your own opinion/evaluation of the study. You can then attach the study document, containing related content"
+          data-html="true"
+          data-trigger="hover"
+          class="label-container">
+      {{ form.text.label_tag }}
+      {% if form.text.field.required %}
+        <span class="required">*</span>
+      {% endif %}
+    </span>
+
+    {% render_field form.text class='form-control' %}
+    {% if form.text.errors %}
+      <p class="text-danger">
+        <small>{{ form.text.errors.0 }}</small></p>
+    {% endif %}
+  </div> {# form-group #}
+
+  <div class="form-group">
+    {{ form.file_id.label_tag }}
+    {% if form.file_id.field.required %}
+       <span class="text-danger">*</span>
+    {% endif %}
+    {% render_field form.file_id class='form-control' %}
+    {% if form.file_id.errors %}
+      <p class="text-danger">
+        <small>{{ form.file_id.errors.0 }}</small></p>
+    {% endif %}
+  </div> {# form-group #}
+
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Save</button>
+  </div>
+
+</form>

@@ -1,10 +1,10 @@
 {% extends '_layout.html' %}
-{% load widget_tweaks %}
+{% load utils %}
 
 
 {% block title %}
 
-  {{ block.super }} - Outcomes and activities
+  {{ block.super }} - Edit {{ outcome.document_title }}
 
 {% endblock %}
 
@@ -13,141 +13,17 @@
 
   {% include '_study_nav.html' %}
 
-  <h2 class="page-title">
-    Outcomes and activities <br>
-    <small>Outcomes related to the study/activities performed, by categories</small>
-  </h2>
-
-  {% include '_messages.html' %}
-
-  {% if form.errors %}
-    <p class="text-danger">There were errors while saving this outcome. Please observer error messages below.</p>
-  {% endif %}
-
   <div class="panel panel-default">
-
-    <div class="panel-heading"><b>List of current documents</b></div>
-
-    <div class="panel-body">
-      <ul class="list-unstyled outcome-list">
-        {% for outcome in object.outcomes.all %}
-          {% url 'study_outcomes_detail' pk=object.pk outcome_pk=outcome.pk as view_url %}
-          {% url 'study_outcomes_delete' pk=object.pk outcome_pk=outcome.pk as delete_url %}
-          <li>
-            <div class="row">
-              <div class="col-md-9">
-                <p><b>{{ outcome.document_title }}</b></p>
-                <p>
-                  {% if outcome.text %}
-                    {{ outcome.text|linebreaks }}
-                  {% else %}
-                  <p><i>No description</i></p>
-                  {% endif %}
-                </p>
-              </div> {# col-md-8 #}
-              <div class="col-md-3 text-right">
-                <a href="{{ view_url }}" class="btn btn-sm btn-primary">
-                  View</a>
-                <a href="{{ delete_url }}" class="btn btn-sm btn-danger">
-                  Delete</a>
-              </div> {# col-md-4 #}
-            </div> {# row #}
-          </li>
-        {% empty %}
-          <li><p>No outcomes for this study.</p></li>
-        {% endfor %}
-      </ul>
-    </div> {# panel-body #}
-
-  </div> {# panel #}
-
-
-  <div class="panel panel-default">
-
     <div class="panel-heading">
-      <b>Add information on outcome/activity</b> <br>
-      <small>You can enter your text directly and/or attach relevant files</small>
+      <b>Edit {{ outcome.document_title }}</b>
     </div>
-
     <div class="panel-body">
-
-      <form role="form" method="POST" enctype="multipart/form-data">
-
+      <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-
-        <div class="form-group">
-          <div class="row">
-            <div class="col-md-7">
-              {{ form.type_of_outcome.label_tag }}
-              {% if form.type_of_outcome.field.required %}
-                 <span class="text-danger">*</span>
-              {% endif %}
-              {% render_field form.type_of_outcome class='form-control' %}
-              {% if form.type_of_outcome.errors %}
-                <p class="text-danger">
-                  <small>{{ form.type_of_outcome.errors.0 }}</small></p>
-              {% endif %}
-            </div> {# col-md-7 #}
-          </div>
-        </div> {# form-group #}
-
-        <div class="form-group">
-          <span data-toggle="popover"
-                data-placement="top"
-                data-content="Type in the document's title. If the document is still a draft, please mention it here."
-                data-html="true"
-                data-trigger="hover"
-                class="label-container">
-            {{ form.document_title.label_tag }}
-            {% if form.document_title.field.required %}
-              <span class="required">*</span>
-            {% endif %}
-          </span>
-          {% render_field form.document_title class='form-control' %}
-          {% if form.document_title.errors %}
-            <p class="text-danger">
-              <small>{{ form.document_title.errors.0 }}</small></p>
-          {% endif %}
-        </div> {# form-group #}
-
-        <div class="form-group">
-          <span data-toggle="popover"
-                data-placement="top"
-                data-content="Here you can enter a short summary of the issue you want to communicate in relation to the study (for example Barriers). You can also enter your own opinion/evaluation of the study. You can then attach the study document, containing related content"
-                data-html="true"
-                data-trigger="hover"
-                class="label-container">
-            {{ form.text.label_tag }}
-            {% if form.text.field.required %}
-              <span class="required">*</span>
-            {% endif %}
-          </span>
-
-          {% render_field form.text class='form-control' %}
-          {% if form.text.errors %}
-            <p class="text-danger">
-              <small>{{ form.text.errors.0 }}</small></p>
-          {% endif %}
-        </div> {# form-group #}
-
-        <div class="form-group">
-          {{ form.file_id.label_tag }}
-          {% if form.file_id.field.required %}
-             <span class="text-danger">*</span>
-          {% endif %}
-          {% render_field form.file_id class='form-control' %}
-          {% if form.file_id.errors %}
-            <p class="text-danger">
-              <small>{{ form.file_id.errors.0 }}</small></p>
-          {% endif %}
-        </div> {# form-group #}
-
-        {% include '_study_footer.html' %}
-
+        {% include "_study_outcome_form.html" %}
       </form>
-
     </div> {# panel-body #}
-
   </div> {# panel #}
+
 
 {% endblock %}
