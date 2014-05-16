@@ -160,3 +160,6 @@ class HomeView(generic.ListView):
 
     model = models.Study
     template_name = 'studies_overview.html'
+
+    def get_queryset(self):
+        return models.Study.objects.all()

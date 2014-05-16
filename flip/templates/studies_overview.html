@@ -1,6 +1,13 @@
 {% extends '_layout.html' %}
 {% load widget_tweaks %}
 
+{% block scripts %}
+  <script>
+    $(function(){
+      $('#studies_listing').dataTable();
+    });
+  </script>
+{% endblock %}
 
 {% block content %}
 
@@ -12,7 +19,8 @@
   {% endif %}
 
   {% if object_list %}
-    <table class="table table-condensed table-bordered table-hover" width="100%">
+    <table id="studies_listing" width="100%"
+      class="table table-condensed table-bordered table-hover">
       <thead>
         <tr>
           <th>Date</th>
