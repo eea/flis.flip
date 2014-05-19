@@ -1,3 +1,4 @@
+from django.conf import settings
 
 VIEW_ROLES = (
     'Administrator',
@@ -16,3 +17,5 @@ EDIT_GROUPS = (
 
 ROLES = VIEW_ROLES + EDIT_ROLES
 GROUPS = VIEW_GROUPS + EDIT_GROUPS
+
+SKIP_EDIT_AUTHORIZATION = settings, 'SKIP_EDIT_AUTHORIZATION', False
