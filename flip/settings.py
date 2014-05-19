@@ -36,8 +36,9 @@ INSTALLED_APPS = (
     'django_assets',
     'widget_tweaks',
     'south',
-    'flip',
     'gunicorn',
+    'auth',
+    'flip',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404
 from django.views import generic
 
 from flip import forms, models
+from auth.views import LoginRequiredMixin
 
 
 class StudyBlossomRequiredMixin(object):
@@ -47,7 +48,8 @@ class StudyLanguageFormMixin(object):
         return kwargs
 
 
-class StudyMetadataAddView(StudyLanguageFormMixin,
+class StudyMetadataAddView(LoginRequiredMixin,
+                           StudyLanguageFormMixin,
                            SuccessMessageMixin,
                            generic.CreateView):
 
