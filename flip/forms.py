@@ -1,7 +1,7 @@
 
 from django.forms import BooleanField
-from django.forms import DateField, DateInput
-from django.forms import ModelForm
+from django.forms import DateField, DateInput, ChoiceField
+from django.forms import ModelForm, Form
 from django.forms.models import BaseInlineFormSet
 from flip.models import Study, Outcome
 
@@ -129,3 +129,18 @@ class OutcomeForm(ModelForm):
         outcome.study = self.study
         outcome.save()
         return outcome
+
+
+class FilterForm(Form):
+
+    BLOSSOM_CHOICES = (('all', 'All'), (1, 'Yes'), (0, 'No'))
+    blossom = ChoiceField(choices=BLOSSOM_CHOICES)
+
+    PHASES_CHOICES = (('all', 'All'),
+                      (1, 'Problem definition'),
+                      (2, 'Agenda setting'),
+                      (3, 'Policy development'),
+                      (4, 'Policy implementation'),
+                      (5, 'Policy evaluation'),
+                      )
+    phases_of_policy = ChoiceField(choices=PHASES_CHOICES)
