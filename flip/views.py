@@ -190,4 +190,14 @@ class HomeView(generic.ListView):
     template_name = 'studies_overview.html'
 
     def get_queryset(self):
-        return models.Study.objects.all()
+        queryset = models.Study.objects.all()
+        if self.request.GET:
+            blossom = self.request.GET.get('blossom_filter')
+            if blossom not in ['', None]:
+                blossom = int(blossom)
+                queryset = queryset.filter(blossom=blossom)
+            phases_of_policy = self.request.GET.get('phases_of_policy_filter')
+            if phases_of_policy not in ['', None]:
+                phases_of_policy = int(phases_of_policy)
+                queryset = queryset.filter(phases_of_policy=phases_of_policy)
+        return queryset

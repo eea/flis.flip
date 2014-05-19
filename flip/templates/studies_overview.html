@@ -13,11 +13,50 @@
 
   {% include '_messages.html' %}
   {% include '_studies_nav.html' %}
-
-  {% if not object_list %}
-    No studies have been added yet.
-  {% endif %}
-
+  {% with request.GET.blossom_filter as blossom_filter %}
+    {% with request.GET.phases_of_policy_filter as phases_of_policy_filter %}
+      {% if object_list or blossom_filter or phases_of_policy_filter %}
+        <form action=".">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-2">
+                <label for="id_id_blossom_filter">Filter studies</label>
+              </div> {# col-md-2 #}
+              <div class="col-md-2">
+                <select name="blossom_filter" id="id_blossom_filter"
+                    class="form-control">
+                  <option value="">All</option>
+                  <option value="1">Blossom</option>
+                  <option value="0">Non-Blossom</option>
+                </select>
+              </div> {# col-md-2 #}
+              <div class="col-md-3">
+                <select name="phases_of_policy_filter" id="id_phases_of_policy_filter"
+                    class="form-control">
+                  <option value="">All</option>
+                  <option value="1">Problem definition</option>
+                  <option value="2">Agenda setting</option>
+                  <option value="3">Policy development</option>
+                  <option value="4">Policy implementation</option>
+                  <option value="5">Policy evaluation</option>
+                </select>
+              </div> {# col-md-3 #}
+              <div class="col-md-3">
+                <button type="submit" class="btn btn-default">Submit</button>
+              </div> {# col-md-3 #}
+            </div> {# row #}
+          </div> {# form-group #}
+        </form>
+      {% endif %}
+      {% if not object_list %}
+        {% if not blossom_filter and not phases_of_policy_filter %}
+          No studies have been added yet.
+        {% else %}
+          No studies found. Please alter your filtering criteria.
+        {% endif %}
+      {% endif %}
+    {% endwith %}
+  {% endwith %}
   {% if object_list %}
     <table id="studies_listing" width="100%"
       class="table table-condensed table-bordered table-hover">
