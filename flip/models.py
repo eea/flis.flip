@@ -18,6 +18,15 @@ class Study(Model):
         (EEA, 'EEA'),
     )
 
+    YES = 1
+    NO = 0
+    YES_NO_CHOICES = (
+        ('', '----'),
+        (YES, 'Yes'),
+        (NO, 'No'),
+    )
+
+
     POLICY = 'policy'
     NON_POLICY = 'non_policy'
     PURPOSE_CHOICES = (

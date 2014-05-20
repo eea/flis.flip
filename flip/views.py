@@ -63,7 +63,8 @@ class StudyMetadataAddView(LoginRequiredMixin,
                        kwargs={'pk': self.object.pk})
 
 
-class StudyMetadataEditView(StudyLanguageFormMixin,
+class StudyMetadataEditView(LoginRequiredMixin,
+                            StudyLanguageFormMixin,
                             SuccessMessageMixin,
                             generic.UpdateView):
 
@@ -77,7 +78,8 @@ class StudyMetadataEditView(StudyLanguageFormMixin,
                        kwargs={'pk': self.object.pk})
 
 
-class StudyContextEditView(StudyBlossomRequiredMixin,
+class StudyContextEditView(LoginRequiredMixin,
+                           StudyBlossomRequiredMixin,
                            SuccessMessageMixin,
                            generic.UpdateView):
 
@@ -91,7 +93,8 @@ class StudyContextEditView(StudyBlossomRequiredMixin,
                        kwargs={'pk': self.object.pk})
 
 
-class StudyOutcomesHomeView(StudyBlossomRequiredMixin,
+class StudyOutcomesHomeView(LoginRequiredMixin,
+                            StudyBlossomRequiredMixin,
                             SuccessMessageMixin,
                             generic.CreateView):
 
@@ -123,7 +126,8 @@ class StudyOutcomesHomeView(StudyBlossomRequiredMixin,
         return '{document_title} was successfully added'.format(**cleaned_data)
 
 
-class StudyOutcomesDeleteView(generic.DeleteView):
+class StudyOutcomesDeleteView(LoginRequiredMixin,
+                              generic.DeleteView):
 
     model = models.Outcome
     pk_url_kwarg = 'outcome_pk'
@@ -142,7 +146,8 @@ class StudyOutcomesDeleteView(generic.DeleteView):
         return super(StudyOutcomesDeleteView, self).get_context_data(**context)
 
 
-class StudyOutcomesView(generic.DetailView):
+class StudyOutcomesView(LoginRequiredMixin,
+                        generic.DetailView):
 
     model = models.Outcome
     pk_url_kwarg = 'outcome_pk'
@@ -158,7 +163,8 @@ class StudyOutcomesView(generic.DetailView):
         return super(StudyOutcomesView, self).get_context_data(**context)
 
 
-class StudyOutcomesEditView(generic.UpdateView):
+class StudyOutcomesEditView(LoginRequiredMixin,
+                            generic.UpdateView):
 
     model = models.Outcome
     form_class = forms.OutcomeForm
@@ -184,7 +190,8 @@ class StudyOutcomesEditView(generic.UpdateView):
         return reverse('study_outcomes', kwargs={'pk': self.study.pk})
 
 
-class HomeView(generic.ListView):
+class HomeView(LoginRequiredMixin,
+               generic.ListView):
 
     model = models.Study
     template_name = 'studies_overview.html'
