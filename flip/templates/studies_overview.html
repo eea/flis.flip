@@ -1,7 +1,7 @@
 {% extends '_layout.html' %}
-{% load widget_tweaks %}
 
 {% block scripts %}
+
   <script>
     $(function(){
       $('#studies_listing').dataTable();
@@ -9,47 +9,30 @@
     $('#id_blossom').on('change', function(){
       $('#id_phases_of_policy').toggleClass('hide', $(this).val() == 0);
       if($(this).val() == '0'){
-        $('#id_phases_of_policy').val('all');
+        $('#id_phases_of_policy').val('');
       }
     }).change();
   </script>
+
 {% endblock %}
 
 {% block content %}
 
   {% include '_messages.html' %}
   {% include '_studies_nav.html' %}
-  {% with request.GET.blossom as blossom_filter %}
-    {% with request.GET.phases_of_policy as phases_of_policy_filter %}
-      {% if object_list or blossom_filter or phases_of_policy_filter %}
-        <form action=".">
-          <div class="form-group">
-            <div class="row">
-              <div class="col-md-2">
-                <label for="id_id_blossom_filter">Filter studies</label>
-              </div> {# col-md-2 #}
-              <div class="col-md-2">
-                {% render_field filter_form.blossom class='form-control' %}
-              </div> {# col-md-2 #}
-              <div class="col-md-3">
-                {% render_field filter_form.phases_of_policy class='form-control' %}
-              </div> {# col-md-3 #}
-              <div class="col-md-3">
-                <button type="submit" class="btn btn-default">Submit</button>
-              </div> {# col-md-3 #}
-            </div> {# row #}
-          </div> {# form-group #}
-        </form>
+
+  {% include '_filters.html' %}
+
+  <div style="margin-top: 35px;">
+    {% if not object_list %}
+      {% if not blossom_filter and not phases_of_policy_filter %}
+        No studies have been added yet.
+      {% else %}
+        No studies found. Please alter your filtering criteria.
       {% endif %}
-      {% if not object_list %}
-        {% if not blossom_filter and not phases_of_policy_filter %}
-          No studies have been added yet.
-        {% else %}
-          No studies found. Please alter your filtering criteria.
-        {% endif %}
-      {% endif %}
-    {% endwith %}
-  {% endwith %}
+    {% endif %}
+  </div>
+
   {% if object_list %}
     <table id="studies_listing" width="100%"
       class="table table-condensed table-bordered table-hover">

@@ -8,20 +8,14 @@ from django.db.models import Model
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 
+from .definitions import YES_NO_CHOICES, NO
+
 
 class Study(Model):
 
     EEA = 'eea'
     REQUESTED_BY_CHOICES = (
         (EEA, 'EEA'),
-    )
-
-    YES = 1
-    NO = 0
-    YES_NO_CHOICES = (
-        ('', '----'),
-        (YES, 'Yes'),
-        (NO, 'No'),
     )
 
     POLICY = 'policy'

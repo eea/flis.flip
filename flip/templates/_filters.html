@@ -1,0 +1,16 @@
+{% load widget_tweaks %}
+
+<form class="form-inline filters" role="form">
+
+  <div class="form-group">
+    {{ filter_form.blossom.label_tag }}
+    {% render_field filter_form.blossom class='form-control first-filter input-sm' %}
+  </div> {# form-group #}
+
+  <div class="form-group">
+    {% render_field filter_form.phases_of_policy class='form-control input-sm' %}
+  </div> {# form-group #}
+
+  <button type="submit" class="btn btn-default btn-sm">Submit</button>
+
+</form>

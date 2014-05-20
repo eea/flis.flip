@@ -1,9 +1,11 @@
 
 from django.forms import BooleanField
-from django.forms import DateField, DateInput, ChoiceField
+from django.forms import DateField, DateInput, ChoiceField, ModelChoiceField
 from django.forms import ModelForm, Form
 from django.forms.models import BaseInlineFormSet
-from flip.models import Study, Outcome
+
+from flip.models import Study, Outcome, PhasesOfPolicy
+from .definitions import YES_NO_CHOICES
 
 
 class StudyMetadataForm(ModelForm):
@@ -133,14 +135,9 @@ class OutcomeForm(ModelForm):
 
 class FilterForm(Form):
 
-    BLOSSOM_CHOICES = (('all', 'All'), (1, 'Yes'), (0, 'No'))
-    blossom = ChoiceField(choices=BLOSSOM_CHOICES)
+    blossom = ChoiceField(choices=(('', 'All Blossom'),) + YES_NO_CHOICES[1:],
+                          label='Filter studies by')
 
-    PHASES_CHOICES = (('all', 'All'),
-                      (1, 'Problem definition'),
-                      (2, 'Agenda setting'),
-                      (3, 'Policy development'),
-                      (4, 'Policy implementation'),
-                      (5, 'Policy evaluation'),
-                      )
-    phases_of_policy = ChoiceField(choices=PHASES_CHOICES)
+    phases_of_policy = ModelChoiceField(
+        queryset=PhasesOfPolicy.objects.all(),
+        empty_label="Policy cycle step")
