@@ -5,7 +5,7 @@ from django.forms import ModelForm, Form
 from django.forms.models import BaseInlineFormSet
 
 from flip.models import Study, Outcome, PhasesOfPolicy
-from .definitions import YES_NO_CHOICES
+from .definitions import BLOSSOM_FILTER_CHOICES
 
 
 class StudyMetadataForm(ModelForm):
@@ -135,9 +135,10 @@ class OutcomeForm(ModelForm):
 
 class FilterForm(Form):
 
-    blossom = ChoiceField(choices=(('', 'All Blossom'),) + YES_NO_CHOICES[1:],
+    blossom = ChoiceField(choices=(('', 'All studies'),) +
+                          BLOSSOM_FILTER_CHOICES,
                           label='Filter studies by')
 
     phases_of_policy = ModelChoiceField(
         queryset=PhasesOfPolicy.objects.all(),
-        empty_label="Policy cycle step")
+        empty_label="All policy cycle steps")
