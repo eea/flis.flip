@@ -227,10 +227,7 @@
         <div class="col-md-5" data-show-if="geographical_scope">
           <div class="row">
             <div class="form-group">
-              {{ form.countries.label_tag }}
-              {% if form.countries.field.required %}
-                <span class="required">*</span>
-              {% endif %}
+              {{ form.countries.label_tag }} <span class="required">*</span>
               {% if form.countries.errors %}
                 <p class="text-danger">
                   <small>{{ form.countries.errors.0 }}</small></p>
