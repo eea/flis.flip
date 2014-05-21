@@ -1,11 +1,15 @@
 from datetime import datetime, timedelta
 
-import factory
+from factory import DjangoModelFactory
 from factory import fuzzy
+from factory import RelatedFactory, SubFactory
 
 from django.core.urlresolvers import reverse
+
 from django_webtest import WebTest
 from mock import Mock, patch
+
+from flip.models import Study
 
 
 UserAdminMock = Mock()
@@ -28,21 +32,22 @@ START_DATE = datetime.now().date()
 END_DATE = START_DATE + 5 * timedelta(days=365)
 
 
-class StudyFactory(factory.DjangoModelFactory):
+class StudyFactory(DjangoModelFactory):
 
     FACTORY_FOR = 'flip.Study'
 
     title = fuzzy.FuzzyText()
 
+    blossom = Study.NO
+
     end_date = fuzzy.FuzzyDate(START_DATE, END_DATE)
 
     lead_author = fuzzy.FuzzyText()
 
-    languages = factory.RelatedFactory('flip.tests.StudyLanguageFactory',
-                                       'study')
+    languages = RelatedFactory('flip.tests.StudyLanguageFactory', 'study')
 
 
-class LanguageFactory(factory.DjangoModelFactory):
+class LanguageFactory(DjangoModelFactory):
 
     FACTORY_FOR = 'flip.Language'
     FACTORY_DJANGO_GET_OR_CREATE = ('code', 'title')
@@ -51,13 +56,13 @@ class LanguageFactory(factory.DjangoModelFactory):
     title = 'English'
 
 
-class StudyLanguageFactory(factory.DjangoModelFactory):
+class StudyLanguageFactory(DjangoModelFactory):
 
     FACTORY_FOR = 'flip.StudyLanguage'
 
-    language = factory.SubFactory(LanguageFactory)
+    language = SubFactory(LanguageFactory)
 
-    study = factory.SubFactory(StudyFactory)
+    study = SubFactory(StudyFactory)
 
     title = fuzzy.FuzzyText()
 
@@ -109,7 +114,7 @@ class StudyMetadataPermissionTests(WebTest):
 
     @patch('frame.middleware.requests',
            Mock(return_value=UserAnonymousMock))
-    def test_study_edit_get_admin(self):
+    def test_study_edit_get_anonymous(self):
         study = StudyFactory()
         url = reverse('study_metadata_edit', kwargs={'pk': study.pk})
         resp = self.app.get(url)
@@ -127,9 +132,79 @@ class StudyMetadataPermissionTests(WebTest):
 
     @patch('frame.middleware.requests',
            Mock(return_value=UserAnonymousMock))
-    def test_study_edit_post_admin(self):
+    def test_study_edit_post_anonymous(self):
         study = StudyFactory()
         url = reverse('study_metadata_edit', kwargs={'pk': study.pk})
         resp = self.app.post(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertTemplateUsed('restricted.html')
+
+    @patch('frame.middleware.requests',
+           Mock(return_value=UserAdminMock))
+    def test_study_context_get_admin(self):
+        study = StudyFactory(blossom=Study.YES)
+        url = reverse('study_context_edit', kwargs={'pk': study.pk})
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertTemplateUsed('study_context_edit.html')
+
+    @patch('frame.middleware.requests',
+           Mock(return_value=UserAdminMock))
+    def test_study_context_post_admin(self):
+        study = StudyFactory(blossom=Study.YES)
+        url = reverse('study_context_edit', kwargs={'pk': study.pk})
+        resp = self.app.post(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertTemplateUsed('study_context_edit.html')
+
+    @patch('frame.middleware.requests',
+           Mock(return_value=UserAnonymousMock))
+    def test_study_context_get_anonymous(self):
+        study = StudyFactory(blossom=Study.YES)
+        url = reverse('study_context_edit', kwargs={'pk': study.pk})
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertTemplateUsed('restricted.html')
+
+    @patch('frame.middleware.requests',
+           Mock(return_value=UserAnonymousMock))
+    def test_study_context_post_anonymous(self):
+        study = StudyFactory(blossom=Study.YES)
+        url = reverse('study_context_edit', kwargs={'pk': study.pk})
+        resp = self.app.post(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertTemplateUsed('restricted.html')
+
+    @patch('frame.middleware.requests',
+           Mock(return_value=UserAdminMock))
+    def test_study_outcome_get_admin(self):
+        study = StudyFactory(blossom=Study.YES)
+        url = reverse('study_outcomes', kwargs={'pk': study.pk})
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertTemplateUsed('study_outcome.html')
+
+    @patch('frame.middleware.requests',
+           Mock(return_value=UserAnonymousMock))
+    def test_study_outcome_get_anonymous(self):
+        study = StudyFactory(blossom=Study.YES)
+        url = reverse('study_outcomes', kwargs={'pk': study.pk})
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertTemplateUsed('restricted.html')
+
+    @patch('frame.middleware.requests',
+           Mock(return_value=UserAdminMock))
+    def test_home_get_admin(self):
+        url = reverse('studies_overview')
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertTemplateUsed('studies_overview.html')
+
+    @patch('frame.middleware.requests',
+           Mock(return_value=UserAnonymousMock))
+    def test_home_get_anonymous(self):
+        url = reverse('studies_overview')
+        resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
         self.assertTemplateUsed('restricted.html')
