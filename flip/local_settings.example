@@ -15,3 +15,9 @@ SECRET_KEY = 'secret'
 SKIP_EDIT_AUTHORIZATION = True
 
 # FRAME_URL = 'path/to/frame/url'
+
+# not for production
+USER_ID = 'eionet user'
+USER_GROUPS = []
+USER_ROLES = ['Administrator']
+
