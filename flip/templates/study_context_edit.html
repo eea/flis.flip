@@ -51,11 +51,11 @@
               {% if form.purpose_and_target.field.required %}
                 <span class="required">*</span>
               {% endif %}
-              {% render_field form.purpose_and_target class='form-control' %}
               {% if form.purpose_and_target.errors %}
                 <p class="text-danger">
                   <small>{{ form.purpose_and_target.errors.0 }}</small></p>
               {% endif %}
+              {% render_field form.purpose_and_target class='form-control' %}
             </div> {# col-md-5 #}
           </div> {# row #}
         </div>
@@ -65,11 +65,11 @@
           {% if form.additional_information.field.required %}
             <span class="required">*</span>
           {% endif %}
-          {% render_field form.additional_information class='form-control' %}
           {% if form.additional_information.errors %}
             <p class="text-danger">
               <small>{{ form.additional_information.errors.0 }}</small></p>
           {% endif %}
+          {% render_field form.additional_information class='form-control' %}
         </div>
 
       </div> {# panel-body #}
@@ -88,11 +88,11 @@
               {% if form.phases_of_policy.field.required %}
                 <span class="required">*</span>
               {% endif %}
-              {% render_field form.phases_of_policy class='form-control' rows=3 %}
               {% if form.phases_of_policy.errors %}
                 <p class="text-danger">
                   <small>{{ form.phases_of_policy.errors.0 }}</small></p>
               {% endif %}
+              {% render_field form.phases_of_policy class='form-control' rows=3 %}
             </div> {# col-md-4 #}
           </div> {# row #}
         </div>
@@ -109,11 +109,11 @@
               <span class="required">*</span>
             {% endif %}
           </span>
-          {% render_field form.additional_information_phase class='form-control' rows=3 %}
           {% if form.additional_information_phase.errors %}
             <p class="text-danger">
               <small>{{ form.additional_information_phase.errors.0 }}</small></p>
           {% endif %}
+          {% render_field form.additional_information_phase class='form-control' rows=3 %}
         </div>
 
       </div> {# panel-body #}
@@ -129,11 +129,11 @@
               {% if form.foresight_approaches.field.required %}
                 <span class="required">*</span>
               {% endif %}
-              {% render_field form.foresight_approaches class='form-control' %}
               {% if form.foresight_approaches.errors %}
                 <p class="text-danger">
                   <small>{{ form.foresight_approaches.errors.0 }}</small></p>
               {% endif %}
+              {% render_field form.foresight_approaches class='form-control' %}
             </div> {# col-md-4 #}
           </div> {# row #}
         </div>
@@ -146,6 +146,10 @@
 
         <div class="form-group">
             <div class="checkbox">
+              {% if form.stakeholder_participation.errors %}
+                <p class="text-danger">
+                  <small>{{ form.stakeholder_participation.errors.0 }}</small></p>
+              {% endif %}
               <label>
                 {% render_field form.stakeholder_participation %}
                 {{ form.stakeholder_participation.label }}
@@ -153,10 +157,6 @@
                   <span class="required">*</span>
                 {% endif %}
               </label>
-              {% if form.stakeholder_participation.errors %}
-                <p class="text-danger">
-                  <small>{{ form.stakeholder_participation.errors.0 }}</small></p>
-              {% endif %}
             </div>
         </div>
 
@@ -172,11 +172,11 @@
                 <span class="required">*</span>
               {% endif %}
           </span>
-          {% render_field form.additional_information_stakeholder class='form-control' %}
           {% if form.additional_information_stakeholder.errors %}
             <p class="text-danger">
               <small>{{ form.additional_information_stakeholder.errors.0 }}</small></p>
           {% endif %}
+          {% render_field form.additional_information_stakeholder class='form-control' %}
         </div>
 
       </div> {# panel-body #}
@@ -195,11 +195,11 @@
                 {% if form.environmental_themes.field.required %}
                   <span class="required">*</span>
                 {% endif %}
-                {% render_field form.environmental_themes class='form-control' %}
                 {% if form.environmental_themes.errors %}
                   <p class="text-danger">
                     <small>{{ form.environmental_themes.errors.0 }}</small></p>
                 {% endif %}
+                {% render_field form.environmental_themes class='form-control' %}
             </div> {# form-group #}
           </div> {# col-md-4 #}
         </div> {# row #}
@@ -208,16 +208,16 @@
           <div class="row">
             <div class="form-group">
               {{ form.geographical_scope.label_tag }}
-              {% if form.environmental_themes.field.required %}
+              {% if form.geographical_scope.field.required %}
                 <span class="required">*</span>
               {% endif %}
               <div class="row">
                 <div class="col-md-10">
-                  {% render_field form.geographical_scope class='form-control' %}
                   {% if form.geographical_scope.errors %}
                     <p class="text-danger">
                       <small>{{ form.geographical_scope.errors.0 }}</small></p>
                   {% endif %}
+                  {% render_field form.geographical_scope class='form-control' %}
                 </div> {# col-md-10 #}
               </div> {# row #}
             </div> {# form-group #}
@@ -231,11 +231,11 @@
               {% if form.countries.field.required %}
                 <span class="required">*</span>
               {% endif %}
-              {% render_field form.countries class='form-control' %}
               {% if form.countries.errors %}
                 <p class="text-danger">
                   <small>{{ form.countries.errors.0 }}</small></p>
               {% endif %}
+              {% render_field form.countries class='form-control' %}
             </div> {# form-group #}
           </div> {# row #}
         </div> {# col-md-4 #}

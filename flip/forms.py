@@ -74,6 +74,7 @@ class StudyContextForm(ModelForm):
         self.fields['phases_of_policy'].required = True
         self.fields['environmental_themes'].required = True
         self.fields['geographical_scope'].required = True
+        self.fields['countries'].required = True
 
     def clean(self):
         cleaned_data = super(StudyContextForm, self).clean()
