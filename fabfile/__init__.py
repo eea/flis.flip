@@ -33,7 +33,7 @@ def deploy():
 
     with cd(env.project_root), prefix('source %(sandbox_activate)s' % env):
         run('svn up')
-        run('pip install -r dev-requirements.txt')
+        run('pip install -r requirements.txt')
         run('python manage.py syncdb')
         run('python manage.py migrate')
         run('python manage.py loadfixtures')
