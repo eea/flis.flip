@@ -3,16 +3,232 @@
     "model": "flip.language",
     "pk": 1,
     "fields": {
-      "code": "en",
-      "title": "English"
+      "code": "bg",
+      "title": "Bulgarian"
     }
   },
   {
     "model": "flip.language",
     "pk": 2,
     "fields": {
+      "code": "cz",
+      "title": "Czech"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 3,
+    "fields": {
+      "code": "da",
+      "title": "Danish"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 4,
+    "fields": {
+      "code": "de",
+      "title": "German"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 5,
+    "fields": {
+      "code": "el",
+      "title": "Greek"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 6,
+    "fields": {
+      "code": "en",
+      "title": "English"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 7,
+    "fields": {
+      "code": "es",
+      "title": "Spanish"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 8,
+    "fields": {
+      "code": "et",
+      "title": "Estonian"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 9,
+    "fields": {
+      "code": "fi",
+      "title": "Finnish"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 10,
+    "fields": {
+      "code": "fr",
+      "title": "French"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 11,
+    "fields": {
+      "code": "ga",
+      "title": "Irish"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 12,
+    "fields": {
+      "code": "hr",
+      "title": "Croatian"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 13,
+    "fields": {
+      "code": "hu",
+      "title": "Hungarian"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 14,
+    "fields": {
+      "code": "is",
+      "title": "Icelandic"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 15,
+    "fields": {
+      "code": "it",
+      "title": "Italian"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 16,
+    "fields": {
+      "code": "lb",
+      "title": "Luxembourgish"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 17,
+    "fields": {
+      "code": "lt",
+      "title": "Lithuanian"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 18,
+    "fields": {
+      "code": "lv",
+      "title": "Latvian"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 19,
+    "fields": {
+      "code": "mt",
+      "title": "Maltese"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 20,
+    "fields": {
+      "code": "nl",
+      "title": "Dutch"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 21,
+    "fields": {
+      "code": "no",
+      "title": "Norwegian"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 22,
+    "fields": {
+      "code": "pl",
+      "title": "Polish"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 23,
+    "fields": {
+      "code": "pt",
+      "title": "Portuguese"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 24,
+    "fields": {
+      "code": "rm",
+      "title": "Rhaeto-Romance"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 25,
+    "fields": {
       "code": "ro",
       "title": "Romanian"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 26,
+    "fields": {
+      "code": "sk",
+      "title": "Slovak"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 27,
+    "fields": {
+      "code": "sl",
+      "title": "Slovenian"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 28,
+    "fields": {
+      "code": "sv",
+      "title": "Swedish"
+    }
+  },
+  {
+    "model": "flip.language",
+    "pk": 29,
+    "fields": {
+      "code": "tr",
+      "title": "Turkish"
     }
   }
 ]

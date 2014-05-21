@@ -8,14 +8,14 @@ from django.db.models import Model
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 
-from .definitions import YES_NO_CHOICES, NO
-
 
 class Study(Model):
 
     EEA = 'eea'
+    OTHER = 'other'
     REQUESTED_BY_CHOICES = (
         (EEA, 'EEA'),
+        (OTHER, 'Other'),
     )
 
     YES = 1
@@ -25,7 +25,6 @@ class Study(Model):
         (YES, 'Yes'),
         (NO, 'No'),
     )
-
 
     POLICY = 'policy'
     NON_POLICY = 'non_policy'
@@ -169,7 +168,7 @@ class StudyLanguage(Model):
 
     study = ForeignKey(Study)
 
-    title = CharField('study title in original languge', max_length=255)
+    title = CharField('study title in original language', max_length=255)
 
     def __unicode__(self):
         return self.title
@@ -227,4 +226,3 @@ class TypeOfOutcome(Model):
 @receiver(pre_delete, sender=Outcome)
 def outcome_delete_file(sender, instance, **kwargs):
     instance.file_id.delete(save=False)
-
