@@ -18,6 +18,10 @@ CACHES = {
     }
 }
 
+USER_ID = 'tester'
+USER_GROUPS = []
+USER_ROLES = ['Administrator']
+
 # WARNING!!
 # This is a hack until there's a setting in django-assets
 # to force using staticfiles finders and avoid the need

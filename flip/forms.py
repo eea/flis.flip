@@ -26,6 +26,7 @@ class StudyMetadataForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         self.formset = kwargs.pop('formset', None)
+        self.user_id = kwargs.pop('user_id', None)
         super(StudyMetadataForm, self).__init__(*args, **kwargs)
         self.fields['blossom'].initial = ''
 
@@ -57,6 +58,7 @@ class StudyMetadataForm(ModelForm):
 
     def save(self):
         study = super(StudyMetadataForm, self).save(commit=False)
+        study.user_id = self.user_id
         study.save()
         # save languages
         self.formset.save(study)
