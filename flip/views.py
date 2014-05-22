@@ -7,7 +7,8 @@ from django.shortcuts import get_object_or_404
 from django.views import generic
 
 from flip import forms, models
-from auth.views import LoginRequiredMixin
+from auth.views import LoginRequiredMixin, EditPermissionRequiredMixin
+from auth.views import is_admin
 
 
 class StudyBlossomRequiredMixin(object):
@@ -50,6 +51,7 @@ class StudyLanguageFormMixin(object):
 
 
 class StudyMetadataAddView(LoginRequiredMixin,
+                           EditPermissionRequiredMixin,
                            StudyLanguageFormMixin,
                            SuccessMessageMixin,
                            generic.CreateView):
@@ -65,6 +67,7 @@ class StudyMetadataAddView(LoginRequiredMixin,
 
 
 class StudyMetadataEditView(LoginRequiredMixin,
+                            EditPermissionRequiredMixin,
                             StudyLanguageFormMixin,
                             SuccessMessageMixin,
                             generic.UpdateView):
@@ -74,12 +77,27 @@ class StudyMetadataEditView(LoginRequiredMixin,
     template_name = 'study_metadata_edit.html'
     success_message = 'The study was successfully updated'
 
+    def dispatch(self, request, *args, **kwargs):
+        return super(StudyMetadataEditView, self).dispatch(
+            request, *args, **kwargs)
+
+    def get_queryset(self, queryset=None):
+        if is_admin(self.request):
+            return self.model._default_manager.all()._clone()
+        else:
+            return (
+                self.model._default_manager
+                .filter(user_id=self.request.user_id)
+                ._clone()
+            )
+
     def get_success_url(self):
         return reverse('study_metadata_edit',
                        kwargs={'pk': self.object.pk})
 
 
 class StudyContextEditView(LoginRequiredMixin,
+                           EditPermissionRequiredMixin,
                            StudyBlossomRequiredMixin,
                            SuccessMessageMixin,
                            generic.UpdateView):
@@ -95,6 +113,7 @@ class StudyContextEditView(LoginRequiredMixin,
 
 
 class StudyOutcomesHomeView(LoginRequiredMixin,
+                            EditPermissionRequiredMixin,
                             StudyBlossomRequiredMixin,
                             SuccessMessageMixin,
                             generic.CreateView):
@@ -128,6 +147,7 @@ class StudyOutcomesHomeView(LoginRequiredMixin,
 
 
 class StudyOutcomesDeleteView(LoginRequiredMixin,
+                              EditPermissionRequiredMixin,
                               generic.DeleteView):
 
     model = models.Outcome
@@ -165,6 +185,7 @@ class StudyOutcomesView(LoginRequiredMixin,
 
 
 class StudyOutcomesEditView(LoginRequiredMixin,
+                            EditPermissionRequiredMixin,
                             generic.UpdateView):
 
     model = models.Outcome

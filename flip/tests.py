@@ -26,9 +26,24 @@ USER_ANONYMOUS_DATA = {
     'user_roles': ['Anonymous'],
     'groups': []
 }
-UserAdminMock = Mock(status_code=200, json=lambda: USER_ADMIN_DATA)
-UserAnonymousMock = Mock(status_code=200, json=lambda: USER_ANONYMOUS_DATA)
-
+USER_CONTRIBUTOR_DATA = {
+    'user_id': 'contribuitor',
+    'user_roles': ['Contributor'],
+    'groups': []
+}
+USER_VIEWER_DATA = {
+    'user_id': 'viewer',
+    'user_roles': ['Viewer'],
+    'groups': []
+}
+UserAdminMock = Mock(status_code=200,
+                     json=lambda: USER_ADMIN_DATA)
+UserAnonymousMock = Mock(status_code=200,
+                         json=lambda: USER_ANONYMOUS_DATA)
+UserViewerMock = Mock(status_code=200,
+                      json=lambda: USER_VIEWER_DATA)
+UserContributorMock = Mock(status_code=200,
+                            json=lambda: USER_CONTRIBUTOR_DATA)
 
 START_DATE = datetime.now().date()
 END_DATE = START_DATE + 5 * timedelta(days=365)
@@ -155,7 +170,7 @@ class BaseWebTest(WebTest):
             ))
 
 
-@override_settings(SKIP_EDIT_AUTHORIZATION=True, FRAME_URL=None)
+@override_settings(FRAME_URL=None)
 class StudyTests(BaseWebTest):
 
     def test_study_new(self):
@@ -222,8 +237,8 @@ class StudyTests(BaseWebTest):
             geographical_scope=data['geographical_scope'])
 
 
-@override_settings(SKIP_EDIT_AUTHORIZATION=False, FRAME_URL=True)
-class StudyPermissionTests(BaseWebTest):
+@override_settings(FRAME_URL=True)
+class StudyMetadataPermissionTests(BaseWebTest):
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAdminMock))
@@ -250,7 +265,7 @@ class StudyPermissionTests(BaseWebTest):
         self.assertIn('study_metadata_edit.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
-            Mock(return_value=UserAdminMock))
+           Mock(return_value=UserAdminMock))
     def test_study_new_saves_logged_user(self):
         data = StudyFactory.attributes()
         url = reverse('study_metadata_edit')
@@ -260,8 +275,24 @@ class StudyPermissionTests(BaseWebTest):
         form = resp.forms['study-form']
         self.populate_fields(form, self.normalize_data(data))
         form.submit().follow()
-        self.assertObjectInDatabase(Study,title=data['title'],
+        self.assertObjectInDatabase(Study, title=data['title'],
                                     user_id='admin')
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserViewerMock))
+    def test_study_new_get_viewer(self):
+        url = reverse('study_metadata_edit')
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertIn('restricted.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserViewerMock))
+    def test_study_new_post_viewer(self):
+        url = reverse('study_metadata_edit')
+        resp = self.app.post(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertIn('restricted.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAnonymousMock))
@@ -306,6 +337,26 @@ class StudyPermissionTests(BaseWebTest):
         resp = self.app.post(url)
         self.assertEqual(200, resp.status_int)
         self.assertIn('restricted.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserContributorMock))
+    def test_study_edit_get_by_another_user(self):
+        study = StudyFactory(user_id='another_user')
+        url = reverse('study_metadata_edit', kwargs={'pk': study.pk})
+        resp = self.app.get(url, expect_errors=True)
+        self.assertEqual(404, resp.status_int)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserContributorMock))
+    def test_study_edit_post_by_another_user(self):
+        study = StudyFactory(user_id='another_user')
+        url = reverse('study_metadata_edit', kwargs={'pk': study.pk})
+        resp = self.app.post(url, expect_errors=True)
+        self.assertEqual(404, resp.status_int)
+
+
+@override_settings(FRAME_URL=True)
+class StudyPermissionTests(BaseWebTest):
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAdminMock))
