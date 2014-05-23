@@ -66,6 +66,13 @@ class StudyMetadataAddView(LoginRequiredMixin,
                        kwargs={'pk': self.object.pk})
 
 
+class StudyMetadataView(LoginRequiredMixin,
+                        generic.DetailView):
+
+    model = models.Study
+    template_name = 'study_metadata_view.html'
+
+
 class StudyMetadataEditView(LoginRequiredMixin,
                             EditPermissionRequiredMixin,
                             StudyLanguageFormMixin,
@@ -76,10 +83,6 @@ class StudyMetadataEditView(LoginRequiredMixin,
     form_class = forms.StudyMetadataForm
     template_name = 'study_metadata_edit.html'
     success_message = 'The study was successfully updated'
-
-    def dispatch(self, request, *args, **kwargs):
-        return super(StudyMetadataEditView, self).dispatch(
-            request, *args, **kwargs)
 
     def get_queryset(self, queryset=None):
         if is_admin(self.request):
