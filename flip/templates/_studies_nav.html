@@ -8,13 +8,13 @@
 
 <ul class="nav nav-tabs nav-study">
 
-  <li class="{% active '$' %}">
+  <li class="{% active 'studies/overview/$' %}">
     <a href="{% url 'studies_overview' %}">
       Studies</a>
   </li>
 
-  <li class="disabled">
-    <a>My entries</a>
+  <li class="{% active 'studies/my-entries/$' %}">
+    <a href="{% url 'my_entries' %}">My entries</a>
   </li>
 
 </ul>

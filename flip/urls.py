@@ -14,8 +14,16 @@ urlpatterns = patterns(
     '',
 
     url(r'^$',
-        views.HomeView.as_view(),
+        views.StudiesView.as_view(),
         name='studies_overview'),
+
+    url(r'^studies/overview/$',
+        views.StudiesView.as_view(),
+        name='studies_overview'),
+
+    url(r'^studies/my-entries/$',
+        views.MyEntriesView.as_view(),
+        name='my_entries'),
 
     url(r'^study/new/$',
         views.StudyMetadataAddView.as_view(),

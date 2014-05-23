@@ -215,8 +215,8 @@ class StudyOutcomesEditView(LoginRequiredMixin,
         return reverse('study_outcomes', kwargs={'pk': self.study.pk})
 
 
-class HomeView(LoginRequiredMixin,
-               generic.ListView):
+class StudiesView(LoginRequiredMixin,
+                  generic.ListView):
 
     model = models.Study
     template_name = 'studies_overview.html'
@@ -238,4 +238,31 @@ class HomeView(LoginRequiredMixin,
         context['phases_of_policy_filter'] = \
             self.request.GET.get('phases_of_policy_filter')
         context.update(kwargs)
-        return super(HomeView, self).get_context_data(**context)
+        return super(StudiesView, self).get_context_data(**context)
+
+
+class MyEntriesView(LoginRequiredMixin,
+                    generic.ListView):
+
+    model = models.Study
+    template_name = 'my_entries.html'
+
+    def get_queryset(self):
+        queryset = models.Study.objects.all()
+        blossom = self.request.GET.get('blossom')
+        phases_of_policy = self.request.GET.get('phases_of_policy')
+        queryset = queryset.filter(user_id=self.request.user_id)
+        if blossom:
+            queryset = queryset.filter(blossom=blossom)
+            if phases_of_policy:
+                queryset = queryset.filter(phases_of_policy=phases_of_policy)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = {}
+        context['filter_form'] = forms.FilterForm(self.request.GET)
+        context['blossom_filter'] = self.request.GET.get('blossom')
+        context['phases_of_policy_filter'] = \
+            self.request.GET.get('phases_of_policy_filter')
+        context.update(kwargs)
+        return super(MyEntriesView, self).get_context_data(**context)
