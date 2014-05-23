@@ -25,6 +25,8 @@ USER_ROLES = ['Administrator']
 VIEW_ROLES = ('Administrator', 'Contributor', 'Viewer')
 EDIT_ROLES = ('Administrator', 'Contributor')
 
+SKIP_EDIT_AUTH = False
+
 # WARNING!!
 # This is a hack until there's a setting in django-assets
 # to force using staticfiles finders and avoid the need

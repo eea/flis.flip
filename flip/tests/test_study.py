@@ -6,7 +6,7 @@ from .base import BaseWebTest
 from .base import StudyFactory, EnvironmentalThemeFactory, StudyContextFactory
 
 
-@override_settings(FRAME_URL=None)
+@override_settings(SKIP_EDIT_AUTH=True, FRAME_URL=None)
 class StudyTests(BaseWebTest):
 
     def test_study_new(self):

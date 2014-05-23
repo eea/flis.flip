@@ -1,0 +1,86 @@
+
+
+{% extends '_layout.html' %}
+
+
+
+{% block title %}
+
+  {{ block.super }} -  Study Metadata
+
+{% endblock %}
+
+
+{% block content %}
+
+  {% include '_study_nav.html' %}
+  <h2 class="page-title">Study metadata</h2>
+
+  <div class="actions">
+    <a href="{% url 'study_metadata_edit' pk=study.pk %}"
+       class="btn btn-primary">
+      Edit study</a>
+  </div> {# /.actions #}
+
+  <table class="table table-detail">
+
+    <tr>
+      <th>{{ form.title.label }}</th>
+      <td>{{ study.title }}</td>
+    </tr>
+
+    <tr class="hd"><th colspan="2">Languages</th></tr>
+
+    {% for study_lang in study.studylanguage_set.all %}
+    <tr>
+      <th>{{ study_lang.language }}</th>
+      <td>{{ study_lang.title }}</td>
+    </tr>
+    {% endfor %}
+
+    <tr>
+      <th>{{ form.url.label }}</th>
+      <td>{{ study.url }}</td>
+    </tr>
+
+    <tr>
+      <th>{{ form.blossom.label }}</th>
+      <td>
+        {% if study.blossom %}
+          <i class="glyphicon glyphicon-ok"></i>
+        {% else %}
+          -
+        {% endif %}
+      </td>
+    </tr>
+
+    {% if study.blossom %}
+      <tr>
+        <th>{{ form.requested_by.label }}</th>
+        <td>{{ study.requested_by }}</td>
+      </tr>
+    {% endif %}
+
+    <tr>
+      <th>{{ form.start_date.label }}</th>
+      <td>{{ study.start_date|date:"d/m/Y" }}</td>
+    </tr>
+
+    <tr>
+      <th>{{ form.end_date.label }}</th>
+      <td>{{ study.end_date|date:"d/m/Y" }}</td>
+    </tr>
+
+    <tr>
+      <th>{{ form.lead_author.label }}</th>
+      <td>{{ study.lead_author }}</td>
+    </tr>
+
+    <tr>
+      <th>{{ form.other.label }}</th>
+      <td>{{ study.other }}</td>
+    </tr>
+
+  </table>
+
+{% endblock %}

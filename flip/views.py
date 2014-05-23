@@ -66,11 +66,16 @@ class StudyMetadataAddView(LoginRequiredMixin,
                        kwargs={'pk': self.object.pk})
 
 
-class StudyMetadataView(LoginRequiredMixin,
-                        generic.DetailView):
+class StudyMetadataDetailView(LoginRequiredMixin,
+                              generic.DetailView):
 
     model = models.Study
-    template_name = 'study_metadata_view.html'
+    template_name = 'study_metadata_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = {'form': forms.StudyMetadataForm()}
+        context.update(kwargs)
+        return super(StudyMetadataDetailView, self).get_context_data(**context)
 
 
 class StudyMetadataEditView(LoginRequiredMixin,

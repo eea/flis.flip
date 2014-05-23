@@ -68,3 +68,15 @@ a {
 .filters .form-group {
     padding-right: 20px;
 }
+
+.table-detail th {
+    width: 220px;
+}
+.table-detail .hd th {
+    text-align: center;
+    background: #efefef;
+}
+
+.actions {
+    margin-bottom: 25px;
+}

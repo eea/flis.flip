@@ -33,6 +33,10 @@ urlpatterns = patterns(
         views.StudyMetadataEditView.as_view(),
         name='study_metadata_edit'),
 
+    url(r'^study/(?P<pk>\d+)/detail$',
+        views.StudyMetadataDetailView.as_view(),
+        name='study_metadata_detail'),
+
     url(r'^study/(?P<pk>\d+)/context/edit$',
         views.StudyContextEditView.as_view(),
         name='study_context_edit'),

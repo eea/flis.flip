@@ -7,7 +7,7 @@
       Studies overview</a>
   </li>
 
-  <li class="{% active 'study/\d/edit$' %}">
+  <li class="{% active 'study/\d/(edit|detail)$' %}">
     <a href="{% url 'study_metadata_edit' pk=study.pk %}">
       Study metadata</a>
   </li>

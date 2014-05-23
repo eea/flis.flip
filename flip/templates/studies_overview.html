@@ -48,7 +48,7 @@
         {% for source in object_list %}
           <tr>
             <td>{{ source.start_date }}</td>
-            <td><a href="{% url 'study_metadata_edit' pk=source.pk %}">{{ source.title }}</a></td>
+            <td><a href="{% url 'study_metadata_detail' pk=source.pk %}">{{ source.title }}</a></td>
             <td>{{ source.lead_author }}</td>
             <td>{{ source.geographical_scope }}</td>
           </tr>

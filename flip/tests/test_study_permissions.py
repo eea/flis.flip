@@ -10,7 +10,7 @@ from .base import BaseWebTest
 from .base import StudyFactory
 
 
-@override_settings(FRAME_URL=True)
+@override_settings(SKIP_EDIT_AUTH=False, FRAME_URL=True)
 class StudyMetadataPermissionTests(BaseWebTest):
 
     @patch('frame.middleware.requests.get',
@@ -68,6 +68,33 @@ class StudyMetadataPermissionTests(BaseWebTest):
         self.assertIn('restricted.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
+           Mock(return_value=UserViewerMock))
+    def test_study_view_viewer(self):
+        study = StudyFactory()
+        url = reverse('study_metadata_detail', kwargs={'pk': study.pk})
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertIn('study_metadata_detail', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserAdminMock))
+    def test_study_view_admin(self):
+        study = StudyFactory()
+        url = reverse('study_metadata_detail', kwargs={'pk': study.pk})
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertIn('study_metadata_detail', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserAnonymousMock))
+    def test_study_view_anonymous(self):
+        study = StudyFactory()
+        url = reverse('study_metadata_detail', kwargs={'pk': study.pk})
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertIn('restricted.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
            Mock(return_value=UserAnonymousMock))
     def test_study_new_post_anonymous(self):
         url = reverse('study_metadata_edit')
@@ -120,7 +147,7 @@ class StudyMetadataPermissionTests(BaseWebTest):
         self.assertEqual(404, resp.status_int)
 
 
-@override_settings(FRAME_URL=True)
+@override_settings(SKIP_EDIT_AUTH=False, FRAME_URL=True)
 class StudyContextPermissionTests(BaseWebTest):
 
     @patch('frame.middleware.requests.get',
@@ -160,7 +187,7 @@ class StudyContextPermissionTests(BaseWebTest):
         self.assertIn('restricted.html', resp.templates[0].name)
 
 
-@override_settings(FRAME_URL=True)
+@override_settings(SKIP_EDIT_AUTH=False, FRAME_URL=True)
 class StudyOutcomePermissionTests(BaseWebTest):
 
     @patch('frame.middleware.requests.get',
