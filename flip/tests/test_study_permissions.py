@@ -7,7 +7,7 @@ from flip.models import Study
 from .base import (UserAdminMock, UserAnonymousMock, UserViewerMock,
                    UserContributorMock)
 from .base import BaseWebTest
-from .base import StudyFactory
+from .base import StudyFactory, OutcomeFactory
 
 
 @override_settings(SKIP_EDIT_AUTH=False, FRAME_URL=True)
@@ -214,21 +214,64 @@ class StudyOutcomePermissionTests(BaseWebTest):
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAdminMock))
-    def test_study_outcome_get_admin(self):
+    def test_study_outcomes_get_admin(self):
         study = StudyFactory(blossom=Study.YES)
-        url = reverse('study_outcomes', kwargs={'pk': study.pk})
+        OutcomeFactory(study=study)
+        url = reverse('study_outcomes_detail', kwargs={'pk': study.pk})
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
-        self.assertIn('study_outcome.html', resp.templates[0].name)
+        self.assertEqual(1, resp.pyquery('.delete').length)
+        self.assertEqual(1, resp.pyquery('#study-outcomes-edit-form').length)
+        self.assertIn('study_outcomes_detail.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserViewerMock))
+    def test_study_outcomes_get_viewer(self):
+        study = StudyFactory(blossom=Study.YES)
+        OutcomeFactory(study=study)
+        url = reverse('study_outcomes_detail', kwargs={'pk': study.pk})
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertEqual(0, resp.pyquery('.delete').length)
+        self.assertEqual(0, resp.pyquery('#study-outcomes-edit-form').length)
+        self.assertIn('study_outcomes_detail.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserContributorMock))
+    def test_study_outcomes_get_different_contribuitor(self):
+        study = StudyFactory(blossom=Study.YES)
+        OutcomeFactory(study=study)
+        url = reverse('study_outcomes_detail', kwargs={'pk': study.pk})
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertEqual(0, resp.pyquery('.delete').length)
+        self.assertEqual(0, resp.pyquery('#study-outcomes-edit-form').length)
+        self.assertIn('study_outcomes_detail.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserContributorMock))
+    def test_study_outcomes_get_same_contribuitor(self):
+        study = StudyFactory(blossom=Study.YES, user_id='contribuitor')
+        OutcomeFactory(study=study)
+        url = reverse('study_outcomes_detail', kwargs={'pk': study.pk})
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertEqual(1, resp.pyquery('.delete').length)
+        self.assertEqual(1, resp.pyquery('#study-outcomes-edit-form').length)
+        self.assertIn('study_outcomes_detail.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAnonymousMock))
-    def test_study_outcome_get_anonymous(self):
+    def test_study_outcomes_get_anonymous(self):
         study = StudyFactory(blossom=Study.YES)
-        url = reverse('study_outcomes', kwargs={'pk': study.pk})
+        url = reverse('study_outcomes_detail', kwargs={'pk': study.pk})
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
         self.assertIn('restricted.html', resp.templates[0].name)
+
+
+@override_settings(SKIP_EDIT_AUTH=False, FRAME_URL=True)
+class StudyHomePermissionTests(BaseWebTest):
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAdminMock))

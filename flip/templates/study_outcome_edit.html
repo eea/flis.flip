@@ -14,15 +14,20 @@
   {% include '_study_nav.html' %}
 
   <div class="panel panel-default">
+
     <div class="panel-heading">
       <b>Edit {{ outcome.document_title }}</b>
     </div>
+
     <div class="panel-body">
-      <form method="POST" enctype="multipart/form-data">
+      {% url 'study_outcome_edit' pk=study.pk outcome_pk=outcome.pk as url %}
+      <form action="{{ url }}" method="POST"
+            enctype="multipart/form-data">
         {% csrf_token %}
         {% include "_study_outcome_form.html" %}
       </form>
     </div> {# panel-body #}
+
   </div> {# panel #}
 
 

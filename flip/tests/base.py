@@ -113,6 +113,24 @@ class StudyContextFactory(Factory):
     geographical_scope = SubFactory(GeographicalScopeFactory)
 
 
+class TypeOfOutcomeFactory(DjangoModelFactory):
+
+    FACTORY_FOR = 'flip.TypeOfOutcome'
+
+    title = fuzzy.FuzzyText()
+
+
+class OutcomeFactory(DjangoModelFactory):
+
+    FACTORY_FOR = 'flip.Outcome'
+
+    study = SubFactory(StudyFactory)
+
+    type_of_outcome = SubFactory(TypeOfOutcomeFactory)
+
+    document_title = fuzzy.FuzzyText()
+
+
 class BaseWebTest(WebTest):
 
     csrf_checks = False

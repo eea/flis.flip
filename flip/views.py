@@ -120,30 +120,36 @@ class StudyContextEditView(LoginRequiredMixin,
                        kwargs={'pk': self.object.pk})
 
 
-class StudyOutcomesHomeView(LoginRequiredMixin,
-                            EditPermissionRequiredMixin,
-                            StudyBlossomRequiredMixin,
-                            SuccessMessageMixin,
-                            generic.CreateView):
+class StudyOutcomesDetailView(LoginRequiredMixin,
+                              StudyBlossomRequiredMixin,
+                              generic.DetailView):
 
-    model = models.Outcome
-    form_class = forms.OutcomeForm
-    template_name = 'study_outcome.html'
-
-    def dispatch(self, request, pk):
-        self.study = self.get_object()
-        return super(StudyOutcomesHomeView, self).dispatch(request, pk)
+    model = models.Study
+    template_name = 'study_outcomes_detail.html'
 
     def get_object(self):
         return get_object_or_404(models.Study, pk=self.kwargs['pk'])
 
     def get_context_data(self, **kwargs):
-        context = {'study': self.study}
+        context = {'form': forms.OutcomeForm(study=self.object)}
         context.update(kwargs)
-        return super(StudyOutcomesHomeView, self).get_context_data(**context)
+        return super(StudyOutcomesDetailView, self).get_context_data(**context)
+
+
+class StudyOutcomesAddView(LoginRequiredMixin,
+                           EditPermissionRequiredMixin,
+                           SuccessMessageMixin,
+                           generic.CreateView):
+
+    model = models.Outcome
+    form_class = forms.OutcomeForm
+
+    def dispatch(self, request, pk):
+        self.study = self.get_object()
+        return super(StudyOutcomesDetailView, self).dispatch(request, pk)
 
     def get_form_kwargs(self):
-        kwargs = super(StudyOutcomesHomeView, self).get_form_kwargs()
+        kwargs = super(StudyOutcomesAddView, self).get_form_kwargs()
         kwargs['study'] = self.study
         return kwargs
 

@@ -17,8 +17,8 @@
     <h2>{{ outcome.document_title }}</h2>
   </div>
 
-  {% url 'study_outcomes_edit' pk=study.pk outcome_pk=outcome.pk as edit_url %}
-  {% url 'study_outcomes_delete' pk=study.pk outcome_pk=outcome.pk as delete_url %}
+  {% url 'study_outcome_edit' pk=study.pk outcome_pk=outcome.pk as edit_url %}
+  {% url 'study_outcome_delete' pk=study.pk outcome_pk=outcome.pk as delete_url %}
 
   <ul class="list-unstyled actions">
     <li>
