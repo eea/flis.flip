@@ -1,7 +1,6 @@
 
-
 {% extends '_layout.html' %}
-
+{% load utils %}
 
 
 {% block title %}
@@ -16,11 +15,15 @@
   {% include '_study_nav.html' %}
   <h2 class="page-title">Study metadata</h2>
 
-  <div class="actions">
-    <a href="{% url 'study_metadata_edit' pk=study.pk %}"
-       class="btn btn-primary">
-      Edit study</a>
-  </div> {# /.actions #}
+  {% can_edit_study study as can_edit_study %}
+
+  {% if can_edit_study %}
+    <div class="actions">
+      <a href="{% url 'study_metadata_edit' pk=study.pk %}"
+         class="btn btn-primary">
+        Edit study</a>
+    </div> {# /.actions #}
+  {% endif %}
 
   <table class="table table-detail">
 

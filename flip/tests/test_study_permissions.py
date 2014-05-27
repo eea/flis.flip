@@ -74,6 +74,7 @@ class StudyMetadataPermissionTests(BaseWebTest):
         url = reverse('study_metadata_detail', kwargs={'pk': study.pk})
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
+        self.assertEqual(0, resp.pyquery('.actions').length)
         self.assertIn('study_metadata_detail', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
@@ -83,6 +84,27 @@ class StudyMetadataPermissionTests(BaseWebTest):
         url = reverse('study_metadata_detail', kwargs={'pk': study.pk})
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
+        self.assertEqual(1, resp.pyquery('.actions').length)
+        self.assertIn('study_metadata_detail', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserContributorMock))
+    def test_study_view_different_contribuitor(self):
+        study = StudyFactory()
+        url = reverse('study_metadata_detail', kwargs={'pk': study.pk})
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertEqual(0, resp.pyquery('.actions').length)
+        self.assertIn('study_metadata_detail', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserContributorMock))
+    def test_study_view_same_contribuitor(self):
+        study = StudyFactory(user_id='contribuitor')
+        url = reverse('study_metadata_detail', kwargs={'pk': study.pk})
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertEqual(1, resp.pyquery('.actions').length)
         self.assertIn('study_metadata_detail', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
