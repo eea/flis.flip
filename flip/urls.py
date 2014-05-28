@@ -50,15 +50,15 @@ urlpatterns = patterns(
         name='study_outcomes_edit'),
 
     url(r'^study/(?P<pk>\d+)/outcomes/(?P<outcome_pk>\d+)/detail$',
-        views.StudyOutcomesView.as_view(),
+        views.StudyOutcomeDetailView.as_view(),
         name='study_outcome_detail'),
 
     url(r'^study/(?P<pk>\d+)/outcomes/(?P<outcome_pk>\d+)/delete$',
-        views.StudyOutcomesDeleteView.as_view(),
+        views.StudyOutcomeDeleteView.as_view(),
         name='study_outcome_delete'),
 
     url(r'^study/(?P<pk>\d+)/outcomes/(?P<outcome_pk>\d+)/edit$',
-        views.StudyOutcomesEditView.as_view(),
+        views.StudyOutcomeEditView.as_view(),
         name='study_outcome_edit'),
 
     url(r'^admin/', include(admin.site.urls)),

@@ -138,31 +138,43 @@ class StudyOutcomesDetailView(LoginRequiredMixin,
 
 class StudyOutcomesAddView(LoginRequiredMixin,
                            EditPermissionRequiredMixin,
+                           StudyBlossomRequiredMixin,
                            SuccessMessageMixin,
                            generic.CreateView):
 
     model = models.Outcome
     form_class = forms.OutcomeForm
+    template_name = 'study_outcomes_detail.html'
 
-    def dispatch(self, request, pk):
-        self.study = self.get_object()
-        return super(StudyOutcomesDetailView, self).dispatch(request, pk)
+    def get_object(self):
+        if is_admin(self.request):
+             return get_object_or_404(models.Study, pk=self.kwargs['pk'])
+        else:
+             return get_object_or_404(models.Study, pk=self.kwargs['pk'],
+                                      user_id=self.request.user_id)
+
+        return get_object_or_404(models.Study, pk=self.kwargs['pk'])
+
+    def get_context_data(self, **kwargs):
+        kwargs = super(StudyOutcomesAddView, self).get_context_data(**kwargs)
+        kwargs['study'] = self.get_object()
+        return kwargs
 
     def get_form_kwargs(self):
         kwargs = super(StudyOutcomesAddView, self).get_form_kwargs()
-        kwargs['study'] = self.study
+        kwargs['study'] = self.get_object()
         return kwargs
 
     def get_success_url(self):
-        return reverse('study_outcomes', kwargs={'pk': self.study.pk})
+        return reverse('study_outcomes_detail', kwargs={'pk': self.study.pk})
 
     def get_success_message(self, cleaned_data):
         return '{document_title} was successfully added'.format(**cleaned_data)
 
 
-class StudyOutcomesDeleteView(LoginRequiredMixin,
-                              EditPermissionRequiredMixin,
-                              generic.DeleteView):
+class StudyOutcomeDeleteView(LoginRequiredMixin,
+                             EditPermissionRequiredMixin,
+                             generic.DeleteView):
 
     model = models.Outcome
     pk_url_kwarg = 'outcome_pk'
@@ -170,19 +182,29 @@ class StudyOutcomesDeleteView(LoginRequiredMixin,
 
     def dispatch(self, request, pk, outcome_pk):
         self.study = get_object_or_404(models.Study, pk=pk)
-        return super(StudyOutcomesDeleteView, self).dispatch(request, pk)
+        return super(StudyOutcomeDeleteView, self).dispatch(request, pk)
+
+    def get_queryset(self, queryset=None):
+        if is_admin(self.request):
+            return self.model._default_manager.all()._clone()
+        else:
+            return (
+                self.model._default_manager
+                .filter(study__user_id=self.request.user_id)
+                ._clone()
+            )
 
     def get_success_url(self):
-        return reverse('study_outcomes', kwargs={'pk': self.study.pk})
+        return reverse('study_outcomes_detail', kwargs={'pk': self.study.pk})
 
     def get_context_data(self, **kwargs):
         context = {'study': self.study}
         context.update(kwargs)
-        return super(StudyOutcomesDeleteView, self).get_context_data(**context)
+        return super(StudyOutcomeDeleteView, self).get_context_data(**context)
 
 
-class StudyOutcomesView(LoginRequiredMixin,
-                        generic.DetailView):
+class StudyOutcomeDetailView(LoginRequiredMixin,
+                             generic.DetailView):
 
     model = models.Outcome
     pk_url_kwarg = 'outcome_pk'
@@ -190,17 +212,17 @@ class StudyOutcomesView(LoginRequiredMixin,
 
     def dispatch(self, request, pk, outcome_pk):
         self.study = get_object_or_404(models.Study, pk=pk)
-        return super(StudyOutcomesView, self).dispatch(request, pk)
+        return super(StudyOutcomeDetailView, self).dispatch(request, pk)
 
     def get_context_data(self, **kwargs):
         context = {'study': self.study}
         context.update(kwargs)
-        return super(StudyOutcomesView, self).get_context_data(**context)
+        return super(StudyOutcomeDetailView, self).get_context_data(**context)
 
 
-class StudyOutcomesEditView(LoginRequiredMixin,
-                            EditPermissionRequiredMixin,
-                            generic.UpdateView):
+class StudyOutcomeEditView(LoginRequiredMixin,
+                           EditPermissionRequiredMixin,
+                           generic.UpdateView):
 
     model = models.Outcome
     form_class = forms.OutcomeForm
@@ -210,20 +232,30 @@ class StudyOutcomesEditView(LoginRequiredMixin,
 
     def dispatch(self, request, pk, outcome_pk):
         self.study = get_object_or_404(models.Study, pk=pk)
-        return super(StudyOutcomesEditView, self).dispatch(request, pk)
+        return super(StudyOutcomeEditView, self).dispatch(request, pk)
+
+    def get_queryset(self, queryset=None):
+        if is_admin(self.request):
+            return self.model._default_manager.all()._clone()
+        else:
+            return (
+                self.model._default_manager
+                .filter(study__user_id=self.request.user_id)
+                ._clone()
+            )
 
     def get_context_data(self, **kwargs):
         context = {'study': self.study}
         context.update(kwargs)
-        return super(StudyOutcomesEditView, self).get_context_data(**context)
+        return super(StudyOutcomeEditView, self).get_context_data(**context)
 
     def get_form_kwargs(self):
-        kwargs = super(StudyOutcomesEditView, self).get_form_kwargs()
+        kwargs = super(StudyOutcomeEditView, self).get_form_kwargs()
         kwargs['study'] = self.study
         return kwargs
 
     def get_success_url(self):
-        return reverse('study_outcomes', kwargs={'pk': self.study.pk})
+        return reverse('study_outcomes_detail', kwargs={'pk': self.study.pk})
 
 
 class StudiesView(LoginRequiredMixin,

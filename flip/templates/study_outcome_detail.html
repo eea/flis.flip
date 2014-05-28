@@ -17,18 +17,22 @@
     <h2>{{ outcome.document_title }}</h2>
   </div>
 
-  {% url 'study_outcome_edit' pk=study.pk outcome_pk=outcome.pk as edit_url %}
-  {% url 'study_outcome_delete' pk=study.pk outcome_pk=outcome.pk as delete_url %}
+  {% can_edit_study study as can_edit_study %}
+  {% if can_edit_study %}
+    {% url 'study_outcome_edit' pk=study.pk outcome_pk=outcome.pk as edit_url %}
+    {% url 'study_outcome_delete' pk=study.pk outcome_pk=outcome.pk as delete_url %}
 
-  <ul class="list-unstyled actions">
-    <li>
-       <a href="{{ edit_url }}" class="btn btn-primary">Edit</a>
-    </li>
-    <li>
-       <a href="{{ delete_url }}" class="btn btn-danger">Delete</a>
-    </li>
 
-  </ul>
+    <ul class="list-unstyled actions">
+      <li>
+         <a href="{{ edit_url }}" class="btn btn-primary">Edit</a>
+      </li>
+      <li>
+         <a href="{{ delete_url }}" class="btn btn-danger">Delete</a>
+      </li>
+
+    </ul>
+  {% endif %}
 
   {% if outcome.text %}
     <div style="padding-bottom: 20px;">{{ outcome.text|linebreaks }}</div>

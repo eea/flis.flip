@@ -163,7 +163,7 @@ class StudyMetadataPermissionTests(BaseWebTest):
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserContributorMock))
     def test_study_edit_get_by_another_user(self):
-        study = StudyFactory(user_id='another_user')
+        study = StudyFactory()
         url = reverse('study_metadata_edit', kwargs={'pk': study.pk})
         resp = self.app.get(url, expect_errors=True)
         self.assertEqual(404, resp.status_int)
@@ -266,6 +266,275 @@ class StudyOutcomePermissionTests(BaseWebTest):
         study = StudyFactory(blossom=Study.YES)
         url = reverse('study_outcomes_detail', kwargs={'pk': study.pk})
         resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertIn('restricted.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserAdminMock))
+    def test_study_outcomes_add_admin(self):
+        study = StudyFactory(blossom=Study.YES)
+        url = reverse('study_outcomes_edit', kwargs={'pk': study.pk})
+        resp = self.app.post(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertIn('study_outcomes_detail.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserViewerMock))
+    def test_study_outcomes_add_viewer(self):
+        study = StudyFactory(blossom=Study.YES)
+        url = reverse('study_outcomes_edit', kwargs={'pk': study.pk})
+        resp = self.app.post(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertIn('restricted.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserContributorMock))
+    def test_study_outcomes_add_different_contribuitor(self):
+        study = StudyFactory(blossom=Study.YES)
+        url = reverse('study_outcomes_edit', kwargs={'pk': study.pk})
+        resp = self.app.post(url, expect_errors=True)
+        self.assertEqual(404, resp.status_int)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserContributorMock))
+    def test_study_outcomes_add_same_contribuitor(self):
+        study = StudyFactory(blossom=Study.YES, user_id='contribuitor')
+        url = reverse('study_outcomes_edit', kwargs={'pk': study.pk})
+        resp = self.app.post(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertIn('study_outcomes_detail.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserAnonymousMock))
+    def test_study_outcomes_add_anonymous(self):
+        study = StudyFactory(blossom=Study.YES)
+        url = reverse('study_outcomes_edit', kwargs={'pk': study.pk})
+        resp = self.app.post(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertIn('restricted.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserAdminMock))
+    def test_study_outcome_get_admin(self):
+        study = StudyFactory(blossom=Study.YES)
+        outcome = OutcomeFactory(study=study)
+        url = reverse('study_outcome_detail',
+                      kwargs={'pk': study.pk, 'outcome_pk': outcome.pk})
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertEqual(1, resp.pyquery('.actions').length)
+        self.assertIn('study_outcome_detail.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserViewerMock))
+    def test_study_outcome_get_viewer(self):
+        study = StudyFactory(blossom=Study.YES)
+        outcome = OutcomeFactory(study=study)
+        url = reverse('study_outcome_detail',
+                      kwargs={'pk': study.pk, 'outcome_pk': outcome.pk})
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertEqual(0, resp.pyquery('.actions').length)
+        self.assertIn('study_outcome_detail.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserContributorMock))
+    def test_study_outcome_get_different_contribuitor(self):
+        study = StudyFactory(blossom=Study.YES)
+        outcome = OutcomeFactory(study=study)
+        url = reverse('study_outcome_detail',
+                      kwargs={'pk': study.pk, 'outcome_pk': outcome.pk})
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertEqual(0, resp.pyquery('.actions').length)
+        self.assertIn('study_outcome_detail.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserContributorMock))
+    def test_study_outcome_get_same_contribuitor(self):
+        study = StudyFactory(blossom=Study.YES, user_id='contribuitor')
+        outcome = OutcomeFactory(study=study)
+        url = reverse('study_outcome_detail',
+                      kwargs={'pk': study.pk, 'outcome_pk': outcome.pk})
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertEqual(1, resp.pyquery('.actions').length)
+        self.assertIn('study_outcome_detail.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserAnonymousMock))
+    def test_study_outcome_get_anonymous(self):
+        study = StudyFactory(blossom=Study.YES, user_id='contribuitor')
+        outcome = OutcomeFactory(study=study)
+        url = reverse('study_outcome_detail',
+                      kwargs={'pk': study.pk, 'outcome_pk': outcome.pk})
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertIn('restricted.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserAdminMock))
+    def test_study_outcome_edit_get_admin(self):
+        study = StudyFactory(blossom=Study.YES)
+        outcome = OutcomeFactory(study=study)
+        url = reverse('study_outcome_edit',
+                      kwargs={'pk': study.pk, 'outcome_pk': outcome.pk})
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertIn('study_outcome_edit.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserViewerMock))
+    def test_study_outcome_edit_get_viewer(self):
+        study = StudyFactory(blossom=Study.YES)
+        outcome = OutcomeFactory(study=study)
+        url = reverse('study_outcome_edit',
+                      kwargs={'pk': study.pk, 'outcome_pk': outcome.pk})
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertIn('restricted.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserContributorMock))
+    def test_study_outcome_edit_get_different_contribuitor(self):
+        study = StudyFactory(blossom=Study.YES)
+        outcome = OutcomeFactory(study=study)
+        url = reverse('study_outcome_edit',
+                      kwargs={'pk': study.pk, 'outcome_pk': outcome.pk})
+        resp = self.app.get(url, expect_errors=True)
+        self.assertEqual(404, resp.status_int)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserContributorMock))
+    def test_study_outcome_edit_get_same_contribuitor(self):
+        study = StudyFactory(blossom=Study.YES, user_id='contribuitor')
+        outcome = OutcomeFactory(study=study)
+        url = reverse('study_outcome_edit',
+                      kwargs={'pk': study.pk, 'outcome_pk': outcome.pk})
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertIn('study_outcome_edit.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserAnonymousMock))
+    def test_study_outcome_edit_get_anonymous(self):
+        study = StudyFactory(blossom=Study.YES)
+        outcome = OutcomeFactory(study=study)
+        url = reverse('study_outcome_edit',
+                      kwargs={'pk': study.pk, 'outcome_pk': outcome.pk})
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertIn('restricted.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserAdminMock))
+    def test_study_outcome_edit_post_admin(self):
+        study = StudyFactory(blossom=Study.YES)
+        outcome = OutcomeFactory(study=study)
+        url = reverse('study_outcome_edit',
+                      kwargs={'pk': study.pk, 'outcome_pk': outcome.pk})
+        resp = self.app.post(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertIn('study_outcome_edit.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserViewerMock))
+    def test_study_outcome_edit_post_viewer(self):
+        study = StudyFactory(blossom=Study.YES)
+        outcome = OutcomeFactory(study=study)
+        url = reverse('study_outcome_edit',
+                      kwargs={'pk': study.pk, 'outcome_pk': outcome.pk})
+        resp = self.app.post(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertIn('restricted.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserContributorMock))
+    def test_study_outcome_edit_post_different_contribuitor(self):
+        study = StudyFactory(blossom=Study.YES)
+        outcome = OutcomeFactory(study=study)
+        url = reverse('study_outcome_edit',
+                      kwargs={'pk': study.pk, 'outcome_pk': outcome.pk})
+        resp = self.app.post(url, expect_errors=True)
+        self.assertEqual(404, resp.status_int)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserContributorMock))
+    def test_study_outcome_edit_post_same_contribuitor(self):
+        study = StudyFactory(blossom=Study.YES, user_id='contribuitor')
+        outcome = OutcomeFactory(study=study)
+        url = reverse('study_outcome_edit',
+                      kwargs={'pk': study.pk, 'outcome_pk': outcome.pk})
+        resp = self.app.post(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertIn('study_outcome_edit.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserAnonymousMock))
+    def test_study_outcome_edit_post_anonymous(self):
+        study = StudyFactory(blossom=Study.YES)
+        outcome = OutcomeFactory(study=study)
+        url = reverse('study_outcome_edit',
+                      kwargs={'pk': study.pk, 'outcome_pk': outcome.pk})
+        resp = self.app.post(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertIn('restricted.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserAdminMock))
+    def test_study_outcome_delete_admin(self):
+        study = StudyFactory(blossom=Study.YES)
+        outcome = OutcomeFactory(study=study)
+        url = reverse('study_outcome_delete',
+                      kwargs={'pk': study.pk, 'outcome_pk': outcome.pk})
+        redirect_url = reverse('study_outcomes_detail',
+                               kwargs={'pk': study.pk})
+        resp = self.app.delete(url)
+        self.assertEqual(302, resp.status_int)
+        self.assertRedirects(resp, redirect_url)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserViewerMock))
+    def test_study_outcome_delete_viewer(self):
+        study = StudyFactory(blossom=Study.YES)
+        outcome = OutcomeFactory(study=study)
+        url = reverse('study_outcome_delete',
+                      kwargs={'pk': study.pk, 'outcome_pk': outcome.pk})
+        resp = self.app.delete(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertIn('restricted.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserContributorMock))
+    def test_study_outcome_delete_different_contribuitor(self):
+        study = StudyFactory(blossom=Study.YES)
+        outcome = OutcomeFactory(study=study)
+        url = reverse('study_outcome_delete',
+                      kwargs={'pk': study.pk, 'outcome_pk': outcome.pk})
+        resp = self.app.delete(url, expect_errors=True)
+        self.assertEqual(404, resp.status_int)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserContributorMock))
+    def test_study_outcome_delete_same_contribuitor(self):
+        study = StudyFactory(blossom=Study.YES, user_id='contribuitor')
+        outcome = OutcomeFactory(study=study)
+        url = reverse('study_outcome_delete',
+                      kwargs={'pk': study.pk, 'outcome_pk': outcome.pk})
+        redirect_url = reverse('study_outcomes_detail',
+                               kwargs={'pk': study.pk})
+        resp = self.app.delete(url)
+        self.assertEqual(302, resp.status_int)
+        self.assertRedirects(resp, redirect_url)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserAnonymousMock))
+    def test_study_outcome_delete_anonymous(self):
+        study = StudyFactory(blossom=Study.YES)
+        outcome = OutcomeFactory(study=study)
+        url = reverse('study_outcome_delete',
+                      kwargs={'pk': study.pk, 'outcome_pk': outcome.pk})
+        resp = self.app.delete(url)
         self.assertEqual(200, resp.status_int)
         self.assertIn('restricted.html', resp.templates[0].name)
 
