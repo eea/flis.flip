@@ -174,6 +174,45 @@ class StudyContextPermissionTests(BaseWebTest):
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAdminMock))
+    def test_study_context_view_admin(self):
+        study = StudyFactory(blossom=Study.YES)
+        url = reverse('study_context_detail', kwargs={'pk': study.pk})
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertEqual(1, resp.pyquery('.actions').length)
+        self.assertIn('study_context_detail', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserContributorMock))
+    def test_study_context_view_different_contribuitor(self):
+        study = StudyFactory(blossom=Study.YES)
+        url = reverse('study_context_detail', kwargs={'pk': study.pk})
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertEqual(0, resp.pyquery('.actions').length)
+        self.assertIn('study_context_detail', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserContributorMock))
+    def test_study_context_view_same_contribuitor(self):
+        study = StudyFactory(blossom=Study.YES, user_id='contribuitor')
+        url = reverse('study_context_detail', kwargs={'pk': study.pk})
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertEqual(1, resp.pyquery('.actions').length)
+        self.assertIn('study_context_detail', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserAnonymousMock))
+    def test_study_context_view_anonymous(self):
+        study = StudyFactory(blossom=Study.YES)
+        url = reverse('study_context_detail', kwargs={'pk': study.pk})
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertIn('restricted.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserAdminMock))
     def test_study_context_get_admin(self):
         study = StudyFactory(blossom=Study.YES)
         url = reverse('study_context_edit', kwargs={'pk': study.pk})
@@ -207,6 +246,22 @@ class StudyContextPermissionTests(BaseWebTest):
         resp = self.app.post(url)
         self.assertEqual(200, resp.status_int)
         self.assertIn('restricted.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserAdminMock))
+    def test_study_context_get_if_not_blossom(self):
+        study = StudyFactory(blossom=Study.NO)
+        url = reverse('study_context_edit', kwargs={'pk': study.pk})
+        resp = self.app.get(url, expect_errors=True)
+        self.assertEqual(404, resp.status_int)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserAdminMock))
+    def test_study_context_post_if_not_blossom(self):
+        study = StudyFactory(blossom=Study.NO)
+        url = reverse('study_context_edit', kwargs={'pk': study.pk})
+        resp = self.app.post(url, expect_errors=True)
+        self.assertEqual(404, resp.status_int)
 
 
 @override_settings(SKIP_EDIT_AUTH=False, FRAME_URL=True)
@@ -538,6 +593,30 @@ class StudyOutcomePermissionTests(BaseWebTest):
         self.assertEqual(200, resp.status_int)
         self.assertIn('restricted.html', resp.templates[0].name)
 
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserAdminMock))
+    def test_study_outcomes_detail_get_if_not_blossom(self):
+        study = StudyFactory(blossom=Study.NO)
+        url = reverse('study_outcomes_detail', kwargs={'pk': study.pk})
+        resp = self.app.get(url, expect_errors=True)
+        self.assertEqual(404, resp.status_int)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserAdminMock))
+    def test_study_outcomes_add_get_if_not_blossom(self):
+        study = StudyFactory(blossom=Study.NO)
+        url = reverse('study_outcomes_edit', kwargs={'pk': study.pk})
+        resp = self.app.get(url, expect_errors=True)
+        self.assertEqual(404, resp.status_int)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserAdminMock))
+    def test_study_outcomes_add_post_if_not_blossom(self):
+        study = StudyFactory(blossom=Study.NO)
+        url = reverse('study_outcomes_edit', kwargs={'pk': study.pk})
+        resp = self.app.post(url, expect_errors=True)
+        self.assertEqual(404, resp.status_int)
+
 
 @override_settings(SKIP_EDIT_AUTH=False, FRAME_URL=True)
 class StudyHomePermissionTests(BaseWebTest):
@@ -545,6 +624,22 @@ class StudyHomePermissionTests(BaseWebTest):
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAdminMock))
     def test_home_get_admin(self):
+        url = reverse('studies_overview')
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertIn('studies_overview.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserViewerMock))
+    def test_home_get_viewer(self):
+        url = reverse('studies_overview')
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertIn('studies_overview.html', resp.templates[0].name)
+
+    @patch('frame.middleware.requests.get',
+           Mock(return_value=UserContributorMock))
+    def test_home_get_contribuitor(self):
         url = reverse('studies_overview')
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)

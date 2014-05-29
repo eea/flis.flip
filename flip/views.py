@@ -104,6 +104,18 @@ class StudyMetadataEditView(LoginRequiredMixin,
                        kwargs={'pk': self.object.pk})
 
 
+class StudyContextDetailView(LoginRequiredMixin,
+                             generic.DetailView):
+
+    model = models.Study
+    template_name = 'study_context_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = {'form': forms.StudyContextForm()}
+        context.update(kwargs)
+        return super(StudyContextDetailView, self).get_context_data(**context)
+
+
 class StudyContextEditView(LoginRequiredMixin,
                            EditPermissionRequiredMixin,
                            StudyBlossomRequiredMixin,
@@ -116,7 +128,7 @@ class StudyContextEditView(LoginRequiredMixin,
     success_message = 'The study was successfully updated'
 
     def get_success_url(self):
-        return reverse('study_context_edit',
+        return reverse('study_context_detail',
                        kwargs={'pk': self.object.pk})
 
 
@@ -147,22 +159,26 @@ class StudyOutcomesAddView(LoginRequiredMixin,
     template_name = 'study_outcomes_detail.html'
 
     def get_object(self):
+        if getattr(self, 'study', None):
+            return self.study
         if is_admin(self.request):
-             return get_object_or_404(models.Study, pk=self.kwargs['pk'])
+             study = get_object_or_404(models.Study, pk=self.kwargs['pk'])
         else:
-             return get_object_or_404(models.Study, pk=self.kwargs['pk'],
-                                      user_id=self.request.user_id)
+             study = get_object_or_404(models.Study, pk=self.kwargs['pk'],
+                                       user_id=self.request.user_id)
 
-        return get_object_or_404(models.Study, pk=self.kwargs['pk'])
+        study = get_object_or_404(models.Study, pk=self.kwargs['pk'])
+        self.study = study
+        return study
 
     def get_context_data(self, **kwargs):
         kwargs = super(StudyOutcomesAddView, self).get_context_data(**kwargs)
-        kwargs['study'] = self.get_object()
+        kwargs['study'] = kwargs['object'] = self.study
         return kwargs
 
     def get_form_kwargs(self):
         kwargs = super(StudyOutcomesAddView, self).get_form_kwargs()
-        kwargs['study'] = self.get_object()
+        kwargs['study'] = self.study
         return kwargs
 
     def get_success_url(self):

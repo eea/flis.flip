@@ -1,0 +1,96 @@
+
+{% extends '_layout.html' %}
+{% load utils %}
+
+
+{% block title %}
+
+  {{ block.super }} -  Study Context
+
+{% endblock %}
+
+
+{% block content %}
+
+  {% include '_study_nav.html' %}
+  <h2 class="page-title">Study context</h2>
+
+  {% include '_messages.html' %}
+
+  {% can_edit_study study as can_edit_study %}
+  {% if can_edit_study %}
+    <div class="actions">
+      <a href="{% url 'study_context_edit' pk=study.pk %}"
+         class="btn btn-primary">
+        Edit study context</a>
+    </div> {# /.actions #}
+  {% endif %}
+
+  <table class="table table-detail">
+
+    <tr>
+      <th>{{ form.purpose_and_target.label }}</th>
+      <td>{{ study.purpose_and_target|default:'None' }}</td>
+    </tr>
+
+    <tr>
+      <th>{{ form.additional_information.label }}</th>
+      <td>{{ study.additional_information|default:'None' }}</td>
+    </tr>
+
+    <tr class="hd">
+      <th colspan="2">Support to policy-making cycle and domain of application</th>
+    </tr>
+
+    <tr>
+      <th>{{ form.phases_of_policy.label }}</th>
+      <td>{{ study.phases_of_policy|default:'None' }}</td>
+    </tr>
+
+    <tr>
+      <th>{{ form.additional_information_phase.label }}</th>
+      <td>{{ study.additional_information_phase|default:'None' }}</td>
+    </tr>
+
+    <tr>
+      <th>{{ form.foresight_approaches.label }}</th>
+      <td>{{ study.foresight_approaches|default:'None' }}</td>
+    </tr>
+
+    <tr>
+      <th>{{ form.stakeholder_participation.label }}</th>
+      <td>
+        {% if study.stakeholder_participation %}
+          <i class="glyphicon glyphicon-ok"></i>
+        {% else %}
+          -
+        {% endif %}
+      </td>
+    </tr>
+
+    <tr>
+      <th>{{ form.additional_information_stakeholder.label }}</th>
+      <td>{{ study.additional_information_stakeholder|default:'None' }}</td>
+    </tr>
+
+    <tr>
+      <th>{{ form.environmental_themes.label }}</th>
+      <td>
+        <ul class="list-unstyled">
+          {% for theme in environmental_themes.all %}
+            <li>{{ theme }}</li>
+          {% empty %}
+            <li>None</li>
+          {% endfor %}
+        </ul>
+      </td>
+    </tr>
+
+    <tr>
+      <th>{{ form.geographical_scope.label }}</th>
+      <td>{{ study.geographical_scope|default:'None' }}</td>
+    </tr>
+
+  </table>
+
+{% endblock %}

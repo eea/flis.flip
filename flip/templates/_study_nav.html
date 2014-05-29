@@ -12,7 +12,7 @@
       Study metadata</a>
   </li>
 
-  {% url 'study_context_edit' pk=study.pk as study_context_url %}
+  {% url 'study_context_detail' pk=study.pk as study_context_url %}
   {% url 'study_outcomes_detail' pk=study.pk as study_outcomes_url %}
 
   <li class="{% active 'study/\d/context/edit$' %}
