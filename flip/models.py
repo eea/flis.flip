@@ -125,7 +125,7 @@ class Study(Model):
 
     countries = ManyToManyField(
         'Country',
-        verbose_name='country',
+        verbose_name='countries',
         blank=True)
 
     def __unicode__(self):

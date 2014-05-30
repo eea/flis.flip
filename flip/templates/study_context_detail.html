@@ -30,7 +30,7 @@
 
     <tr>
       <th>{{ form.purpose_and_target.label }}</th>
-      <td>{{ study.purpose_and_target|default:'None' }}</td>
+      <td>{{ study.get_purpose_and_target_display|default:'None' }}</td>
     </tr>
 
     <tr>
@@ -90,6 +90,18 @@
       <th>{{ form.geographical_scope.label }}</th>
       <td>{{ study.geographical_scope|default:'None' }}</td>
     </tr>
+
+    {% if study.countries.exists %}
+      <tr>
+        <th>{{ form.countries.label }}</th>
+        <td>
+          <ul class="list-unstyled">
+            {% for country in study.countries.all %}
+              <li>{{ country }}</li>
+            {% endfor %}
+          </ul>
+      </tr>
+    {% endif %}
 
   </table>
 

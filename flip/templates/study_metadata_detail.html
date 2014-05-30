@@ -32,14 +32,21 @@
       <td>{{ study.title }}</td>
     </tr>
 
-    <tr class="hd"><th colspan="2">Languages</th></tr>
-
-    {% for study_lang in study.studylanguage_set.all %}
+    {% if study.studylanguage_set.exists %}
     <tr>
-      <th>{{ study_lang.language }}</th>
-      <td>{{ study_lang.title }}</td>
+      <th>Languages</th>
+      <td>
+        <ul class="list-unstyled">
+          {% for study_lang in study.studylanguage_set.all %}
+            <li>
+              <div><b>{{ study_lang.language }}</b></div>
+              <div>- {{ study_lang.title }}</div>
+            </li>
+          {% endfor %}
+        </ul>
+      </td>
     </tr>
-    {% endfor %}
+    {% endif %}
 
     <tr>
       <th>{{ form.url.label }}</th>
