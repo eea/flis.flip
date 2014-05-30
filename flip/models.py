@@ -201,6 +201,7 @@ class EnvironmentalTheme(Model):
 class GeographicalScope(Model):
 
     title = CharField(max_length=128)
+    require_country = BooleanField(default=False)
 
     def __unicode__(self):
         return self.title

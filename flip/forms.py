@@ -83,8 +83,8 @@ class StudyContextForm(ModelForm):
         countries_data = cleaned_data.get('countries')
         countries = self.fields['countries']
 
-        if (geographical_scope_data and geographical_scope_data.title in
-           ['Country', 'Sub-national']):
+        if (geographical_scope_data and
+            geographical_scope_data.require_country):
             if len(countries_data) == 0:
                 self._errors['countries'] = self.error_class(
                     [countries.error_messages['required']])

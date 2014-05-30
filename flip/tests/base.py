@@ -101,6 +101,8 @@ class GeographicalScopeFactory(DjangoModelFactory):
 
     title = fuzzy.FuzzyText()
 
+    require_country = False
+
 
 class StudyContextFactory(Factory):
 
