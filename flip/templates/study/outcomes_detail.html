@@ -11,7 +11,7 @@
 
 {% block content %}
 
-  {% include '_study_nav.html' %}
+  {% include 'study/_nav.html' %}
 
   <h2 class="page-title">
     Outcomes and activities <br>
@@ -81,7 +81,7 @@
         <form action="{{ url }}" role="form" method="POST"
               id="study-outcomes-edit-form"
               enctype="multipart/form-data">
-          {% include "_study_outcome_form.html" %}
+          {% include "study/_outcome_form.html" %}
         </form>
       {% endif %}
 

@@ -62,3 +62,8 @@ def can_edit_study(context, study):
                  groups=EDIT_GROUPS) and request.user_id == study.user_id:
         return True
     return False
+
+
+@register.assignment_tag(name='is_admin', takes_context=True)
+def do_is_admin(context):
+    return True if is_admin(context['request']) else False

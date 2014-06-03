@@ -8,6 +8,7 @@ from django.views import generic
 
 from flip import forms, models
 from auth.views import LoginRequiredMixin, EditPermissionRequiredMixin
+from auth.views import AdminPermissionRequiredMixin
 from auth.views import is_admin
 
 
@@ -58,7 +59,7 @@ class StudyMetadataAddView(LoginRequiredMixin,
 
     model = models.Study
     form_class = forms.StudyMetadataForm
-    template_name = 'study_metadata_edit.html'
+    template_name = 'study/metadata_edit.html'
     success_message = 'The study was successfully updated'
 
     def get_success_url(self):
@@ -70,7 +71,7 @@ class StudyMetadataDetailView(LoginRequiredMixin,
                               generic.DetailView):
 
     model = models.Study
-    template_name = 'study_metadata_detail.html'
+    template_name = 'study/metadata_detail.html'
 
     def get_context_data(self, **kwargs):
         context = {'form': forms.StudyMetadataForm()}
@@ -86,7 +87,7 @@ class StudyMetadataEditView(LoginRequiredMixin,
 
     model = models.Study
     form_class = forms.StudyMetadataForm
-    template_name = 'study_metadata_edit.html'
+    template_name = 'study/metadata_edit.html'
     success_message = 'The study was successfully updated'
 
     def get_queryset(self, queryset=None):
@@ -108,7 +109,7 @@ class StudyContextDetailView(LoginRequiredMixin,
                              generic.DetailView):
 
     model = models.Study
-    template_name = 'study_context_detail.html'
+    template_name = 'study/context_detail.html'
 
     def get_context_data(self, **kwargs):
         context = {'form': forms.StudyContextForm()}
@@ -124,7 +125,7 @@ class StudyContextEditView(LoginRequiredMixin,
 
     model = models.Study
     form_class = forms.StudyContextForm
-    template_name = 'study_context_edit.html'
+    template_name = 'study/context_edit.html'
     success_message = 'The study was successfully updated'
 
     def get_success_url(self):
@@ -137,7 +138,7 @@ class StudyOutcomesDetailView(LoginRequiredMixin,
                               generic.DetailView):
 
     model = models.Study
-    template_name = 'study_outcomes_detail.html'
+    template_name = 'study/outcomes_detail.html'
 
     def get_object(self):
         return get_object_or_404(models.Study, pk=self.kwargs['pk'])
@@ -156,7 +157,7 @@ class StudyOutcomesAddView(LoginRequiredMixin,
 
     model = models.Outcome
     form_class = forms.OutcomeForm
-    template_name = 'study_outcomes_detail.html'
+    template_name = 'study/outcomes_detail.html'
 
     def get_object(self):
         if getattr(self, 'study', None):
@@ -194,7 +195,7 @@ class StudyOutcomeDeleteView(LoginRequiredMixin,
 
     model = models.Outcome
     pk_url_kwarg = 'outcome_pk'
-    template_name = 'study_outcome_confirm_delete.html'
+    template_name = 'study/outcome_confirm_delete.html'
 
     def dispatch(self, request, pk, outcome_pk):
         self.study = get_object_or_404(models.Study, pk=pk)
@@ -224,7 +225,7 @@ class StudyOutcomeDetailView(LoginRequiredMixin,
 
     model = models.Outcome
     pk_url_kwarg = 'outcome_pk'
-    template_name = 'study_outcome_detail.html'
+    template_name = 'study/outcome_detail.html'
 
     def dispatch(self, request, pk, outcome_pk):
         self.study = get_object_or_404(models.Study, pk=pk)
@@ -243,7 +244,7 @@ class StudyOutcomeEditView(LoginRequiredMixin,
     model = models.Outcome
     form_class = forms.OutcomeForm
     pk_url_kwarg = 'outcome_pk'
-    template_name = 'study_outcome_edit.html'
+    template_name = 'study/outcome_edit.html'
     success_message = 'Outcome was successfully update'
 
     def dispatch(self, request, pk, outcome_pk):
@@ -325,3 +326,38 @@ class MyEntriesView(LoginRequiredMixin,
             self.request.GET.get('phases_of_policy_filter')
         context.update(kwargs)
         return super(MyEntriesView, self).get_context_data(**context)
+
+
+class SettingsPhasesOfPolicyView(LoginRequiredMixin,
+                                 AdminPermissionRequiredMixin,
+                                 generic.ListView):
+
+    model = models.PhasesOfPolicy
+    template_name = 'settings/phases_of_policy.html'
+
+
+
+class SettingsPhasesOfPolicyAddView(LoginRequiredMixin,
+                                    AdminPermissionRequiredMixin,
+                                    SuccessMessageMixin,
+                                    generic.CreateView):
+
+    model = models.PhasesOfPolicy
+    template_name = 'settings/phases_of_policy_edit.html'
+    success_message = 'Policy added successfully'
+
+    def get_success_url(self):
+        return reverse('settings:phases_of_policy')
+
+
+class SettingsPhasesOfPolicyEditView(LoginRequiredMixin,
+                                     AdminPermissionRequiredMixin,
+                                     SuccessMessageMixin,
+                                     generic.UpdateView):
+
+    model = models.PhasesOfPolicy
+    template_name = 'settings/phases_of_policy_edit.html'
+    success_message = 'Policy updated successfully'
+
+    def get_success_url(self):
+        return reverse('settings:phases_of_policy')

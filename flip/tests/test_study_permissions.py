@@ -19,7 +19,7 @@ class StudyMetadataPermissionTests(BaseWebTest):
         url = reverse('study_metadata_edit')
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
-        self.assertIn('study_metadata_edit.html', resp.templates[0].name)
+        self.assertIn('study/metadata_edit.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAnonymousMock))
@@ -35,7 +35,7 @@ class StudyMetadataPermissionTests(BaseWebTest):
         url = reverse('study_metadata_edit')
         resp = self.app.post(url)
         self.assertEqual(200, resp.status_int)
-        self.assertIn('study_metadata_edit.html', resp.templates[0].name)
+        self.assertIn('study/metadata_edit.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAdminMock))
@@ -44,7 +44,7 @@ class StudyMetadataPermissionTests(BaseWebTest):
         url = reverse('study_metadata_edit')
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
-        self.assertIn('study_metadata_edit.html', resp.templates[0].name)
+        self.assertIn('study/metadata_edit.html', resp.templates[0].name)
         form = resp.forms['study-form']
         self.populate_fields(form, self.normalize_data(data))
         form.submit().follow()
@@ -75,7 +75,7 @@ class StudyMetadataPermissionTests(BaseWebTest):
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
         self.assertEqual(0, resp.pyquery('.actions').length)
-        self.assertIn('study_metadata_detail', resp.templates[0].name)
+        self.assertIn('study/metadata_detail', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAdminMock))
@@ -85,7 +85,7 @@ class StudyMetadataPermissionTests(BaseWebTest):
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
         self.assertEqual(1, resp.pyquery('.actions').length)
-        self.assertIn('study_metadata_detail', resp.templates[0].name)
+        self.assertIn('study/metadata_detail', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserContributorMock))
@@ -95,7 +95,7 @@ class StudyMetadataPermissionTests(BaseWebTest):
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
         self.assertEqual(0, resp.pyquery('.actions').length)
-        self.assertIn('study_metadata_detail', resp.templates[0].name)
+        self.assertIn('study/metadata_detail', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserContributorMock))
@@ -105,7 +105,7 @@ class StudyMetadataPermissionTests(BaseWebTest):
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
         self.assertEqual(1, resp.pyquery('.actions').length)
-        self.assertIn('study_metadata_detail', resp.templates[0].name)
+        self.assertIn('study/metadata_detail', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAnonymousMock))
@@ -131,7 +131,7 @@ class StudyMetadataPermissionTests(BaseWebTest):
         url = reverse('study_metadata_edit', kwargs={'pk': study.pk})
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
-        self.assertIn('study_metadata_edit.html', resp.templates[0].name)
+        self.assertIn('study/metadata_edit.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAnonymousMock))
@@ -149,7 +149,7 @@ class StudyMetadataPermissionTests(BaseWebTest):
         url = reverse('study_metadata_edit', kwargs={'pk': study.pk})
         resp = self.app.post(url)
         self.assertEqual(200, resp.status_int)
-        self.assertIn('study_metadata_edit.html', resp.templates[0].name)
+        self.assertIn('study/metadata_edit.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAnonymousMock))
@@ -180,7 +180,7 @@ class StudyContextPermissionTests(BaseWebTest):
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
         self.assertEqual(1, resp.pyquery('.actions').length)
-        self.assertIn('study_context_detail', resp.templates[0].name)
+        self.assertIn('study/context_detail', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserContributorMock))
@@ -190,7 +190,7 @@ class StudyContextPermissionTests(BaseWebTest):
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
         self.assertEqual(0, resp.pyquery('.actions').length)
-        self.assertIn('study_context_detail', resp.templates[0].name)
+        self.assertIn('study/context_detail', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserContributorMock))
@@ -200,7 +200,7 @@ class StudyContextPermissionTests(BaseWebTest):
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
         self.assertEqual(1, resp.pyquery('.actions').length)
-        self.assertIn('study_context_detail', resp.templates[0].name)
+        self.assertIn('study/context_detail', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAnonymousMock))
@@ -218,7 +218,7 @@ class StudyContextPermissionTests(BaseWebTest):
         url = reverse('study_context_edit', kwargs={'pk': study.pk})
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
-        self.assertIn('study_context_edit.html', resp.templates[0].name)
+        self.assertIn('study/context_edit.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAdminMock))
@@ -227,7 +227,7 @@ class StudyContextPermissionTests(BaseWebTest):
         url = reverse('study_context_edit', kwargs={'pk': study.pk})
         resp = self.app.post(url)
         self.assertEqual(200, resp.status_int)
-        self.assertIn('study_context_edit.html', resp.templates[0].name)
+        self.assertIn('study/context_edit.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAnonymousMock))
@@ -277,7 +277,7 @@ class StudyOutcomePermissionTests(BaseWebTest):
         self.assertEqual(200, resp.status_int)
         self.assertEqual(1, resp.pyquery('.delete').length)
         self.assertEqual(1, resp.pyquery('#study-outcomes-edit-form').length)
-        self.assertIn('study_outcomes_detail.html', resp.templates[0].name)
+        self.assertIn('study/outcomes_detail.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserViewerMock))
@@ -289,7 +289,7 @@ class StudyOutcomePermissionTests(BaseWebTest):
         self.assertEqual(200, resp.status_int)
         self.assertEqual(0, resp.pyquery('.delete').length)
         self.assertEqual(0, resp.pyquery('#study-outcomes-edit-form').length)
-        self.assertIn('study_outcomes_detail.html', resp.templates[0].name)
+        self.assertIn('study/outcomes_detail.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserContributorMock))
@@ -301,7 +301,7 @@ class StudyOutcomePermissionTests(BaseWebTest):
         self.assertEqual(200, resp.status_int)
         self.assertEqual(0, resp.pyquery('.delete').length)
         self.assertEqual(0, resp.pyquery('#study-outcomes-edit-form').length)
-        self.assertIn('study_outcomes_detail.html', resp.templates[0].name)
+        self.assertIn('study/outcomes_detail.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserContributorMock))
@@ -313,7 +313,7 @@ class StudyOutcomePermissionTests(BaseWebTest):
         self.assertEqual(200, resp.status_int)
         self.assertEqual(1, resp.pyquery('.delete').length)
         self.assertEqual(1, resp.pyquery('#study-outcomes-edit-form').length)
-        self.assertIn('study_outcomes_detail.html', resp.templates[0].name)
+        self.assertIn('study/outcomes_detail.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAnonymousMock))
@@ -331,7 +331,7 @@ class StudyOutcomePermissionTests(BaseWebTest):
         url = reverse('study_outcomes_edit', kwargs={'pk': study.pk})
         resp = self.app.post(url)
         self.assertEqual(200, resp.status_int)
-        self.assertIn('study_outcomes_detail.html', resp.templates[0].name)
+        self.assertIn('study/outcomes_detail.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserViewerMock))
@@ -357,7 +357,7 @@ class StudyOutcomePermissionTests(BaseWebTest):
         url = reverse('study_outcomes_edit', kwargs={'pk': study.pk})
         resp = self.app.post(url)
         self.assertEqual(200, resp.status_int)
-        self.assertIn('study_outcomes_detail.html', resp.templates[0].name)
+        self.assertIn('study/outcomes_detail.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAnonymousMock))
@@ -378,7 +378,7 @@ class StudyOutcomePermissionTests(BaseWebTest):
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
         self.assertEqual(1, resp.pyquery('.actions').length)
-        self.assertIn('study_outcome_detail.html', resp.templates[0].name)
+        self.assertIn('study/outcome_detail.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserViewerMock))
@@ -390,7 +390,7 @@ class StudyOutcomePermissionTests(BaseWebTest):
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
         self.assertEqual(0, resp.pyquery('.actions').length)
-        self.assertIn('study_outcome_detail.html', resp.templates[0].name)
+        self.assertIn('study/outcome_detail.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserContributorMock))
@@ -402,7 +402,7 @@ class StudyOutcomePermissionTests(BaseWebTest):
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
         self.assertEqual(0, resp.pyquery('.actions').length)
-        self.assertIn('study_outcome_detail.html', resp.templates[0].name)
+        self.assertIn('study/outcome_detail.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserContributorMock))
@@ -414,7 +414,7 @@ class StudyOutcomePermissionTests(BaseWebTest):
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
         self.assertEqual(1, resp.pyquery('.actions').length)
-        self.assertIn('study_outcome_detail.html', resp.templates[0].name)
+        self.assertIn('study/outcome_detail.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAnonymousMock))
@@ -436,7 +436,7 @@ class StudyOutcomePermissionTests(BaseWebTest):
                       kwargs={'pk': study.pk, 'outcome_pk': outcome.pk})
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
-        self.assertIn('study_outcome_edit.html', resp.templates[0].name)
+        self.assertIn('study/outcome_edit.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserViewerMock))
@@ -468,7 +468,7 @@ class StudyOutcomePermissionTests(BaseWebTest):
                       kwargs={'pk': study.pk, 'outcome_pk': outcome.pk})
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
-        self.assertIn('study_outcome_edit.html', resp.templates[0].name)
+        self.assertIn('study/outcome_edit.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAnonymousMock))
@@ -490,7 +490,7 @@ class StudyOutcomePermissionTests(BaseWebTest):
                       kwargs={'pk': study.pk, 'outcome_pk': outcome.pk})
         resp = self.app.post(url)
         self.assertEqual(200, resp.status_int)
-        self.assertIn('study_outcome_edit.html', resp.templates[0].name)
+        self.assertIn('study/outcome_edit.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserViewerMock))
@@ -522,7 +522,7 @@ class StudyOutcomePermissionTests(BaseWebTest):
                       kwargs={'pk': study.pk, 'outcome_pk': outcome.pk})
         resp = self.app.post(url)
         self.assertEqual(200, resp.status_int)
-        self.assertIn('study_outcome_edit.html', resp.templates[0].name)
+        self.assertIn('study/outcome_edit.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAnonymousMock))

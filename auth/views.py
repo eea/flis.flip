@@ -53,3 +53,17 @@ class EditPermissionRequiredMixin(object):
             return render(request, 'restricted.html')
 
         return dispatch()
+
+
+class AdminPermissionRequiredMixin(object):
+
+    def dispatch(self, request, *args, **kwargs):
+        dispatch = partial(super(AdminPermissionRequiredMixin, self).dispatch,
+                           request, *args, **kwargs)
+        if settings.SKIP_EDIT_AUTH:
+            return dispatch()
+
+        if not (request.user_id and is_admin(request)):
+            return render(request, 'restricted.html')
+
+        return dispatch()
