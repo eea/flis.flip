@@ -25,6 +25,10 @@ settings_urls = patterns(
         views.SettingsPhasesOfPolicyEditView.as_view(),
         name='phases_of_policy_edit'),
 
+    url(r'^phases_of_policy/(?P<pk>\d+)/delete$',
+        views.SettingsPhasesOfPolicyDeleteView.as_view(),
+        name='phases_of_policy_delete'),
+
 )
 
 

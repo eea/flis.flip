@@ -42,6 +42,7 @@ class StudyMetadaTests(BaseWebTest):
         data['title'] = 'new title'
         self.populate_fields(form, self.normalize_data(data))
         form.submit().follow()
+        self.assertEqual(1, Study.objects.count())
         self.assertObjectInDatabase(Study,
                                     title=data['title'],
                                     blossom=Study.NO,

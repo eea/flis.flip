@@ -14,8 +14,14 @@
   {% include '_messages.html' %}
   {% include '_studies_nav.html' %}
 
+  {% if object %}
+    {% url 'settings:phases_of_policy_delete' pk=object.pk as delete_url %}
+    <div class="actions">
+      <a href="{{ delete_url }}" class="btn btn-danger">Delete</a>
+    </div>
+  {% endif %}
 
-  <form id="phases-of-policy-form" method="POST" role="form">
+  <form id="policy-form" method="POST" role="form">
 
     {% csrf_token %}
 

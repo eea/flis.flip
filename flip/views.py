@@ -284,19 +284,19 @@ class StudiesView(LoginRequiredMixin,
     def get_queryset(self):
         queryset = models.Study.objects.all()
         blossom = self.request.GET.get('blossom')
-        phases_of_policy = self.request.GET.get('phases_of_policy')
+        policy = self.request.GET.get('policy')
         if blossom:
             queryset = queryset.filter(blossom=blossom)
-            if phases_of_policy:
-                queryset = queryset.filter(phases_of_policy=phases_of_policy)
+            if policy:
+                queryset = queryset.filter(policy=policy)
         return queryset
 
     def get_context_data(self, **kwargs):
         context = {}
         context['filter_form'] = forms.FilterForm(self.request.GET)
         context['blossom_filter'] = self.request.GET.get('blossom')
-        context['phases_of_policy_filter'] = \
-            self.request.GET.get('phases_of_policy_filter')
+        context['policy_filter'] = \
+            self.request.GET.get('policy_filter')
         context.update(kwargs)
         return super(StudiesView, self).get_context_data(**context)
 
@@ -310,20 +310,20 @@ class MyEntriesView(LoginRequiredMixin,
     def get_queryset(self):
         queryset = models.Study.objects.all()
         blossom = self.request.GET.get('blossom')
-        phases_of_policy = self.request.GET.get('phases_of_policy')
+        policy = self.request.GET.get('policy')
         queryset = queryset.filter(user_id=self.request.user_id)
         if blossom:
             queryset = queryset.filter(blossom=blossom)
-            if phases_of_policy:
-                queryset = queryset.filter(phases_of_policy=phases_of_policy)
+            if policy:
+                queryset = queryset.filter(policy=policy)
         return queryset
 
     def get_context_data(self, **kwargs):
         context = {}
         context['filter_form'] = forms.FilterForm(self.request.GET)
         context['blossom_filter'] = self.request.GET.get('blossom')
-        context['phases_of_policy_filter'] = \
-            self.request.GET.get('phases_of_policy_filter')
+        context['policy_filter'] = \
+            self.request.GET.get('policy_filter')
         context.update(kwargs)
         return super(MyEntriesView, self).get_context_data(**context)
 
@@ -333,7 +333,7 @@ class SettingsPhasesOfPolicyView(LoginRequiredMixin,
                                  generic.ListView):
 
     model = models.PhasesOfPolicy
-    template_name = 'settings/phases_of_policy.html'
+    template_name = 'settings/policy.html'
 
 
 
@@ -343,7 +343,7 @@ class SettingsPhasesOfPolicyAddView(LoginRequiredMixin,
                                     generic.CreateView):
 
     model = models.PhasesOfPolicy
-    template_name = 'settings/phases_of_policy_edit.html'
+    template_name = 'settings/policy_edit.html'
     success_message = 'Policy added successfully'
 
     def get_success_url(self):
@@ -356,8 +356,20 @@ class SettingsPhasesOfPolicyEditView(LoginRequiredMixin,
                                      generic.UpdateView):
 
     model = models.PhasesOfPolicy
-    template_name = 'settings/phases_of_policy_edit.html'
+    template_name = 'settings/policy_edit.html'
     success_message = 'Policy updated successfully'
 
     def get_success_url(self):
         return reverse('settings:phases_of_policy')
+
+
+class SettingsPhasesOfPolicyDeleteView(LoginRequiredMixin,
+                                       AdminPermissionRequiredMixin,
+                                       generic.DeleteView):
+
+    model = models.PhasesOfPolicy
+    template_name = 'settings/policy_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse('settings:phases_of_policy')
+

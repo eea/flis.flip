@@ -10,7 +10,7 @@ from .base import PhasesOfPolicyFactory
 
 
 @override_settings(SKIP_EDIT_AUTH=False, FRAME_URL=True)
-class SettingsPermissionTests(BaseWebTest):
+class SettingsPolicyPermissionTests(BaseWebTest):
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAdminMock))
@@ -18,7 +18,7 @@ class SettingsPermissionTests(BaseWebTest):
         url = reverse('settings:phases_of_policy')
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
-        self.assertIn('settings/phases_of_policy.html', resp.templates[0].name)
+        self.assertIn('settings/policy.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAnonymousMock))
@@ -50,7 +50,7 @@ class SettingsPermissionTests(BaseWebTest):
         url = reverse('settings:phases_of_policy_edit')
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
-        self.assertIn('settings/phases_of_policy_edit.html', resp.templates[0].name)
+        self.assertIn('settings/policy_edit.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAnonymousMock))
@@ -82,7 +82,7 @@ class SettingsPermissionTests(BaseWebTest):
         url = reverse('settings:phases_of_policy_edit')
         resp = self.app.post(url)
         self.assertEqual(200, resp.status_int)
-        self.assertIn('settings/phases_of_policy_edit.html', resp.templates[0].name)
+        self.assertIn('settings/policy_edit.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAnonymousMock))
@@ -116,7 +116,7 @@ class SettingsPermissionTests(BaseWebTest):
                       kwargs={'pk': policy.pk})
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
-        self.assertIn('settings/phases_of_policy_edit.html', resp.templates[0].name)
+        self.assertIn('settings/policy_edit.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAnonymousMock))
@@ -156,7 +156,7 @@ class SettingsPermissionTests(BaseWebTest):
                       kwargs={'pk': policy.pk})
         resp = self.app.post(url)
         self.assertEqual(200, resp.status_int)
-        self.assertIn('settings/phases_of_policy_edit.html', resp.templates[0].name)
+        self.assertIn('settings/policy_edit.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAnonymousMock))
