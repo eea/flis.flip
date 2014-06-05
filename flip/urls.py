@@ -29,6 +29,21 @@ settings_urls = patterns(
         views.SettingsPhasesOfPolicyDeleteView.as_view(),
         name='phases_of_policy_delete'),
 
+    url(r'^foresight_approaches/$',
+        views.SettingsForesightApproachesView.as_view(),
+        name='foresight_approaches'),
+
+    url(r'^foresight_approaches/new$',
+        views.SettingsForesightApproachesAddView.as_view(),
+        name='foresight_approaches_edit'),
+
+    url(r'^foresight_approaches/(?P<pk>\d+)/edit$',
+        views.SettingsForesightApproachesEditView.as_view(),
+        name='foresight_approaches_edit'),
+
+    url(r'^foresight_approaches/(?P<pk>\d+)/delete$',
+        views.SettingsForesightApproachesDeleteView.as_view(),
+        name='foresight_approaches_delete'),
 )
 
 

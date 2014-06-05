@@ -88,6 +88,13 @@ class PhasesOfPolicyFactory(DjangoModelFactory):
     title = fuzzy.FuzzyText()
 
 
+class ForesightApproachesFactory(DjangoModelFactory):
+
+    FACTORY_FOR = 'flip.ForesightApproaches'
+
+    title = fuzzy.FuzzyText()
+
+
 class EnvironmentalThemeFactory(DjangoModelFactory):
 
     FACTORY_FOR = 'flip.EnvironmentalTheme'

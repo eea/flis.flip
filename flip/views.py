@@ -336,7 +336,6 @@ class SettingsPhasesOfPolicyView(LoginRequiredMixin,
     template_name = 'settings/policy.html'
 
 
-
 class SettingsPhasesOfPolicyAddView(LoginRequiredMixin,
                                     AdminPermissionRequiredMixin,
                                     SuccessMessageMixin,
@@ -372,4 +371,49 @@ class SettingsPhasesOfPolicyDeleteView(LoginRequiredMixin,
 
     def get_success_url(self):
         return reverse('settings:phases_of_policy')
+
+
+class SettingsForesightApproachesView(LoginRequiredMixin,
+                                      AdminPermissionRequiredMixin,
+                                      generic.ListView):
+
+    model = models.ForesightApproaches
+    template_name = 'settings/foresight_approaches.html'
+
+
+class SettingsForesightApproachesAddView(LoginRequiredMixin,
+                                         AdminPermissionRequiredMixin,
+                                         SuccessMessageMixin,
+                                         generic.CreateView):
+
+    model = models.ForesightApproaches
+    template_name = 'settings/foresight_approaches_edit.html'
+    success_message = 'Approach updated successfully'
+
+    def get_success_url(self):
+        return reverse('settings:foresight_approaches')
+
+
+class SettingsForesightApproachesEditView(LoginRequiredMixin,
+                                          AdminPermissionRequiredMixin,
+                                          SuccessMessageMixin,
+                                          generic.UpdateView):
+
+    model = models.ForesightApproaches
+    template_name = 'settings/foresight_approaches_edit.html'
+    success_message = 'Approach updated successfully'
+
+    def get_success_url(self):
+        return reverse('settings:foresight_approaches')
+
+
+class SettingsForesightApproachesDeleteView(LoginRequiredMixin,
+                                            AdminPermissionRequiredMixin,
+                                            generic.DeleteView):
+
+    model = models.ForesightApproaches
+    template_name = 'settings/foresight_approaches_confirm.html'
+
+    def get_success_url(self):
+        return reverse('settings:foresight_approaches')
 

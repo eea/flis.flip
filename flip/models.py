@@ -189,6 +189,9 @@ class ForesightApproaches(Model):
 
     title = CharField(max_length=128)
 
+    class Meta:
+        ordering = ('-pk',)
+
     def __unicode__(self):
         return self.title
 
