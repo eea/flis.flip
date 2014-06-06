@@ -124,3 +124,7 @@ a {
 .legend li{
     margin-bottom: 1em;
 }
+
+li.right-float ul.dropdown-menu{
+     margin-left: -80px;
+}
