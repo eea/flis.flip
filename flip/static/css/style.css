@@ -82,11 +82,11 @@ a {
 }
 
 .right-float{
-    float: right;
+    float: right !important;
 }
 
 .left-float{
-    float: left;
+    float: left !important;
 }
 
 .btn-primary{

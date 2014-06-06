@@ -1,11 +1,5 @@
 {% load utils %}
 
-<div class="text-right right-float">
-  <a class="btn btn-primary" href="{% url 'study_metadata_edit' %}">
-    New study
-  </a>
-</div>
-
 <ul class="nav nav-tabs nav-study">
 
   <li class="{% active '$' %}">
@@ -21,9 +15,13 @@
     <a href="{% url 'my_entries' %}">My entries</a>
   </li>
 
+  <li class="{% active 'studies/new/$' %}">
+    <a href="{% url 'study_metadata_edit' %}">New study</a>
+  </li>
+
   {% is_admin as is_admin %}
   {% if is_admin %}
-  <li class="{% active 'settings/(.+)$' %}">
+  <li class="{% active 'settings/(.+)$' %} right-float">
     <a class="dropdown-toggle" data-toggle="dropdown">
       Settings <span class="caret"></span></a>
 
