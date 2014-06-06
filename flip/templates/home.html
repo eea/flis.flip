@@ -12,9 +12,10 @@
 {% block content %}
   {% include '_studies_nav.html' %}
 
-  <div class="radial-layout">
+  <p>Clicking on either of the 5 policy cycle stages will lead to a filtered listing of the studies by that stage.</p>
+  <div class="radial-layout left-float">
     <div class="radial-content">
-      <div class="item-0">
+      <div class="item-0 white">
         <strong>Forward-looking information and services knowledge base FLIS</strong>
         <ul class="no-list">
           <li>Communication of results</li>
@@ -29,41 +30,46 @@
       <ol id="cycle">
         <li class="item-1">
           <a href="{% url 'studies_overview' %}?&blossom=1&phases_of_policy=1" class="item-content">
-            <strong>Problem definition</strong>
+            <strong class="red">1. Problem definition</strong>
             <div class="item-hover">
-              <p>Timely identification of issues that should alert and frame decision making, issue framing, management of uncertainty and complexity, exploratory identification of strategic information (not necessary leading to agenda setting): Connection to research and business goals and new paradigms.</p>
+              <p class="red">Timely identification of issues that should alert and frame decision making, issue framing, management of uncertainty and complexity, exploratory identification of strategic information (not necessary leading to agenda setting): Connection to research and business goals and new paradigms.</p>
+              <p class="black"><strong>Environment scanning for typically emerging new  trends  and issues, uncertainties, wild cards, weak signals</strong> (expert polling, scanning of  documentary sources, issue surveys, SWOT, scenarios – explorative..). <strong>Seeking for new and innovative approaches to tackle identified problems (for example form phase 5). Driving forces analyses (ie. Trends/megatrends analyses)</strong></p>
             </div>
           </a>
         </li>
         <li class="item-2">
           <a href="{% url 'studies_overview' %}?&blossom=1&phases_of_policy=2" class="item-content">
-            <strong>Agenda setting</strong>
+            <strong class="red">2. Agenda setting</strong>
             <div class="item-hover">
-              <p>Identifying issues for policy attention, structuring, priority setting, initiation of innovation processes, Build on issues in stage 1 and support policy discussion in a structured ways (however final policy decision are normally results of many divergent also non-professional factors). Stakeholder participation and communication of knowledge are important in this phase: Assessment of alternative and desired scenarios, tipping points, wild cards, uncertainties, risks and opportunities</p>
+              <p class="red">Identifying issues for policy attention, structuring, priority setting, initiation of innovation processes, Build on issues in stage 1 and support policy discussion in a structured ways (however final policy decision are normally results of many divergent also non-professional factors). Stakeholder participation and communication of knowledge are important in this phase;</p>
+              <p class="black"><strong>Assessment of alternative and desired scenarios, tipping points, wild cards, uncertainties, risks and opportunities</strong></p>
             </div>
           </a>
         </li>
         <li class="item-3">
           <a href="{% url 'studies_overview' %}?&blossom=1&phases_of_policy=3" class="item-content">
-            <strong>Policy development</strong>
+            <strong class="red">3. Policy development</strong>
             <div class="item-hover">
-              <p>Policy issues are transformed into policy programs, strategies, measures etc. Here forward-looking information helps improving strategic competence &amp; policy coherence; Ex ante analyses, normative approaches (visions, normative scenarios, road mapping), strategies/programs/plans, alternative pathways, transitions, scenarios analyses (policy alternatives, impacts, risks, wild cards, forecasts/outlooks), back casting, long-term (regulatory) impact assessment of policies</p>
+              <p class="red">Policy issues are transformed into policy programs, strategies, measures etc. Here forward-looking information helps improving strategic competence &amp; policy coherence;</p>
+              <p class="black"><strong>Ex ante analyses, normative approaches (visions, normative scenarios, road mapping), strategies/programs/plans, alternative pathways, transitions, scenarios analyses</strong> (policy alternatives, impacts, risks, wild cards, forecasts/outlooks), <strong>back casting, long-term (regulatory) impact assessment of policies</strong></p>
             </div>
           </a>
         </li>
         <li class="item-4">
           <a href="{% url 'studies_overview' %}?&blossom=1&phases_of_policy=4" class="item-content">
-            <strong>Policy implementation</strong>
+            <strong class="red">4. Policy implementation</strong>
             <div class="item-hover">
-              <p>Good policy programme doesn’t ensure good outcome. Execution and enforcement (Specification of policies in term of means, responsibilities and financial resources) are crucial to deliver outcomes.  Institutions, processes and other mechanisms are important in this phase. Forward-looking information can help improving strategic coordination &amp; communication. Scenarios analyses- prioritisation, actors involvement and risk  management, roadmaps</p>
+              <p class="red">Good policy programme doesn’t ensure good outcome. Execution and enforcement (Specification of policies in term of means, responsibilities and financial resources) are crucial to deliver outcomes.  Institutions, processes and other mechanisms are important in this phase. Forward-looking information can help improving strategic coordination &amp; communication.</p>
+              <p><strong>Scenarios analyses- prioritisation, actors involvement and risk  management, roadmaps</strong></p>
             </div>
           </a>
         </li>
         <li class="item-5">
           <a href="{% url 'studies_overview' %}?&blossom=1&phases_of_policy=5" class="item-content">
-            <strong>Policy evaluation</strong>
+            <strong class="red">5. Policy evaluation</strong>
             <div class="item-hover">
-              <p>checking of existing policies- lessons learned, new developments, and evaluation of all policy cycling phases. It provides  link to research needs, to public. Stakeholder involvements is again very important, as evaluation needs to reach out of politics realm. Forward-looking information can facilitate policy adaptation and learning and establishing close link to phase 1. Ex-ante and ex-post analyses, wind tunnelling of existing policies and policy impact assessments, forecasting- distance to target analyses,  back casting, uncertainties   analyses, transitions management (visions analyses, SWOT.</p>
+              <p class="red">checking of existing policies- lessons learned, new developments, and evaluation of all policy cycling phases. It provides  link to research needs, to public. Stakeholder involvements is again very important, as evaluation needs to reach out of politics realm. Forward-looking information can facilitate policy adaptation and learning and establishing close link to phase 1.</p>
+              <p><strong>Ex-ante and ex-post analyses, wind tunnelling of existing policies and policy impact assessments, forecasting- distance to target analyses,  back casting, uncertainties   analyses, transitions management (visions analyses, SWOT.</strong></p>
             </div>
           </a>
         </li>
@@ -71,4 +77,13 @@
 
     </div>
   </div>
+  <div class="legend grey">
+    <strong>LEGEND:</strong>
+    <ul class="no-list">
+      <li><strong>Numbers:</strong> 5 stages of policy cycles - identified in the inner graphics</li>
+      <li><strong class="red">Red text:</strong>  main aim of the stage (preferably in relation to FLI)</li>
+      <li><strong class="black">Black text:</strong>  specific types of FLI relevant for the stage. Now is inserted all relevant but we have to select that one <strong class="black">(bold)</strong> which we can link with entries in the tool FLIP (use of forward-looking information for policy)</li>
+      <li><strong class="blue">Centre blue:</strong>  common issues linked to information system, networking, processes, governance, and other crosscutting issues</li>
+  </div>
+
 {% endblock %}

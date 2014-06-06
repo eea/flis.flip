@@ -85,6 +85,42 @@ a {
     float: right;
 }
 
+.left-float{
+    float: left;
+}
+
 .btn-primary{
     color: white !important;
+}
+
+.red{
+    color: red;
+}
+
+.blue{
+    color: #0061a2;
+}
+
+.black{
+    color: black;
+}
+
+.grey{
+    color: #495b6b;
+    background: #fff !important;
+}
+
+.white{
+    color: #fff;
+}
+
+.legend{
+    border: 1px solid black;
+    padding: 1em;
+    margin-left: 580px;
+    max-width: 400px;
+}
+
+.legend li{
+    margin-bottom: 1em;
 }
