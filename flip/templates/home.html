@@ -1,5 +1,74 @@
 {% extends '_layout.html' %}
+{% load assets %}
+
+
+{% block extra_head %}
+  {% assets "home_css" %}
+    <link href="{{ ASSET_URL }}" rel="stylesheet">
+  {% endassets %}
+{% endblock %}
 
 
 {% block content %}
+  {% include '_studies_nav.html' %}
+
+  <div class="radial-layout">
+    <div class="radial-content">
+      <div class="item-0">
+        <strong>Forward-looking information and services knowledge base FLIS</strong>
+        <ul class="no-list">
+          <li>Communication of results</li>
+          <li>Foresight methods used</li>
+          <li>Government practice</li>
+          <li>Policy recommendations forming </li>
+          <li>Priorities setting </li>
+          <li>Successes in use of FLI in policy</li>
+          <li>Barriers in use of FLI in policy</li>
+        </ul>
+      </div>
+      <ol id="cycle">
+        <li class="item-1">
+          <a href="{% url 'studies_overview' %}?&blossom=1&phases_of_policy=1" class="item-content">
+            <strong>Problem definition</strong>
+            <div class="item-hover">
+              <p>Timely identification of issues that should alert and frame decision making, issue framing, management of uncertainty and complexity, exploratory identification of strategic information (not necessary leading to agenda setting): Connection to research and business goals and new paradigms.</p>
+            </div>
+          </a>
+        </li>
+        <li class="item-2">
+          <a href="{% url 'studies_overview' %}?&blossom=1&phases_of_policy=2" class="item-content">
+            <strong>Agenda setting</strong>
+            <div class="item-hover">
+              <p>Identifying issues for policy attention, structuring, priority setting, initiation of innovation processes, Build on issues in stage 1 and support policy discussion in a structured ways (however final policy decision are normally results of many divergent also non-professional factors). Stakeholder participation and communication of knowledge are important in this phase: Assessment of alternative and desired scenarios, tipping points, wild cards, uncertainties, risks and opportunities</p>
+            </div>
+          </a>
+        </li>
+        <li class="item-3">
+          <a href="{% url 'studies_overview' %}?&blossom=1&phases_of_policy=3" class="item-content">
+            <strong>Policy development</strong>
+            <div class="item-hover">
+              <p>Policy issues are transformed into policy programs, strategies, measures etc. Here forward-looking information helps improving strategic competence &amp; policy coherence; Ex ante analyses, normative approaches (visions, normative scenarios, road mapping), strategies/programs/plans, alternative pathways, transitions, scenarios analyses (policy alternatives, impacts, risks, wild cards, forecasts/outlooks), back casting, long-term (regulatory) impact assessment of policies</p>
+            </div>
+          </a>
+        </li>
+        <li class="item-4">
+          <a href="{% url 'studies_overview' %}?&blossom=1&phases_of_policy=4" class="item-content">
+            <strong>Policy implementation</strong>
+            <div class="item-hover">
+              <p>Good policy programme doesn’t ensure good outcome. Execution and enforcement (Specification of policies in term of means, responsibilities and financial resources) are crucial to deliver outcomes.  Institutions, processes and other mechanisms are important in this phase. Forward-looking information can help improving strategic coordination &amp; communication. Scenarios analyses- prioritisation, actors involvement and risk  management, roadmaps</p>
+            </div>
+          </a>
+        </li>
+        <li class="item-5">
+          <a href="{% url 'studies_overview' %}?&blossom=1&phases_of_policy=5" class="item-content">
+            <strong>Policy evaluation</strong>
+            <div class="item-hover">
+              <p>checking of existing policies- lessons learned, new developments, and evaluation of all policy cycling phases. It provides  link to research needs, to public. Stakeholder involvements is again very important, as evaluation needs to reach out of politics realm. Forward-looking information can facilitate policy adaptation and learning and establishing close link to phase 1. Ex-ante and ex-post analyses, wind tunnelling of existing policies and policy impact assessments, forecasting- distance to target analyses,  back casting, uncertainties   analyses, transitions management (visions analyses, SWOT.</p>
+            </div>
+          </a>
+        </li>
+      </ol>
+
+    </div>
+  </div>
 {% endblock %}

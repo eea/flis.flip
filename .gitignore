@@ -2,3 +2,4 @@ local_settings.py
 /media
 /fabfile/supervisord.conf
 /fabfile/env.ini
+/run

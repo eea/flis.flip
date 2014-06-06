@@ -1,12 +1,16 @@
 {% load utils %}
 
-<div class="text-right">
+<div class="text-right right-float">
   <a class="btn btn-primary" href="{% url 'study_metadata_edit' %}">
     New study
   </a>
 </div>
 
 <ul class="nav nav-tabs nav-study">
+
+  <li class="{% active '$' %}">
+    <a href="/">Home</a>
+  </li>
 
   <li class="{% active 'studies/overview/$' %}">
     <a href="{% url 'studies_overview' %}">

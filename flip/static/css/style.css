@@ -80,3 +80,11 @@ a {
 .actions {
     margin-bottom: 25px;
 }
+
+.right-float{
+    float: right;
+}
+
+.btn-primary{
+    color: white !important;
+}

@@ -2,6 +2,7 @@ from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.views.generic import TemplateView
 
 from flip import views
 
@@ -99,8 +100,7 @@ urlpatterns = patterns(
     '',
 
     url(r'^$',
-        views.StudiesView.as_view(),
-        name='studies_overview'),
+        TemplateView.as_view(template_name="home.html")),
 
     url(r'^studies/overview/$',
         views.StudiesView.as_view(),
