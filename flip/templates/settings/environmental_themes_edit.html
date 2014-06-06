@@ -1,0 +1,52 @@
+{% extends '_layout.html' %}
+{% load widget_tweaks %}
+
+
+{% block title %}
+
+  {{ block.super }} -  Settings (Environmental Themes)
+
+{% endblock %}
+
+
+{% block content %}
+
+  {% include '_messages.html' %}
+  {% include '_studies_nav.html' %}
+
+  {% if object %}
+    {% url 'settings:environmental_themes_delete' pk=object.pk as delete_url %}
+    <div class="actions">
+      <a href="{{ delete_url }}" class="btn btn-danger">Delete</a>
+    </div>
+  {% endif %}
+
+  <form id="environmental-themes-form" method="POST" role="form">
+
+    {% csrf_token %}
+
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-9">
+          {{ form.title.label_tag }}
+          {% if form.title.field.required %}
+            <span class="required">*</span>
+          {% endif %}
+
+          {% render_field form.title class='form-control' %}
+          {% if form.title.errors %}
+            <p class="text-danger">
+              <small>{{ form.title.errors.0 }}</small></p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group form-footer" style="margin-bottom: 0">
+      <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+
+
+  </form>
+
+{% endblock %}

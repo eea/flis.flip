@@ -1,0 +1,48 @@
+{% extends '_layout.html' %}
+
+
+{% block title %}
+
+  {{ block.super }} -  Settings (Geographical Scopes)
+
+{% endblock %}
+
+
+{% block content %}
+
+  {% include '_messages.html' %}
+  {% include '_studies_nav.html' %}
+
+  {% url 'settings:geographical_scopes_edit' as add_url %}
+  <div class="actions">
+    <a href="{{ add_url }}" class="btn btn-primary">Add new scope</a>
+  </div>
+
+  {% if object_list %}
+
+    <table id="settings" width="100%"
+           class="table table-condensed table-bordered table-hover">
+
+      <thead>
+        <tr>
+          <th>Title</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for object in object_list %}
+          {% url 'settings:geographical_scopes_edit' pk=object.pk as edit_url %}
+          <tr>
+            <td>
+              <a href="{{ edit_url }}">{{ object.title }}</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+
+    </table>
+
+  {% endif %}
+
+
+{% endblock%}

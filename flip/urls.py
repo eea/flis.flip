@@ -45,6 +45,55 @@ settings_urls = patterns(
     url(r'^foresight_approaches/(?P<pk>\d+)/delete$',
         views.SettingsForesightApproachesDeleteView.as_view(),
         name='foresight_approaches_delete'),
+
+    url(r'^environmental_themes/$',
+        views.SettingsEnvironmentalThemesView.as_view(),
+        name='environmental_themes'),
+
+    url(r'^environmental_themes/new$',
+        views.SettingsEnvironmentalThemesAddView.as_view(),
+        name='environmental_themes_edit'),
+
+    url(r'^environmental_themes/(?P<pk>\d+)/edit$',
+        views.SettingsEnvironmentalThemesEditView.as_view(),
+        name='environmental_themes_edit'),
+
+    url(r'^environmental_themes/(?P<pk>\d+)/delete$',
+        views.SettingsEnvironmentalThemesDeleteView.as_view(),
+        name='environmental_themes_delete'),
+
+    url(r'^geographical_scopes/$',
+        views.SettingsGeographicalScopesView.as_view(),
+        name='geographical_scopes'),
+
+    url(r'^geographical_scopes/new$',
+        views.SettingsGeographicalScopesAddView.as_view(),
+        name='geographical_scopes_edit'),
+
+    url(r'^geographical_scopes/(?P<pk>\d+)/edit$',
+        views.SettingsGeographicalScopesEditView.as_view(),
+        name='geographical_scopes_edit'),
+
+    url(r'^geographical_scopes/(?P<pk>\d+)/delete$',
+        views.SettingsGeographicalScopesDeleteView.as_view(),
+        name='geographical_scopes_delete'),
+
+    url(r'^outcomes/$',
+        views.SettingsOutcomesView.as_view(),
+        name='outcomes'),
+
+    url(r'^outcomes/new$',
+        views.SettingsOutcomesAddView.as_view(),
+        name='outcomes_edit'),
+
+    url(r'^outcomes/(?P<pk>\d+)/edit$',
+        views.SettingsOutcomesEditView.as_view(),
+        name='outcomes_edit'),
+
+    url(r'^outcomes/(?P<pk>\d+)/delete$',
+        views.SettingsOutcomesDeleteView.as_view(),
+        name='outcomes_delete'),
+
 )
 
 

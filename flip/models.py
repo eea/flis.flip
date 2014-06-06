@@ -200,6 +200,9 @@ class EnvironmentalTheme(Model):
 
     title = CharField(max_length=128)
 
+    class Meta:
+        ordering = ('-pk',)
+
     def __unicode__(self):
         return self.title
 
@@ -208,6 +211,9 @@ class GeographicalScope(Model):
 
     title = CharField(max_length=128)
     require_country = BooleanField(default=False)
+
+    class Meta:
+        ordering = ('-pk',)
 
     def __unicode__(self):
         return self.title
@@ -225,6 +231,9 @@ class Country(Model):
 class TypeOfOutcome(Model):
 
     title = CharField(max_length=256)
+
+    class Meta:
+        ordering = ('-pk',)
 
     def __unicode__(self):
         return self.title

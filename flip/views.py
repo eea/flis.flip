@@ -417,3 +417,137 @@ class SettingsForesightApproachesDeleteView(LoginRequiredMixin,
     def get_success_url(self):
         return reverse('settings:foresight_approaches')
 
+
+class SettingsEnvironmentalThemesView(LoginRequiredMixin,
+                                      AdminPermissionRequiredMixin,
+                                      generic.ListView):
+
+    model = models.EnvironmentalTheme
+    template_name = 'settings/environmental_themes.html'
+
+
+class SettingsEnvironmentalThemesAddView(LoginRequiredMixin,
+                                         AdminPermissionRequiredMixin,
+                                         SuccessMessageMixin,
+                                         generic.CreateView):
+
+    model = models.EnvironmentalTheme
+    template_name = 'settings/environmental_themes_edit.html'
+    success_message = 'Theme updated successfully'
+
+    def get_success_url(self):
+        return reverse('settings:environmental_themes')
+
+
+class SettingsEnvironmentalThemesEditView(LoginRequiredMixin,
+                                          AdminPermissionRequiredMixin,
+                                          SuccessMessageMixin,
+                                          generic.UpdateView):
+
+    model = models.EnvironmentalTheme
+    template_name = 'settings/environmental_themes_edit.html'
+    success_message = 'Theme updated successfully'
+
+    def get_success_url(self):
+        return reverse('settings:environmental_themes')
+
+
+class SettingsEnvironmentalThemesDeleteView(LoginRequiredMixin,
+                                            AdminPermissionRequiredMixin,
+                                            generic.DeleteView):
+
+    model = models.EnvironmentalTheme
+    template_name = 'settings/environmental_themes_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse('settings:environmental_themes')
+
+
+class SettingsGeographicalScopesView(LoginRequiredMixin,
+                                     AdminPermissionRequiredMixin,
+                                     generic.ListView):
+
+    model = models.GeographicalScope
+    template_name = 'settings/geographical_scopes.html'
+
+
+class SettingsGeographicalScopesAddView(LoginRequiredMixin,
+                                        AdminPermissionRequiredMixin,
+                                        SuccessMessageMixin,
+                                        generic.CreateView):
+
+    model = models.GeographicalScope
+    template_name = 'settings/geographical_scopes_edit.html'
+    success_message = 'Scope updated successfully'
+
+    def get_success_url(self):
+        return reverse('settings:geographical_scopes')
+
+
+class SettingsGeographicalScopesEditView(LoginRequiredMixin,
+                                         AdminPermissionRequiredMixin,
+                                         SuccessMessageMixin,
+                                         generic.UpdateView):
+
+    model = models.GeographicalScope
+    template_name = 'settings/geographical_scopes_edit.html'
+    success_message = 'Scope updated successfully'
+
+    def get_success_url(self):
+        return reverse('settings:geographical_scopes')
+
+
+class SettingsGeographicalScopesDeleteView(LoginRequiredMixin,
+                                           AdminPermissionRequiredMixin,
+                                           generic.DeleteView):
+
+    model = models.GeographicalScope
+    template_name = 'settings/geographical_scopes_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse('settings:geographical_scopes')
+
+
+class SettingsOutcomesView(LoginRequiredMixin,
+                           AdminPermissionRequiredMixin,
+                           generic.ListView):
+
+    model = models.TypeOfOutcome
+    template_name = 'settings/outcomes.html'
+
+
+class SettingsOutcomesAddView(LoginRequiredMixin,
+                                        AdminPermissionRequiredMixin,
+                                        SuccessMessageMixin,
+                                        generic.CreateView):
+
+    model = models.TypeOfOutcome
+    template_name = 'settings/outcomes_edit.html'
+    success_message = 'Outcome updated successfully'
+
+    def get_success_url(self):
+        return reverse('settings:outcomes')
+
+
+class SettingsOutcomesEditView(LoginRequiredMixin,
+                               AdminPermissionRequiredMixin,
+                               SuccessMessageMixin,
+                               generic.UpdateView):
+
+    model = models.TypeOfOutcome
+    template_name = 'settings/outcomes_edit.html'
+    success_message = 'Outcome updated successfully'
+
+    def get_success_url(self):
+        return reverse('settings:outcomes')
+
+
+class SettingsOutcomesDeleteView(LoginRequiredMixin,
+                                 AdminPermissionRequiredMixin,
+                                 generic.DeleteView):
+
+    model = models.TypeOfOutcome
+    template_name = 'settings/outcomes_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse('settings:outcomes')

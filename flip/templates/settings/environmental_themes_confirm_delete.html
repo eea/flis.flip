@@ -1,0 +1,24 @@
+{% extends '_layout.html' %}
+
+
+{% block title %}
+
+  {{ block.super }} - Are you sure you want to delete "{{ object }}"?
+
+{% endblock %}
+
+
+{% block content %}
+
+  <h3>Are you sure you want to delete "{{ object }}"?</h3>
+  <br>
+  <form method="POST">
+
+    {% csrf_token %}
+
+    <button class="btn btn-primary">Yes</button>
+    <a href="{% url 'settings:environmental_themes_edit' pk=object.pk %}">
+      Cancel</a>
+  </form>
+
+{% endblock %}
