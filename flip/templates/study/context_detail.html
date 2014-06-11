@@ -77,7 +77,7 @@
       <th>{{ form.environmental_themes.label }}</th>
       <td>
         <ul class="list-unstyled">
-          {% for theme in environmental_themes.all %}
+          {% for theme in study.environmental_themes.all %}
             <li>{{ theme }}</li>
           {% empty %}
             <li>None</li>
