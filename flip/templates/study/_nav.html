@@ -15,16 +15,14 @@
   {% url 'study_context_detail' pk=study.pk as study_context_url %}
   {% url 'study_outcomes_detail' pk=study.pk as study_outcomes_url %}
 
-  <li class="{% active 'study/\d/context/(detail|edit)$' %}
-             {% active_if_blossom study %}">
-    {% url_if_blossom study study_context_url 'Study context' %}
+  <li class="{% active 'study/\d/context/(detail|edit)$' %}">
+    <a href="{{ study_context_url }}">Study context</a>
   </li>
 
-   <li class="{% active 'study/\d/outcomes/(edit|detail)$' %}
-              {% active 'study/\d/outcomes/\d+/(edit|detail)$' %}
-              {% active_if_blossom study %}">
-    {% url_if_blossom study study_outcomes_url 'Outcomes and activities' %}
-    </li>
+  <li class="{% active 'study/\d/outcomes/(edit|detail)$' %}
+              {% active 'study/\d/outcomes/\d+/(edit|detail)$' %}">
+    <a href="{{ study_outcomes_url }}">Outcomes and activities</a>
+  </li>
 
 </ul>
 

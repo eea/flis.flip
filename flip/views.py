@@ -134,7 +134,6 @@ class StudyContextEditView(LoginRequiredMixin,
 
 
 class StudyOutcomesDetailView(LoginRequiredMixin,
-                              StudyBlossomRequiredMixin,
                               generic.DetailView):
 
     model = models.Study

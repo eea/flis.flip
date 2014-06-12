@@ -67,26 +67,28 @@
   </div> {# panel #}
 
 
-  <div class="panel panel-default">
+  {% if study.blossom %}
+    <div id="outcome-add" class="panel panel-default">
 
-    <div class="panel-heading">
-      <b>Add information on outcome/activity</b> <br>
-      <small>You can enter your text directly and/or attach relevant files</small>
-    </div>
+      <div class="panel-heading">
+        <b>Add information on outcome/activity</b> <br>
+        <small>You can enter your text directly and/or attach relevant files</small>
+      </div>
 
-    <div class="panel-body">
+      <div class="panel-body">
 
-      {% if can_edit_study %}
-        {% url 'study_outcomes_edit' pk=object.pk as url %}
-        <form action="{{ url }}" role="form" method="POST"
-              id="study-outcomes-edit-form"
-              enctype="multipart/form-data">
-          {% include "study/_outcome_form.html" %}
-        </form>
-      {% endif %}
+        {% if can_edit_study %}
+          {% url 'study_outcomes_edit' pk=object.pk as url %}
+          <form action="{{ url }}" role="form" method="POST"
+                id="study-outcomes-edit-form"
+                enctype="multipart/form-data">
+            {% include "study/_outcome_form.html" %}
+          </form>
+        {% endif %}
 
-    </div> {# panel-body #}
+      </div> {# panel-body #}
 
-  </div> {# panel #}
+    </div> {# panel #}
+  {% endif%}
 
 {% endblock %}
