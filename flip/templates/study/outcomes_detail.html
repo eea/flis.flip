@@ -50,7 +50,7 @@
               <div class="col-md-3 text-right">
                 <a href="{{ view_url }}" class="btn btn-sm btn-primary">
                   View</a>
-                {% if can_edit_study %}
+                {% if can_edit_study and study.blossom %}
                   <a href="{{ delete_url }}"
                      class="btn btn-sm btn-danger delete">
                     Delete</a>
