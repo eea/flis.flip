@@ -107,7 +107,8 @@
     <div class="alert alert-danger">There were errors while saving this study. Please see the error messages below.</div>
   {% endif %}
 
-  <form id="study-form" method="POST" role="form">
+  <form id="study-form" method="POST" role="form"
+        data-edit-form="true">
 
     {% csrf_token %}
 

@@ -22,7 +22,8 @@
     <div class="panel-body">
       {% url 'study_outcome_edit' pk=study.pk outcome_pk=outcome.pk as url %}
       <form action="{{ url }}" method="POST"
-            enctype="multipart/form-data">
+            enctype="multipart/form-data"
+            data-edit-form="true">
         {% csrf_token %}
         {% include 'study/_outcome_form.html' %}
       </form>

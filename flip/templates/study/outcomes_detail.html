@@ -81,7 +81,8 @@
           {% url 'study_outcomes_edit' pk=object.pk as url %}
           <form action="{{ url }}" role="form" method="POST"
                 id="study-outcomes-edit-form"
-                enctype="multipart/form-data">
+                enctype="multipart/form-data"
+                data-edit-form="true">
             {% include "study/_outcome_form.html" %}
           </form>
         {% endif %}

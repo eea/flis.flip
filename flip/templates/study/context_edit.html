@@ -38,7 +38,8 @@
     <p class="text-danger">There were errors while saving this study. Please see the error messages below.</p>
   {% endif %}
 
-  <form id="study-context-form" role="form" method="POST">
+  <form id="study-context-form" role="form" method="POST"
+        data-edit-form="true">
     {% csrf_token %}
 
     <div class="panel panel-default">
