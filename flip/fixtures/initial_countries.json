@@ -21,6 +21,34 @@
     }
   },
   {
+    "pk": "ba",
+    "model": "flip.country",
+    "fields": {
+      "name": "Bosnia and Herzegovina"
+    }
+  },
+  {
+    "pk": "bg",
+    "model": "flip.country",
+    "fields": {
+      "name": "Bulgaria"
+    }
+  },
+  {
+    "pk": "hr",
+    "model": "flip.country",
+    "fields": {
+      "name": "Croatia"
+    }
+  },
+  {
+    "pk": "cy",
+    "model": "flip.country",
+    "fields": {
+      "name": "Cyprus"
+    }
+  },
+  {
     "pk": "cz",
     "model": "flip.country",
     "fields": {
@@ -28,10 +56,52 @@
     }
   },
   {
-    "pk": "ch",
+    "pk": "dk",
     "model": "flip.country",
     "fields": {
-      "name": "Switzerland"
+      "name": "Denmark"
+    }
+  },
+  {
+    "pk": "ee",
+    "model": "flip.country",
+    "fields": {
+      "name": "Estonia"
+    }
+  },
+  {
+    "pk": "fi",
+    "model": "flip.country",
+    "fields": {
+      "name": "Finland"
+    }
+  },
+  {
+    "pk": "fr",
+    "model": "flip.country",
+    "fields": {
+      "name": "France"
+    }
+  },
+  {
+    "pk": "de",
+    "model": "flip.country",
+    "fields": {
+      "name": "Germany"
+    }
+  },
+  {
+    "pk": "gr",
+    "model": "flip.country",
+    "fields": {
+      "name": "Greece"
+    }
+  },
+  {
+    "pk": "gr",
+    "model": "flip.country",
+    "fields": {
+      "name": "Greece"
     }
   },
   {
@@ -42,10 +112,73 @@
     }
   },
   {
+    "pk": "is",
+    "model": "flip.country",
+    "fields": {
+      "name": "Iceland"
+    }
+  },
+  {
     "pk": "ir",
     "model": "flip.country",
     "fields": {
       "name": "Ireland"
+    }
+  },
+  {
+    "pk": "it",
+    "model": "flip.country",
+    "fields": {
+      "name": "Italy"
+    }
+  },
+  {
+    "pk": "xk",
+    "model": "flip.country",
+    "fields": {
+      "name": "Kosovo"
+    }
+  },
+  {
+    "pk": "lv",
+    "model": "flip.country",
+    "fields": {
+      "name": "Latvia"
+    }
+  },
+  {
+    "pk": "li",
+    "model": "flip.country",
+    "fields": {
+      "name": "Liechtenstein"
+    }
+  },
+  {
+    "pk": "lt",
+    "model": "flip.country",
+    "fields": {
+      "name": "Lithuania"
+    }
+  },
+  {
+    "pk": "lu",
+    "model": "flip.country",
+    "fields": {
+      "name": "Luxembourg"
+    }
+  },
+  {
+    "pk": "mk",
+    "model": "flip.country",
+    "fields": {
+      "name": "Macedonia, FYR of"
+    }
+  },
+  {
+    "pk": "mt",
+    "model": "flip.country",
+    "fields": {
+      "name": "Malta"
     }
   },
   {
@@ -55,11 +188,26 @@
       "name": "Montenegro"
     }
   },
+
   {
-    "pk": "mk",
+    "pk": "nl",
     "model": "flip.country",
     "fields": {
-      "name": "FYR Macedonia"
+      "name": "Netherlands"
+    }
+  },
+  {
+    "pk": "no",
+    "model": "flip.country",
+    "fields": {
+      "name": "Norway"
+    }
+  },
+  {
+    "pk": "pl",
+    "model": "flip.country",
+    "fields": {
+      "name": "Poland"
     }
   },
   {
@@ -77,6 +225,13 @@
     }
   },
   {
+    "pk": "rs",
+    "model": "flip.country",
+    "fields": {
+      "name": "Serbia"
+    }
+  },
+  {
     "pk": "sk",
     "model": "flip.country",
     "fields": {
@@ -84,10 +239,46 @@
     }
   },
   {
-    "pk": "xk",
+    "pk": "si",
     "model": "flip.country",
     "fields": {
-      "name": "Kosovo"
+      "name": "Slovenia"
+    }
+  },
+  {
+    "pk": "es",
+    "model": "flip.country",
+    "fields": {
+      "name": "Spain"
+    }
+  },
+
+  {
+    "pk": "se",
+    "model": "flip.country",
+    "fields": {
+      "name": "Sweden"
+    }
+  },
+  {
+    "pk": "ch",
+    "model": "flip.country",
+    "fields": {
+      "name": "Switzerland"
+    }
+  },
+  {
+    "pk": "tr",
+    "model": "flip.country",
+    "fields": {
+      "name": "Turkey"
+    }
+  },
+  {
+    "pk": "uk",
+    "model": "flip.country",
+    "fields": {
+      "name": "United Kingdom"
     }
   }
 ]
