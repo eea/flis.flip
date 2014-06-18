@@ -96,7 +96,8 @@ class StudyContextForm(ModelForm):
         model = Study
         fields = ('draft', 'purpose_and_target', 'additional_information',
                   'phases_of_policy', 'additional_information_phase',
-                  'foresight_approaches', 'stakeholder_participation',
+                  'foresight_approaches', 'additional_information_foresight',
+                  'stakeholder_participation',
                   'additional_information_stakeholder', 'environmental_themes',
                   'geographical_scope', 'countries')
 

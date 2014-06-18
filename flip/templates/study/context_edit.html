@@ -139,6 +139,19 @@
           </div> {# row #}
         </div>
 
+        <div class="form-group">
+
+          {{ form.additional_information_foresight.label_tag }}
+          {% if form.additional_information_foresight.field.required %}
+            <span class="required">*</span>
+          {% endif %}
+          {% if form.additional_information_foresight.errors %}
+            <p class="text-danger">
+              <small>{{ form.additional_information_foresight.errors.0 }}</small></p>
+          {% endif %}
+          {% render_field form.additional_information_foresight class='form-control' %}
+        </div>
+
       </div> {# panel-body #}
     </div> {# panel #}
 

@@ -54,7 +54,20 @@
 
     <tr>
       <th>{{ form.foresight_approaches.label }}</th>
-      <td>{{ study.foresight_approaches|default:'None' }}</td>
+      <td>
+        <ul class="list-unstyled">
+          {% for foresight in study.foresight_approaches.all %}
+            <li>{{ foresight }}</li>
+          {% empty %}
+            <li>None</li>
+          {% endfor %}
+        </ul>
+      </td>
+    </tr>
+
+    <tr>
+      <th>{{ form.additional_information_foresight.label }}</th>
+      <td>{{ study.additional_information_foresight|default:'None' }}</td>
     </tr>
 
     <tr>

@@ -98,10 +98,12 @@ class Study(Model):
          'domain of application'),
         blank=True)
 
-    foresight_approaches = ForeignKey(
+    foresight_approaches = ManyToManyField(
         'ForesightApproaches',
-        verbose_name='foresight approaches used',
-        null=True,
+        verbose_name='foresight approaches used')
+
+    additional_information_foresight = TextField(
+        'additional information',
         blank=True)
 
     stakeholder_participation = BooleanField(
