@@ -20,6 +20,22 @@
 </div> {# form-group #}
 
 <div class="form-group">
+  <div class="row">
+    <div class="col-md-7">
+      {{ form.content_topic.label_tag }}
+      {% if form.content_topic.field.required %}
+         <span class="text-danger">*</span>
+      {% endif %}
+      {% render_field form.content_topic class='form-control' %}
+      {% if form.content_topic.errors %}
+        <p class="text-danger">
+          <small>{{ form.content_topic.errors.0 }}</small></p>
+      {% endif %}
+    </div> {# col-md-7 #}
+  </div>
+</div> {# form-group #}
+
+<div class="form-group">
   <span data-toggle="popover"
         data-placement="top"
         data-content="Type in the document's title. If the document is still a draft, please mention it here."

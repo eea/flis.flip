@@ -3,70 +3,28 @@
     "model": "flip.typeofoutcome",
     "pk": 1,
     "fields": {
-      "title": "Barriers in use of forward-looking information in policy"
+      "title": "Key messages"
     }
   },
   {
     "model": "flip.typeofoutcome",
     "pk": 2,
     "fields": {
-      "title": "Communication of results"
+      "title": "Interviews"
     }
   },
   {
     "model": "flip.typeofoutcome",
     "pk": 3,
     "fields": {
-      "title": "Governance practice (governance, institutional set up, regulatory mechanism and processes, actors, culture, level of political support)"
+      "title": "Final overall report"
     }
   },
   {
     "model": "flip.typeofoutcome",
     "pk": 4,
     "fields": {
-      "title": "Stakeholders involvement"
-    }
-  },
-  {
-    "model": "flip.typeofoutcome",
-    "pk":5,
-    "fields": {
-      "title": "Successes in use of forward-looking information in policy"
-    }
-  },
-  {
-    "model": "flip.typeofoutcome",
-    "pk":6,
-    "fields": {
-      "title": "Use of future techniques"
-    }
-  },
-  {
-    "model": "flip.typeofoutcome",
-    "pk":7,
-    "fields": {
       "title": "SWOT tail diagram"
-    }
-  },
-  {
-    "model": "flip.typeofoutcome",
-    "pk":8,
-    "fields": {
-      "title": "Final overall report"
-    }
-  },
-  {
-    "model": "flip.typeofoutcome",
-    "pk":9,
-    "fields": {
-      "title": "Interviews"
-    }
-  },
-  {
-    "model": "flip.typeofoutcome",
-    "pk":10,
-    "fields": {
-      "title": "Key messages"
     }
   }
 ]
