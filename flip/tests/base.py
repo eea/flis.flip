@@ -121,6 +121,8 @@ class StudyContextFactory(Factory):
 
     geographical_scope = SubFactory(GeographicalScopeFactory)
 
+    foresight_approaches = SubFactory(ForesightApproachesFactory)
+
 
 class TypeOfOutcomeFactory(DjangoModelFactory):
 
