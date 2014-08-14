@@ -1,5 +1,4 @@
 $(function () {
-
     var alertOnExit = function () {
         if(!window.onbeforeunload) {
             window.onbeforeunload = function () {
@@ -20,12 +19,12 @@ $(function () {
     $('#id_foresight_approaches').select2({
         placeholder: "All foresight approaches"
     });
-    setupDropdownMenu1();
+    setupSubMenu();
 });
 
-function setupDropdownMenu1() {
-    var dropDown = $("#dropdownMenu1");
-    var selectedTabIdx = parseInt(dropDown.data("selected-tab"));
-    var selectedText = $(dropDown.siblings('ul').find('li a')[selectedTabIdx]).text();
-    dropDown.html(selectedText + ' <span class="caret"></span>');
+function setupSubMenu() {
+    var subMenu = $("#sub-menu");
+    var selectedTabIdx = parseInt(subMenu.data("selected-tab"));
+    var selectedTab = $(subMenu.find("li")[selectedTabIdx]);
+    selectedTab.addClass("active");
 }

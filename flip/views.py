@@ -139,6 +139,12 @@ class StudyContextEditView(LoginRequiredMixin,
         return reverse('study_context_detail',
                        kwargs={'pk': self.object.pk})
 
+    def get_context_data(self, **kwargs):
+        context = {'form': forms.StudyContextForm(),
+                   'selected_tab': 1}
+        context.update(kwargs)
+        return super(StudyContextEditView, self).get_context_data(**context)
+
 
 class StudyOutcomesDetailView(LoginRequiredMixin,
                               generic.DetailView):
