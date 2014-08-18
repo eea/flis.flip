@@ -6,22 +6,14 @@
   <a href="{% url 'home_view' %}">Home</a>
   </li>
 
-  <li class="{% active 'studies/overview/$' %}">
+  <li class="{% active 'studies/' %}">
     <a href="{% url 'studies_overview' %}">
       Studies overview</a>
   </li>
 
-  <li class="{% active 'studies/my-entries/$' %}">
-    <a href="{% url 'my_entries' %}">My entries</a>
-  </li>
-
-  <li class="{% active 'study/new/$' %}">
-    <a href="{% url 'study_metadata_edit' %}">New study</a>
-  </li>
-
   {% is_admin as is_admin %}
   {% if is_admin %}
-  <li class="{% active 'settings/(.+)$' %} right-float">
+  <li class="{% active 'settings/(.+)$' %}">
     <a class="dropdown-toggle" data-toggle="dropdown">
       Settings <span class="caret"></span></a>
 

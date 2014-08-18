@@ -66,6 +66,12 @@ class StudyMetadataAddView(LoginRequiredMixin,
         return reverse('study_metadata_edit',
                        kwargs={'pk': self.object.pk})
 
+    def get_context_data(self, **kwargs):
+        context = {'selected_tab': 0,
+                   'cancel_url': reverse('studies_overview')}
+        context.update(kwargs)
+        return super(StudyMetadataAddView, self).get_context_data(**context)
+
 
 class StudyMetadataDetailView(LoginRequiredMixin,
                               generic.DetailView):
@@ -306,44 +312,16 @@ class StudiesView(LoginRequiredMixin,
     template_name = 'studies_overview.html'
 
     def get_queryset(self):
-        queryset = models.Study.objects.all()
-        self.blossom = self.request.GET.get('blossom')
-        self.phase_of_policy = self.request.GET.get('phase_of_policy')
-        self.foresight_approaches = self.request.GET.getlist('foresight_approaches')
-        if self.blossom:
-            queryset = queryset.filter(blossom=self.blossom)
-            if self.phase_of_policy:
-                queryset = queryset.filter(phase_of_policy=self.phase_of_policy)
-            if self.foresight_approaches:
-                queryset = queryset.filter(
-                    foresight_approaches__in=self.foresight_approaches
-                ).distinct()
-        return queryset
-
-    def get_context_data(self, **kwargs):
-        context = {
-            'filter_form': forms.FilterForm(self.request.GET),
-            'filtering': any([self.blossom,
-                             self.phase_of_policy,
-                             self.foresight_approaches])
-        }
-        context.update(kwargs)
-        return super(StudiesView, self).get_context_data(**context)
-
-
-class MyEntriesView(LoginRequiredMixin,
-                    generic.ListView):
-
-    model = models.Study
-    template_name = 'my_entries.html'
-
-    def get_queryset(self):
-        queryset = models.Study.objects.all()
         self.blossom = self.request.GET.get('blossom')
         self.phase_of_policy = self.request.GET.get('phase_of_policy')
         self.foresight_approaches = self.request.GET.getlist(
             'foresight_approaches')
-        self.queryset = queryset.filter(user_id=self.request.user_id)
+        self.my_entries = self.request.GET.get('my_entries')
+
+        queryset = models.Study.objects.all()
+        if self.my_entries:
+            queryset = queryset.filter(user_id=self.request.user_id)
+
         if self.blossom:
             queryset = queryset.filter(blossom=self.blossom)
             if self.phase_of_policy:
@@ -359,10 +337,11 @@ class MyEntriesView(LoginRequiredMixin,
             'filter_form': forms.FilterForm(self.request.GET),
             'filtering': any([self.blossom,
                              self.phase_of_policy,
-                             self.foresight_approaches])
+                             self.foresight_approaches,
+                             self.my_entries])
         }
         context.update(kwargs)
-        return super(MyEntriesView, self).get_context_data(**context)
+        return super(StudiesView, self).get_context_data(**context)
 
 
 class SettingsPhasesOfPolicyView(LoginRequiredMixin,

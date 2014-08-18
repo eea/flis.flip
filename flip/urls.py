@@ -172,11 +172,7 @@ urlpatterns = patterns(
         views.StudiesView.as_view(),
         name='studies_overview'),
 
-    url(r'^studies/my-entries/$',
-        views.MyEntriesView.as_view(),
-        name='my_entries'),
-
-    url(r'^study/', include(study_urls)),
+    url(r'^studies/', include(study_urls)),
 
     url(r'^settings/', include(settings_urls, namespace='settings')),
 
