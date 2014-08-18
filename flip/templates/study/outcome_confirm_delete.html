@@ -17,7 +17,7 @@
     {% csrf_token %}
 
     <button class="btn btn-primary">Yes</button>
-    <a href="{% url 'study_outcomes_detail' pk=study.pk %}">Cancel</a>
+    <a href="{% url 'study_outcome_detail' pk=study.pk outcome_pk=outcome.pk %}">Cancel</a>
   </form>
 
 {% endblock %}

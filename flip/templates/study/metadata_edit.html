@@ -97,10 +97,10 @@
   {% include '_studies_nav.html' %}
 
   {% if study %}
-    {% include 'study/_nav.html' %}
-    <h2 class="page-title">Study metadata</h2>
-  {% else %}
     <h2 class="page-title">{{ study }}</h2>
+    {% include 'study/_nav.html' %}
+  {% else %}
+    <h2 class="page-title">Metadata</h2>
   {% endif %}
 
   {% include '_messages.html' %}

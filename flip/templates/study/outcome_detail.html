@@ -13,29 +13,15 @@
 
   {% include '_studies_nav.html' %}
 
+  <div class="page-title">
+    <h2>{{ study }}</h2>
+  </div>
+
   {% include 'study/_nav.html' %}
 
   <div class="page-header">
-    <h2>{{ outcome.document_title }}</h2>
+    <h3>{{ outcome.document_title }}</h3>
   </div>
-
-  {% can_edit_study study as can_edit_study %}
-  {% if can_edit_study and study.blossom %}
-
-    {% url 'study_outcome_edit' pk=study.pk outcome_pk=outcome.pk as edit_url %}
-    {% url 'study_outcome_delete' pk=study.pk outcome_pk=outcome.pk as delete_url %}
-
-    <ul class="list-unstyled actions">
-      <li>
-         <a href="{{ edit_url }}" class="btn btn-primary">Edit</a>
-      </li>
-      <li>
-         <a href="{{ delete_url }}" class="btn btn-danger">Delete</a>
-      </li>
-
-    </ul>
-
-  {% endif %}
 
   {% if outcome.text %}
     <div style="padding-bottom: 20px;">{{ outcome.text|linebreaks }}</div>
@@ -50,6 +36,26 @@
           {{ outcome.file_id|filename }}</a>
       </div>
     </div>
+  {% endif %}
+
+  {% can_edit_study study as can_edit_study %}
+  {% if can_edit_study and study.blossom %}
+
+    {% url 'study_outcome_edit' pk=study.pk outcome_pk=outcome.pk as edit_url %}
+    {% url 'study_outcome_delete' pk=study.pk outcome_pk=outcome.pk as delete_url %}
+
+    <ul class="list-unstyled actions">
+      <li>
+         <a href="{{ edit_url }}" class="btn btn-primary">Edit</a>
+      </li>
+      <li>
+         <a href="{{ delete_url }}" class="btn btn-danger">Delete</a>
+      </li>
+      <li>
+         <a href="{{ back_url }}" class="btn btn-link">Back to documents</a>
+      </li>
+    </ul>
+
   {% endif %}
 
 {% endblock %}
