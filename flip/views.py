@@ -296,27 +296,26 @@ class StudiesView(LoginRequiredMixin,
 
     def get_queryset(self):
         queryset = models.Study.objects.all()
-        blossom = self.request.GET.get('blossom')
-        phase_of_policy = self.request.GET.get('phase_of_policy')
-        foresight_approaches = self.request.GET.getlist('foresight_approaches')
-        if blossom:
-            queryset = queryset.filter(blossom=blossom)
-            if phase_of_policy:
-                queryset = queryset.filter(phase_of_policy=phase_of_policy)
-            if foresight_approaches:
+        self.blossom = self.request.GET.get('blossom')
+        self.phase_of_policy = self.request.GET.get('phase_of_policy')
+        self.foresight_approaches = self.request.GET.getlist('foresight_approaches')
+        if self.blossom:
+            queryset = queryset.filter(blossom=self.blossom)
+            if self.phase_of_policy:
+                queryset = queryset.filter(phase_of_policy=self.phase_of_policy)
+            if self.foresight_approaches:
                 queryset = queryset.filter(
-                    foresight_approaches__in=foresight_approaches).distinct()
+                    foresight_approaches__in=self.foresight_approaches
+                ).distinct()
         return queryset
 
     def get_context_data(self, **kwargs):
-        context = {}
-        context['filter_form'] = forms.FilterForm(self.request.GET)
-        filter_params = ['blossom', 'phase_of_policy', 'foresight_approaches']
-        context['filtering'] = False
-        for filter_param in filter_params:
-            if self.request.GET.get(filter_param):
-                context['filtering'] = True
-                break
+        context = {
+            'filter_form': forms.FilterForm(self.request.GET),
+            'filtering': any([self.blossom,
+                             self.phase_of_policy,
+                             self.foresight_approaches])
+        }
         context.update(kwargs)
         return super(StudiesView, self).get_context_data(**context)
 
@@ -329,27 +328,28 @@ class MyEntriesView(LoginRequiredMixin,
 
     def get_queryset(self):
         queryset = models.Study.objects.all()
-        blossom = self.request.GET.get('blossom')
-        phase_of_policy = self.request.GET.get('phase_of_policy')
-        foresight_approaches = self.request.GET.getlist('foresight_approaches')
-        queryset = queryset.filter(user_id=self.request.user_id)
-        if blossom:
-            queryset = queryset.filter(blossom=blossom)
-            if phase_of_policy:
-                queryset = queryset.filter(phase_of_policy=phase_of_policy)
-            if foresight_approaches:
+        self.blossom = self.request.GET.get('blossom')
+        self.phase_of_policy = self.request.GET.get('phase_of_policy')
+        self.foresight_approaches = self.request.GET.getlist(
+            'foresight_approaches')
+        self.queryset = queryset.filter(user_id=self.request.user_id)
+        if self.blossom:
+            queryset = queryset.filter(blossom=self.blossom)
+            if self.phase_of_policy:
+                queryset = queryset.filter(phase_of_policy=self.phase_of_policy)
+            if self.foresight_approaches:
                 queryset = queryset.filter(
-                    foresight_approaches__in=foresight_approaches).distinct()
+                    foresight_approaches__in=self.foresight_approaches
+                ).distinct()
         return queryset
 
     def get_context_data(self, **kwargs):
-        context = {}
-        context['filter_form'] = forms.FilterForm(self.request.GET)
-        filter_params = ['blossom', 'phase_of_policy', 'foresight_approaches']
-        context['filtering'] = False
-        for filter_param in filter_params:
-            if self.request.GET.get(filter_param):
-                context['filtering'] = True
+        context = {
+            'filter_form': forms.FilterForm(self.request.GET),
+            'filtering': any([self.blossom,
+                             self.phase_of_policy,
+                             self.foresight_approaches])
+        }
         context.update(kwargs)
         return super(MyEntriesView, self).get_context_data(**context)
 
