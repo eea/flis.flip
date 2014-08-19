@@ -19,12 +19,4 @@ $(function () {
     $('#id_foresight_approaches').select2({
         placeholder: "All foresight approaches"
     });
-    setupSubMenu();
 });
-
-function setupSubMenu() {
-    var subMenu = $("#sub-menu");
-    var selectedTabIdx = parseInt(subMenu.data("selected-tab"));
-    var selectedTab = $(subMenu.find("li")[selectedTabIdx]);
-    selectedTab.addClass("active");
-}
