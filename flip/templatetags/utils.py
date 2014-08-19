@@ -1,5 +1,6 @@
 import re
-import markup
+from datetime import datetime
+from flip.models import Study
 import os
 
 from django import template
@@ -50,3 +51,17 @@ def can_edit_study(context, study):
 @register.assignment_tag(name='is_admin', takes_context=True)
 def do_is_admin(context):
     return True if is_admin(context['request']) else False
+
+
+@register.assignment_tag(takes_context=True)
+def new_studies(context):
+    request = context['request']
+    last_viewed = request.session.get('last_viewed')
+    if not last_viewed:
+        return 0
+
+    return Study.objects.filter(
+        created_on__gt=datetime.fromtimestamp(last_viewed)
+    ).exclude(
+        user_id=request.user_id
+    ).count()

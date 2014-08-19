@@ -1,3 +1,4 @@
+import time
 
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse
@@ -302,6 +303,10 @@ class StudiesView(LoginRequiredMixin,
 
     model = models.Study
     template_name = 'studies_overview.html'
+
+    def get(self, request, *args, **kwargs):
+        request.session['last_viewed'] = time.time()
+        return super(StudiesView, self).get(request, args, kwargs)
 
     def get_queryset(self):
         self.blossom = self.request.GET.get('blossom')

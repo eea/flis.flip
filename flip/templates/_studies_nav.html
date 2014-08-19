@@ -8,7 +8,12 @@
 
   <li class="{% active 'studies/' %}">
     <a href="{% url 'studies_overview' %}">
-      Studies overview</a>
+      {% new_studies as ns %}
+      Studies overview
+      {% if ns %}
+        ({{ ns }})
+      {% endif %}
+    </a>
   </li>
 
   {% is_admin as is_admin %}
@@ -60,4 +65,3 @@
   {% endif %}
 
 </ul>
-
