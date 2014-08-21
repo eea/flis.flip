@@ -3,3 +3,4 @@ local_settings.py
 /fabfile/supervisord.conf
 /fabfile/env.ini
 /run
+*.pyc

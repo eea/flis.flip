@@ -11,6 +11,12 @@
 
 {% block content %}
 
+  {% include '_studies_nav.html' %}
+
+  <div class="page-title">
+    <h2>{{ study }}</h2>
+  </div>
+
   {% include 'study/_nav.html' %}
 
   <div class="panel panel-default">
@@ -20,8 +26,8 @@
     </div>
 
     <div class="panel-body">
-      {% url 'study_outcome_edit' pk=study.pk outcome_pk=outcome.pk as url %}
-      <form action="{{ url }}" method="POST"
+
+      <form action="{% url 'study_outcome_edit' pk=study.pk outcome_pk=outcome.pk as url %}" method="POST"
             enctype="multipart/form-data"
             data-edit-form="true">
         {% csrf_token %}

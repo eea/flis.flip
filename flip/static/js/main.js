@@ -1,5 +1,4 @@
 $(function () {
-
     var alertOnExit = function () {
         if(!window.onbeforeunload) {
             window.onbeforeunload = function () {
@@ -17,4 +16,7 @@ $(function () {
         window.onbeforeunload = null;
     });
 
+    $('#id_foresight_approaches').select2({
+        placeholder: "All foresight approaches"
+    });
 });

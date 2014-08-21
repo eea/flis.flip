@@ -11,12 +11,14 @@
 
 {% block content %}
 
-  {% include 'study/_nav.html' %}
+  {% include '_studies_nav.html' %}
 
-  <h2 class="page-title">
-    Outcomes and activities <br>
-    <small>Outcomes related to the study/activities performed, by categories</small>
-  </h2>
+  <a href="{% url 'studies_overview' %}" role="button" class="btn btn-link">
+    Back to listing
+  </a>
+  <h2 class="page-title">{{ study }}</h2>
+
+  {% include 'study/_nav.html' %}
 
   {% include '_messages.html' %}
 
@@ -34,11 +36,10 @@
       <ul class="list-unstyled outcome-list">
         {% for outcome in object.outcomes.all %}
           {% url 'study_outcome_detail' pk=object.pk outcome_pk=outcome.pk as view_url %}
-          {% url 'study_outcome_delete' pk=object.pk outcome_pk=outcome.pk as delete_url %}
           <li>
             <div class="row">
               <div class="col-md-9">
-                <p><b>{{ outcome.document_title }}</b></p>
+                <p><a href="{{ view_url }}">{{ outcome.document_title }}</a></p>
                 <p>
                   {% if outcome.text %}
                     {{ outcome.text|truncatewords:'30'|linebreaks }}
@@ -47,15 +48,6 @@
                   {% endif %}
                 </p>
               </div> {# col-md-8 #}
-              <div class="col-md-3 text-right">
-                <a href="{{ view_url }}" class="btn btn-sm btn-primary">
-                  View</a>
-                {% if can_edit_study and study.blossom %}
-                  <a href="{{ delete_url }}"
-                     class="btn btn-sm btn-danger delete">
-                    Delete</a>
-                {% endif %}
-              </div> {# col-md-4 #}
             </div> {# row #}
           </li>
         {% empty %}

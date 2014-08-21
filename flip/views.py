@@ -1,3 +1,4 @@
+import time
 
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse
@@ -66,6 +67,11 @@ class StudyMetadataAddView(LoginRequiredMixin,
         return reverse('study_metadata_edit',
                        kwargs={'pk': self.object.pk})
 
+    def get_context_data(self, **kwargs):
+        context = {'cancel_url': reverse('studies_overview')}
+        context.update(kwargs)
+        return super(StudyMetadataAddView, self).get_context_data(**context)
+
 
 class StudyMetadataDetailView(LoginRequiredMixin,
                               generic.DetailView):
@@ -100,8 +106,14 @@ class StudyMetadataEditView(LoginRequiredMixin,
                 ._clone()
             )
 
+    def get_context_data(self, **kwargs):
+        context = {'cancel_url': reverse('study_metadata_detail',
+                                         kwargs={'pk': self.object.pk})}
+        context.update(kwargs)
+        return super(StudyMetadataEditView, self).get_context_data(**context)
+
     def get_success_url(self):
-        return reverse('study_metadata_edit',
+        return reverse('study_metadata_detail',
                        kwargs={'pk': self.object.pk})
 
 
@@ -131,6 +143,13 @@ class StudyContextEditView(LoginRequiredMixin,
     def get_success_url(self):
         return reverse('study_context_detail',
                        kwargs={'pk': self.object.pk})
+
+    def get_context_data(self, **kwargs):
+        context = {'form': forms.StudyContextForm(),
+                   'cancel_url': reverse('study_context_detail',
+                                         kwargs={'pk': self.object.pk})}
+        context.update(kwargs)
+        return super(StudyContextEditView, self).get_context_data(**context)
 
 
 class StudyOutcomesDetailView(LoginRequiredMixin,
@@ -231,7 +250,9 @@ class StudyOutcomeDetailView(LoginRequiredMixin,
         return super(StudyOutcomeDetailView, self).dispatch(request, pk)
 
     def get_context_data(self, **kwargs):
-        context = {'study': self.study}
+        context = {'study': self.study,
+                   'back_url': reverse('study_outcomes_detail',
+                                         kwargs={'pk': self.study.pk})}
         context.update(kwargs)
         return super(StudyOutcomeDetailView, self).get_context_data(**context)
 
@@ -261,7 +282,10 @@ class StudyOutcomeEditView(LoginRequiredMixin,
             )
 
     def get_context_data(self, **kwargs):
-        context = {'study': self.study}
+        context = {'study': self.study,
+                   'cancel_url': reverse('study_outcome_detail',
+                                         kwargs={'pk': self.study.pk,
+                                                 'outcome_pk': self.object.pk})}
         context.update(kwargs)
         return super(StudyOutcomeEditView, self).get_context_data(**context)
 
@@ -280,51 +304,41 @@ class StudiesView(LoginRequiredMixin,
     model = models.Study
     template_name = 'studies_overview.html'
 
+    def get(self, request, *args, **kwargs):
+        request.session['last_viewed'] = time.time()
+        return super(StudiesView, self).get(request, args, kwargs)
+
     def get_queryset(self):
+        self.blossom = self.request.GET.get('blossom')
+        self.phase_of_policy = self.request.GET.get('phase_of_policy')
+        self.foresight_approaches = self.request.GET.getlist(
+            'foresight_approaches')
+        self.my_entries = self.request.GET.get('my_entries')
+
         queryset = models.Study.objects.all()
-        blossom = self.request.GET.get('blossom')
-        policy = self.request.GET.get('policy')
-        if blossom:
-            queryset = queryset.filter(blossom=blossom)
-            if policy:
-                queryset = queryset.filter(policy=policy)
+        if self.my_entries:
+            queryset = queryset.filter(user_id=self.request.user_id)
+
+        if self.blossom:
+            queryset = queryset.filter(blossom=self.blossom)
+            if self.phase_of_policy:
+                queryset = queryset.filter(phase_of_policy=self.phase_of_policy)
+            if self.foresight_approaches:
+                queryset = queryset.filter(
+                    foresight_approaches__in=self.foresight_approaches
+                ).distinct()
         return queryset
 
     def get_context_data(self, **kwargs):
-        context = {}
-        context['filter_form'] = forms.FilterForm(self.request.GET)
-        context['blossom_filter'] = self.request.GET.get('blossom')
-        context['policy_filter'] = \
-            self.request.GET.get('policy_filter')
+        context = {
+            'filter_form': forms.FilterForm(self.request.GET),
+            'filtering': any([self.blossom,
+                             self.phase_of_policy,
+                             self.foresight_approaches,
+                             self.my_entries])
+        }
         context.update(kwargs)
         return super(StudiesView, self).get_context_data(**context)
-
-
-class MyEntriesView(LoginRequiredMixin,
-                    generic.ListView):
-
-    model = models.Study
-    template_name = 'my_entries.html'
-
-    def get_queryset(self):
-        queryset = models.Study.objects.all()
-        blossom = self.request.GET.get('blossom')
-        policy = self.request.GET.get('policy')
-        queryset = queryset.filter(user_id=self.request.user_id)
-        if blossom:
-            queryset = queryset.filter(blossom=blossom)
-            if policy:
-                queryset = queryset.filter(policy=policy)
-        return queryset
-
-    def get_context_data(self, **kwargs):
-        context = {}
-        context['filter_form'] = forms.FilterForm(self.request.GET)
-        context['blossom_filter'] = self.request.GET.get('blossom')
-        context['policy_filter'] = \
-            self.request.GET.get('policy_filter')
-        context.update(kwargs)
-        return super(MyEntriesView, self).get_context_data(**context)
 
 
 class SettingsPhasesOfPolicyView(LoginRequiredMixin,
@@ -550,3 +564,48 @@ class SettingsOutcomesDeleteView(LoginRequiredMixin,
 
     def get_success_url(self):
         return reverse('settings:outcomes')
+
+
+class SettingsTopicsView(LoginRequiredMixin,
+                         AdminPermissionRequiredMixin,
+                         generic.ListView):
+
+    model = models.ContentTopic
+    template_name = 'settings/topics.html'
+
+
+class SettingsTopicAddView(LoginRequiredMixin,
+                           AdminPermissionRequiredMixin,
+                           SuccessMessageMixin,
+                           generic.CreateView):
+
+    model = models.ContentTopic
+    template_name = 'settings/topics_edit.html'
+    success_message = 'Outcome topic created successfully'
+
+    def get_success_url(self):
+        return reverse('settings:topics')
+
+
+class SettingsTopicEditView(LoginRequiredMixin,
+                            AdminPermissionRequiredMixin,
+                            SuccessMessageMixin,
+                            generic.UpdateView):
+
+    model = models.ContentTopic
+    template_name = 'settings/topics_edit.html'
+    success_message = 'Outcome topic updated successfully'
+
+    def get_success_url(self):
+        return reverse('settings:topics')
+
+
+class SettingsTopicDeleteView(LoginRequiredMixin,
+                              AdminPermissionRequiredMixin,
+                              generic.DeleteView):
+
+    model = models.ContentTopic
+    template_name = 'settings/topics_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse('settings:topics')

@@ -94,6 +94,22 @@ settings_urls = patterns(
         views.SettingsOutcomesDeleteView.as_view(),
         name='outcomes_delete'),
 
+    url(r'^topics/$',
+        views.SettingsTopicsView.as_view(),
+        name='topics'),
+
+    url(r'^topics/new$',
+        views.SettingsTopicAddView.as_view(),
+        name='topics_add'),
+
+    url(r'^topics/(?P<pk>\d+)/edit$',
+        views.SettingsTopicEditView.as_view(),
+        name='topics_edit'),
+
+    url(r'^topics/(?P<pk>\d+)/delete$',
+        views.SettingsTopicDeleteView.as_view(),
+        name='topics_delete'),
+
 )
 
 
@@ -156,11 +172,7 @@ urlpatterns = patterns(
         views.StudiesView.as_view(),
         name='studies_overview'),
 
-    url(r'^studies/my-entries/$',
-        views.MyEntriesView.as_view(),
-        name='my_entries'),
-
-    url(r'^study/', include(study_urls)),
+    url(r'^studies/', include(study_urls)),
 
     url(r'^settings/', include(settings_urls, namespace='settings')),
 

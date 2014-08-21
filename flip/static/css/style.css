@@ -143,3 +143,13 @@ li.right-float ul.dropdown-menu{
     padding: 40px 0 0 5px !important;
     margin-top: 0;
 }
+
+.dropdown-menu {
+    z-index: 10000;
+}
+
+.table>thead>tr>th, .table>tbody>tr>th,
+.table>tfoot>tr>th, .table>thead>tr>td,
+.table>tbody>tr>td, .table>tfoot>tr>td {
+    border: none;
+}

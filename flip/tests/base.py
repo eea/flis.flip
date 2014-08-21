@@ -117,9 +117,11 @@ class StudyContextFactory(Factory):
 
     purpose_and_target = fuzzy.FuzzyChoice([Study.POLICY, Study.NON_POLICY])
 
-    phases_of_policy = SubFactory(PhasesOfPolicyFactory)
+    phase_of_policy = SubFactory(PhasesOfPolicyFactory)
 
     geographical_scope = SubFactory(GeographicalScopeFactory)
+
+    foresight_approaches = SubFactory(ForesightApproachesFactory)
 
 
 class TypeOfOutcomeFactory(DjangoModelFactory):

@@ -1,10 +1,10 @@
 
-from django.forms import BooleanField
+from django.forms import BooleanField, ModelMultipleChoiceField
 from django.forms import DateField, DateInput, ChoiceField, ModelChoiceField
 from django.forms import ModelForm, Form
 from django.forms.models import BaseInlineFormSet
 
-from flip.models import Study, Outcome, PhasesOfPolicy
+from flip.models import Study, Outcome, PhasesOfPolicy, ForesightApproaches
 
 
 class StudyMetadataForm(ModelForm):
@@ -73,7 +73,7 @@ class StudyContextForm(ModelForm):
         super(StudyContextForm, self).__init__(*args, **kwargs)
 
         self.fields['purpose_and_target'].required = True
-        self.fields['phases_of_policy'].required = True
+        self.fields['phase_of_policy'].required = True
         self.fields['environmental_themes'].required = True
         self.fields['geographical_scope'].required = True
 
@@ -95,7 +95,7 @@ class StudyContextForm(ModelForm):
     class Meta:
         model = Study
         fields = ('draft', 'purpose_and_target', 'additional_information',
-                  'phases_of_policy', 'additional_information_phase',
+                  'phase_of_policy', 'additional_information_phase',
                   'foresight_approaches', 'additional_information_foresight',
                   'stakeholder_participation',
                   'additional_information_stakeholder', 'environmental_themes',
@@ -147,6 +147,11 @@ class FilterForm(Form):
         choices=BLOSSOM_FILTER_CHOICES,
         label='Filter studies by')
 
-    phases_of_policy = ModelChoiceField(
+    phase_of_policy = ModelChoiceField(
         queryset=PhasesOfPolicy.objects.all(),
         empty_label="All policy cycle steps")
+
+    foresight_approaches = ModelMultipleChoiceField(
+        queryset=ForesightApproaches.objects.all())
+
+    my_entries = BooleanField()

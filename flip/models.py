@@ -87,7 +87,7 @@ class Study(Model):
         'additional information',
         blank=True)
 
-    phases_of_policy = ForeignKey(
+    phase_of_policy = ForeignKey(
         'PhasesOfPolicy',
         verbose_name='phases of policy cycle',
         null=True,
@@ -141,6 +141,12 @@ class Outcome(Model):
     type_of_outcome = ForeignKey(
         'TypeOfOutcome',
         verbose_name='type of outcome or activity',
+        null=True,
+        blank=True)
+
+    content_topic = ForeignKey(
+        'ContentTopic',
+        verbose_name='content topic',
         null=True,
         blank=True)
 
@@ -231,6 +237,17 @@ class Country(Model):
 
 
 class TypeOfOutcome(Model):
+
+    title = CharField(max_length=256)
+
+    class Meta:
+        ordering = ('-pk',)
+
+    def __unicode__(self):
+        return self.title
+
+
+class ContentTopic(Model):
 
     title = CharField(max_length=256)
 

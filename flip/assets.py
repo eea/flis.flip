@@ -4,9 +4,11 @@ from django_assets import Bundle, register
 
 CSS_ASSETS = (
     'css/bootstrap.min.css',
-    'css/style.css',
     'css/bootstrap-datetimepicker.css',
     'css/jquery.dataTables.css',
+    'css/select2/select2.css',
+    'css/select2/select2-bootstrap.css',
+    'css/style.css',
 )
 
 
@@ -21,6 +23,7 @@ JS_ASSETS = (
     'js/lib/moment.js',
     'js/lib/bootstrap-datetimepicker.min.js',
     'js/lib/jquery.dataTables.min.js',
+    'js/lib/select2.min.js',
     'js/main.js',
 )
 
