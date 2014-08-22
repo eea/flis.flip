@@ -87,7 +87,7 @@ class Study(Model):
         'additional information',
         blank=True)
 
-    phases_of_policy = ForeignKey(
+    phase_of_policy = ForeignKey(
         'PhasesOfPolicy',
         verbose_name='phases of policy cycle',
         null=True,

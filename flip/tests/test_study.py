@@ -68,7 +68,7 @@ class StudyMetadaTests(BaseWebTest):
         self.assertObjectInDatabase(
             Study,
             purpose_and_target=data['purpose_and_target'],
-            phases_of_policy=data['phases_of_policy'],
+            phase_of_policy=data['phase_of_policy'],
             environmental_themes=data['environmental_themes'],
             geographical_scope=data['geographical_scope'])
 
