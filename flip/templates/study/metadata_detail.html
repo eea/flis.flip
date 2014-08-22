@@ -2,30 +2,23 @@
 {% extends '_layout.html' %}
 {% load utils %}
 
-
 {% block title %}
 
   {{ block.super }} -  Study Metadata
 
 {% endblock %}
 
-
 {% block content %}
 
   {% include '_studies_nav.html' %}
 
-  {% include 'study/_nav.html' %}
+  <a href="{% url 'studies_overview' %}" role="button" class="btn btn-link">
+    Back to listing
+  </a>
   <h2 class="page-title">{{ study }}</h2>
+  {% include '_messages.html' %}
 
-  {% can_edit_study study as can_edit_study %}
-
-  {% if can_edit_study %}
-    <div class="actions">
-      <a href="{% url 'study_metadata_edit' pk=study.pk %}"
-         class="btn btn-primary">
-        Edit study</a>
-    </div> {# /.actions #}
-  {% endif %}
+  {% include 'study/_nav.html' %}
 
   <table class="table table-detail">
 
@@ -106,5 +99,15 @@
     </tr>
 
   </table>
+
+  {% can_edit_study study as can_edit_study %}
+
+  {% if can_edit_study %}
+    <div class="actions">
+      <a href="{% url 'study_metadata_edit' pk=study.pk %}"
+         class="btn btn-primary">
+        Edit</a>
+    </div> {# /.actions #}
+  {% endif %}
 
 {% endblock %}

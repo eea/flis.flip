@@ -102,12 +102,14 @@ class StudyMetadataEditView(LoginRequiredMixin,
             )
 
     def get_context_data(self, **kwargs):
-        context = {'selected_tab': 0}
+        context = {'selected_tab': 0,
+                   'cancel_url': reverse('study_metadata_detail',
+                                         kwargs={'pk': self.object.pk})}
         context.update(kwargs)
         return super(StudyMetadataEditView, self).get_context_data(**context)
 
     def get_success_url(self):
-        return reverse('study_metadata_edit',
+        return reverse('study_metadata_detail',
                        kwargs={'pk': self.object.pk})
 
 
@@ -141,7 +143,9 @@ class StudyContextEditView(LoginRequiredMixin,
 
     def get_context_data(self, **kwargs):
         context = {'form': forms.StudyContextForm(),
-                   'selected_tab': 1}
+                   'selected_tab': 1,
+                   'cancel_url': reverse('study_context_detail',
+                                         kwargs={'pk': self.object.pk})}
         context.update(kwargs)
         return super(StudyContextEditView, self).get_context_data(**context)
 
@@ -245,7 +249,10 @@ class StudyOutcomeDetailView(LoginRequiredMixin,
         return super(StudyOutcomeDetailView, self).dispatch(request, pk)
 
     def get_context_data(self, **kwargs):
-        context = {'study': self.study}
+        context = {'study': self.study,
+                   'selected_tab': 2,
+                   'back_url': reverse('study_outcomes_detail',
+                                         kwargs={'pk': self.study.pk})}
         context.update(kwargs)
         return super(StudyOutcomeDetailView, self).get_context_data(**context)
 
@@ -275,7 +282,11 @@ class StudyOutcomeEditView(LoginRequiredMixin,
             )
 
     def get_context_data(self, **kwargs):
-        context = {'study': self.study}
+        context = {'study': self.study,
+                   'cancel_url': reverse('study_outcome_detail',
+                                         kwargs={'pk': self.study.pk,
+                                                 'outcome_pk': self.object.pk}),
+                   'selected_tab': 2}
         context.update(kwargs)
         return super(StudyOutcomeEditView, self).get_context_data(**context)
 
