@@ -1,30 +1,19 @@
 {% load utils %}
 
-<ol class="breadcrumb">
-  <li>{{ object }}</li>
+<ul id="sub-menu" class="nav nav-pills" data-selected-tab="{{ selected_tab }}">
   <li>
-    <div class="dropdown" id="dropdown1">
-      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
-              data-toggle="dropdown" data-selected-tab="{{ selected_tab }}">
-        <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-        <li role="presentation">
-          <a role="menuitem" tabindex="-1" href="{% url 'study_metadata_detail' pk=study.pk %}">
-            Study metadata
-          </a>
-        </li>
-        <li role="presentation">
-          <a role="menuitem" tabindex="-1" href="{% url 'study_context_detail' pk=study.pk %}">
-            Study context
-          </a>
-        </li>
-        <li role="presentation">
-          <a role="menuitem" tabindex="-1" href="{% url 'study_outcomes_detail' pk=study.pk %}">
-            Outcomes and activities
-          </a>
-        </li>
-      </ul>
-    </div>
+    <a href="{% url 'study_metadata_detail' pk=study.pk %}">
+      Study metadata
+    </a>
   </li>
-</ol>
+  <li>
+    <a href="{% url 'study_context_detail' pk=study.pk %}">
+      Study context
+    </a>
+  </li>
+  <li>
+    <a href="{% url 'study_outcomes_detail' pk=study.pk %}">
+      Outcomes and activities
+    </a>
+  </li>
+</ul>
