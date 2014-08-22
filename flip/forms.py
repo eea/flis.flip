@@ -153,3 +153,5 @@ class FilterForm(Form):
 
     foresight_approaches = ModelMultipleChoiceField(
         queryset=ForesightApproaches.objects.all())
+
+    my_entries = BooleanField()
