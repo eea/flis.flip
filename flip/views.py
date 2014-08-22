@@ -74,7 +74,8 @@ class StudyMetadataDetailView(LoginRequiredMixin,
     template_name = 'study/metadata_detail.html'
 
     def get_context_data(self, **kwargs):
-        context = {'form': forms.StudyMetadataForm()}
+        context = {'form': forms.StudyMetadataForm(),
+                   'selected_tab': 0}
         context.update(kwargs)
         return super(StudyMetadataDetailView, self).get_context_data(**context)
 
@@ -100,6 +101,11 @@ class StudyMetadataEditView(LoginRequiredMixin,
                 ._clone()
             )
 
+    def get_context_data(self, **kwargs):
+        context = {'selected_tab': 0}
+        context.update(kwargs)
+        return super(StudyMetadataEditView, self).get_context_data(**context)
+
     def get_success_url(self):
         return reverse('study_metadata_edit',
                        kwargs={'pk': self.object.pk})
@@ -112,7 +118,8 @@ class StudyContextDetailView(LoginRequiredMixin,
     template_name = 'study/context_detail.html'
 
     def get_context_data(self, **kwargs):
-        context = {'form': forms.StudyContextForm()}
+        context = {'form': forms.StudyContextForm(),
+                   'selected_tab': 1}
         context.update(kwargs)
         return super(StudyContextDetailView, self).get_context_data(**context)
 
@@ -143,7 +150,8 @@ class StudyOutcomesDetailView(LoginRequiredMixin,
         return get_object_or_404(models.Study, pk=self.kwargs['pk'])
 
     def get_context_data(self, **kwargs):
-        context = {'form': forms.OutcomeForm(study=self.object)}
+        context = {'form': forms.OutcomeForm(study=self.object),
+                   'selected_tab': 2}
         context.update(kwargs)
         return super(StudyOutcomesDetailView, self).get_context_data(**context)
 

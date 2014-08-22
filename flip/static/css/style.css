@@ -143,3 +143,7 @@ li.right-float ul.dropdown-menu{
     padding: 40px 0 0 5px !important;
     margin-top: 0;
 }
+
+#dropdown1 {
+    display: inline;
+}

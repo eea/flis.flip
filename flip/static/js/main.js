@@ -19,6 +19,13 @@ $(function () {
 
     $('#id_foresight_approaches').select2({
         placeholder: "All foresight approaches"
-    })
-
+    });
+    setupDropdownMenu1();
 });
+
+function setupDropdownMenu1() {
+    var dropDown = $("#dropdownMenu1");
+    var selectedTabIdx = parseInt(dropDown.data("selected-tab"));
+    var selectedText = $(dropDown.siblings('ul').find('li a')[selectedTabIdx]).text();
+    dropDown.html(selectedText + ' <span class="caret"></span>');
+}
