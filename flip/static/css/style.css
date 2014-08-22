@@ -144,8 +144,8 @@ li.right-float ul.dropdown-menu{
     margin-top: 0;
 }
 
-#dropdown1 {
-    display: inline;
+.dropdown-menu {
+    z-index: 10000;
 }
 
 .table>thead>tr>th, .table>tbody>tr>th,
