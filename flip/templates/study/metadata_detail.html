@@ -11,14 +11,14 @@
 {% block content %}
 
   {% include '_studies_nav.html' %}
+  {% include 'study/_nav.html' %}
+  <h2 class="page-title">{{ study.title }}</h2>
 
   <a href="{% url 'studies_overview' %}" role="button" class="btn btn-link">
     Back to listing
   </a>
   <h2 class="page-title">{{ study }}</h2>
   {% include '_messages.html' %}
-
-  {% include 'study/_nav.html' %}
 
   <table class="table table-detail">
 
@@ -55,50 +55,277 @@
     <tr>
       <th>{{ form.blossom.label }}</th>
       <td>
-        {% if study.blossom %}
-          <i class="glyphicon glyphicon-ok"></i>
-        {% else %}
-          -
+=======
+  {% if can_edit_study %}
+    <div class="actions">
+      <a href="{% url 'study_metadata_edit' pk=study.pk %}"
+         class="btn btn-primary">
+        Edit study</a>
+      <a href="{% url 'study_delete' pk=study.pk %}"
+         class="btn btn-danger">
+        Delete study</a>
+    </div> {# /.actions #}
+  {% endif %}
+
+  <div class="row">
+    <div class="col-sm-6">
+
+      <h3>Study metadata</h3>
+      <table class="table table-detail table-bordered">
+
+        <tr>
+          <th>{{ form.title.label }}</th>
+          <td>{{ study.title }}</td>
+        </tr>
+
+        {% if study.studylanguage_set.exists %}
+        <tr>
+          <th>Languages</th>
+          <td>
+            <ul class="list-unstyled">
+              {% for study_lang in study.studylanguage_set.all %}
+                <li>
+                  <div><b>{{ study_lang.language }}</b></div>
+                  <div>- {{ study_lang.title }}</div>
+                </li>
+              {% endfor %}
+            </ul>
+          </td>
+        </tr>
         {% endif %}
-      </td>
-    </tr>
 
-    {% if study.blossom %}
-      <tr>
-        <th>{{ form.requested_by.label }}</th>
-        <td>{{ study.requested_by }}</td>
-      </tr>
-    {% endif %}
+        <tr>
+          <th>{{ form.url.label }}</th>
+          <td>{{ study.url }}</td>
+        </tr>
 
-    <tr class="hd">
-      <th colspan="2">Timing of study production</th>
-    </tr>
+        <tr class="hd">
+          <th colspan="2">Approach used</th>
+        </tr>
 
-    <tr>
-      <th>{{ form.start_date.label }}</th>
-      <td>{{ study.start_date|date:"d/m/Y" }}</td>
-    </tr>
+        <tr>
+          <th>{{ form.blossom.label }}</th>
+          <td>
+            {% if study.blossom %}
+              <i class="glyphicon glyphicon-ok"></i>
+            {% else %}
+              -
+            {% endif %}
+          </td>
+        </tr>
 
-    <tr>
-      <th>{{ form.end_date.label }}</th>
-      <td>{{ study.end_date|date:"d/m/Y" }}</td>
-    </tr>
+>>>>>>> [Study] Refactor views and templates
+        {% if study.blossom %}
+          <tr>
+            <th>{{ form.requested_by.label }}</th>
+            <td>{{ study.requested_by }}</td>
+          </tr>
+        {% endif %}
 
-    <tr class="hd">
-      <th colspan="2">References and contact information</th>
-    </tr>
+        <tr class="hd">
+          <th colspan="2">Timing of study production</th>
+        </tr>
 
-    <tr>
-      <th>{{ form.lead_author.label }}</th>
-      <td>{{ study.lead_author }}</td>
-    </tr>
+        <tr>
+          <th>{{ form.start_date.label }}</th>
+          <td>{{ study.start_date|date:"d/m/Y" }}</td>
+        </tr>
 
-    <tr>
-      <th>{{ form.other.label }}</th>
-      <td>{{ study.other }}</td>
-    </tr>
+        <tr>
+          <th>{{ form.end_date.label }}</th>
+          <td>{{ study.end_date|date:"d/m/Y" }}</td>
+        </tr>
 
-  </table>
+        <tr class="hd">
+          <th colspan="2">References and contact information</th>
+        </tr>
+
+        <tr>
+          <th>{{ form.lead_author.label }}</th>
+          <td>{{ study.lead_author }}</td>
+        </tr>
+
+        <tr>
+          <th>{{ form.other.label }}</th>
+          <td>{{ study.other }}</td>
+        </tr>
+
+      </table>
+    </div>
+
+    <div class="col-sm-6">
+      <h3>Study context</h3>
+      <table class="table table-detail table-bordered">
+
+        <tr>
+          <th>{{ context_form.purpose_and_target.label }}</th>
+          <td>{{ study.get_purpose_and_target_display|default:'None' }}</td>
+        </tr>
+
+        <tr>
+          <th>{{ context_form.additional_information.label }}</th>
+          <td>{{ study.additional_information|default:'None' }}</td>
+        </tr>
+
+        <tr class="hd">
+          <th colspan="2">Support to policy-making cycle and domain of application</th>
+        </tr>
+
+        <tr>
+          <th>{{ context_form.phases_of_policy.label }}</th>
+          <td>{{ study.phases_of_policy|default:'None' }}</td>
+        </tr>
+
+        <tr>
+          <th>{{ context_form.additional_information_phase.label }}</th>
+          <td>{{ study.additional_information_phase|default:'None' }}</td>
+        </tr>
+
+        <tr>
+          <th>{{ context_form.foresight_approaches.label }}</th>
+          <td>
+            <ul class="list-unstyled">
+              {% for foresight in study.foresight_approaches.all %}
+                <li>{{ foresight }}</li>
+              {% empty %}
+                <li>None</li>
+              {% endfor %}
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <th>{{ context_form.additional_information_foresight.label }}</th>
+          <td>{{ study.additional_information_foresight|default:'None' }}</td>
+        </tr>
+
+        <tr>
+          <th>{{ context_form.stakeholder_participation.label }}</th>
+          <td>
+            {% if study.stakeholder_participation %}
+              <i class="glyphicon glyphicon-ok"></i>
+            {% else %}
+              -
+            {% endif %}
+          </td>
+        </tr>
+
+        <tr>
+          <th>{{ form.additional_information_stakeholder.label }}</th>
+          <td>{{ study.additional_information_stakeholder|default:'None' }}</td>
+        </tr>
+
+        <tr class="hd">
+          <th colspan="2">Scope of the study</th>
+        </tr>
+
+        <tr>
+          <th>{{ form.environmental_themes.label }}</th>
+          <td>
+            <ul class="list-unstyled">
+              {% for theme in study.environmental_themes.all %}
+                <li>{{ theme }}</li>
+              {% empty %}
+                <li>None</li>
+              {% endfor %}
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <th>{{ form.geographical_scope.label }}</th>
+          <td>{{ study.geographical_scope|default:'None' }}</td>
+        </tr>
+
+        {% if study.countries.exists %}
+          <tr>
+            <th>{{ form.countries.label }}</th>
+            <td>
+              <ul class="list-unstyled">
+                {% for country in study.countries.all %}
+                  <li>{{ country }}</li>
+                {% endfor %}
+              </ul>
+          </tr>
+        {% endif %}
+
+      </table>
+    </div>
+
+    <div class="col-sm-12">
+      <h3 class="page-title">
+        Outcomes and activities <br>
+        <small>Outcomes related to the study/activities performed, by categories</small>
+      </h3>
+
+      <div class="panel panel-default">
+
+        <div class="panel-heading"><b>List of current documents</b></div>
+
+          <div class="panel-body">
+            <ul class="list-unstyled outcome-list">
+              {% for outcome in object.outcomes.all %}
+                {% url 'study_outcome_detail' pk=object.pk outcome_pk=outcome.pk as view_url %}
+                {% url 'study_outcome_delete' pk=object.pk outcome_pk=outcome.pk as delete_url %}
+              <li>
+                <div class="row">
+                  <div class="col-md-9">
+                    <p><b>{{ outcome.document_title }}</b></p>
+                    <p>
+                      {% if outcome.text %}
+                        {{ outcome.text|truncatewords:'30'|linebreaks }}
+                      {% else %}
+                        <p><i>No description</i></p>
+                      {% endif %}
+                    </p>
+                  </div> {# col-md-8 #}
+                  <div class="col-md-3 text-right">
+                    <a href="{{ view_url }}" class="btn btn-sm btn-primary">
+                      View</a>
+                    {% if can_edit_study and study.blossom %}
+                      <a href="{{ delete_url }}"
+                         class="btn btn-sm btn-danger delete">
+                        Delete</a>
+                    {% endif %}
+                  </div> {# col-md-4 #}
+                </div> {# row #}
+              </li>
+            {% empty %}
+              <li><p>No outcomes for this study.</p></li>
+            {% endfor %}
+          </ul>
+        </div> {# panel-body #}
+
+      </div> {# panel #}
+
+      {% if study.blossom %}
+        <div id="outcome-add" class="panel panel-default">
+
+          <div class="panel-heading">
+            <b>Add information on outcome/activity</b> <br>
+            <small>You can enter your text directly and/or attach relevant files</small>
+          </div>
+
+          <div class="panel-body">
+
+            {% if can_edit_study %}
+              {% url 'study_outcomes_edit' pk=object.pk as url %}
+              <form action="{{ url }}" role="form" method="POST"
+                    id="study-outcomes-edit-form"
+                    enctype="multipart/form-data"
+                    data-edit-form="true">
+                {% include "study/_outcome_form.html" with form=outcomes_form %}
+              </form>
+            {% endif %}
+
+          </div> {# panel-body #}
+
+        </div> {# panel #}
+      {% endif%}
+
+    </div>
+
+  </div> {# row #}
 
   {% can_edit_study study as can_edit_study %}
 

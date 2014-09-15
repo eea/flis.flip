@@ -1,0 +1,22 @@
+{% extends '_layout.html' %}
+
+{% block title %}
+
+  {{ block.super }} - Are you sure you want to delete "{{ study }}"?
+
+{% endblock %}
+
+
+{% block content %}
+
+  <h3>Are you sure you want to delete "{{ study }}"?</h3>
+  <br>
+  <form method="POST">
+
+    {% csrf_token %}
+
+    <button class="btn btn-primary">Yes</button>
+    <a href="{% url 'study_outcomes_detail' pk=study.pk %}">Cancel</a>
+  </form>
+
+{% endblock %}
