@@ -83,7 +83,6 @@ class StudyMetadataDetailView(LoginRequiredMixin,
         context = {
             'form': forms.StudyMetadataForm(),
             'context_form': forms.StudyContextForm(),
-            'outcomes_form': forms.OutcomeForm(study=self.object),
         }
         context.update(kwargs)
         return super(StudyMetadataDetailView, self).get_context_data(**context)
@@ -190,7 +189,7 @@ class StudyOutcomesAddView(LoginRequiredMixin,
 
     model = models.Outcome
     form_class = forms.OutcomeForm
-    template_name = 'study/outcomes_detail.html'
+    template_name = 'study/outcome_add_form.html'
 
     def get_object(self):
         if getattr(self, 'study', None):

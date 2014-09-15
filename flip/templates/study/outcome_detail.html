@@ -58,4 +58,21 @@
 
   {% endif %}
 
+  {% if outcome.text %}
+    <div style="padding-bottom: 20px;">{{ outcome.text|linebreaks }}</div>
+  {% endif %}
+
+  {% if outcome.file_id %}
+    <div class="panel panel-default" >
+      <div class="panel-body">
+        <b>File attached:</b>
+        <a href="{{ outcome.file_id.url }}" target="_blank">
+          <i class="glyphicon glyphicon-file"></i>
+          {{ outcome.file_id|filename }}</a>
+      </div>
+    </div>
+  {% endif %}
+
+  <a href="{% url 'study_metadata_detail' study.id %}" class="btn btn-default">Back</a>
+
 {% endblock %}

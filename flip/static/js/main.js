@@ -39,7 +39,7 @@ $(function () {
     });
 
     $('#add-modal-submit').on('click', function () {
-        var form = $('#study-context-form');
+        var form = $('#study-modal-form');
         var url = $(this).data('action');
         var formdata = false;
         if (window.FormData){

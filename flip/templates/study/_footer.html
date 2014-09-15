@@ -14,8 +14,6 @@
             class="btn btn-default">Save as draft</button>
   {% endif %}
 
-  {% if cancel_url %}
-    <a href="{{ cancel_url }}" class="btn btn-link" role="button">Cancel</a>
-  {% endif %}
+  <a href="{% url 'study_metadata_detail' study.id %}" class="btn btn-danger">Cancel</a>
 
 </div>
