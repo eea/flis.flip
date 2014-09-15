@@ -101,14 +101,4 @@
     {% endif %}
 
   </table>
-
-  {% can_edit_study study as can_edit_study %}
-  {% if can_edit_study and study.blossom %}
-    <div class="actions">
-      <a href="{% url 'study_context_edit' pk=study.pk %}"
-         class="btn btn-primary">
-        Edit</a>
-    </div> {# /.actions #}
-  {% endif %}
-
 {% endblock %}
