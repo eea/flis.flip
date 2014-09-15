@@ -252,7 +252,7 @@
       </table>
     </div>
 
-    <div class="col-sm-12">
+    <div class="col-sm-6 col-sm-offset-6">
       <h3 class="page-title">
         Outcomes and activities <br>
         <small>Outcomes related to the study/activities performed, by categories</small>
@@ -297,32 +297,6 @@
         </div> {# panel-body #}
 
       </div> {# panel #}
-
-      {% if study.blossom %}
-        <div id="outcome-add" class="panel panel-default">
-
-          <div class="panel-heading">
-            <b>Add information on outcome/activity</b> <br>
-            <small>You can enter your text directly and/or attach relevant files</small>
-          </div>
-
-          <div class="panel-body">
-
-            {% if can_edit_study %}
-              {% url 'study_outcomes_edit' pk=object.pk as url %}
-              <form action="{{ url }}" role="form" method="POST"
-                    id="study-outcomes-edit-form"
-                    enctype="multipart/form-data"
-                    data-edit-form="true">
-                {% include "study/_outcome_form.html" with form=outcomes_form %}
-              </form>
-            {% endif %}
-
-          </div> {# panel-body #}
-
-        </div> {# panel #}
-      {% endif%}
-
     </div>
 
   </div> {# row #}

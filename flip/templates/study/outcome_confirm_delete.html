@@ -16,8 +16,9 @@
 
     {% csrf_token %}
 
-    <button class="btn btn-primary">Yes</button>
-    <a href="{% url 'study_outcome_detail' pk=study.pk outcome_pk=outcome.pk %}">Cancel</a>
+    <button class="btn btn-primary">Yes</button> or
+    <a href="{% url 'study_metadata_detail' study.id %}">Cancel</a>
+
   </form>
 
 {% endblock %}
