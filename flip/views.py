@@ -80,7 +80,11 @@ class StudyMetadataDetailView(LoginRequiredMixin,
     template_name = 'study/metadata_detail.html'
 
     def get_context_data(self, **kwargs):
-        context = {'form': forms.StudyMetadataForm()}
+        context = {
+            'form': forms.StudyMetadataForm(),
+            'context_form': forms.StudyContextForm(),
+            'outcomes_form': forms.OutcomeForm(study=self.object),
+        }
         context.update(kwargs)
         return super(StudyMetadataDetailView, self).get_context_data(**context)
 
@@ -117,6 +121,17 @@ class StudyMetadataEditView(LoginRequiredMixin,
                        kwargs={'pk': self.object.pk})
 
 
+class StudyDeleteView(LoginRequiredMixin,
+                      EditPermissionRequiredMixin,
+                      generic.DeleteView):
+
+    model = models.Study
+    template_name = 'study/study_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse('studies_overview')
+
+
 class StudyContextDetailView(LoginRequiredMixin,
                              generic.DetailView):
 
@@ -137,7 +152,7 @@ class StudyContextEditView(LoginRequiredMixin,
 
     model = models.Study
     form_class = forms.StudyContextForm
-    template_name = 'study/context_edit.html'
+    template_name = 'study/context_edit_form.html'
     success_message = 'The study was successfully updated'
 
     def get_success_url(self):
@@ -181,10 +196,10 @@ class StudyOutcomesAddView(LoginRequiredMixin,
         if getattr(self, 'study', None):
             return self.study
         if is_admin(self.request):
-             study = get_object_or_404(models.Study, pk=self.kwargs['pk'])
+            study = get_object_or_404(models.Study, pk=self.kwargs['pk'])
         else:
-             study = get_object_or_404(models.Study, pk=self.kwargs['pk'],
-                                       user_id=self.request.user_id)
+            study = get_object_or_404(models.Study, pk=self.kwargs['pk'],
+                                      user_id=self.request.user_id)
 
         study = get_object_or_404(models.Study, pk=self.kwargs['pk'])
         self.study = study
@@ -252,7 +267,7 @@ class StudyOutcomeDetailView(LoginRequiredMixin,
     def get_context_data(self, **kwargs):
         context = {'study': self.study,
                    'back_url': reverse('study_outcomes_detail',
-                                         kwargs={'pk': self.study.pk})}
+                                       kwargs={'pk': self.study.pk})}
         context.update(kwargs)
         return super(StudyOutcomeDetailView, self).get_context_data(**context)
 
@@ -530,9 +545,9 @@ class SettingsOutcomesView(LoginRequiredMixin,
 
 
 class SettingsOutcomesAddView(LoginRequiredMixin,
-                                        AdminPermissionRequiredMixin,
-                                        SuccessMessageMixin,
-                                        generic.CreateView):
+                              AdminPermissionRequiredMixin,
+                              SuccessMessageMixin,
+                              generic.CreateView):
 
     model = models.TypeOfOutcome
     template_name = 'settings/outcomes_edit.html'

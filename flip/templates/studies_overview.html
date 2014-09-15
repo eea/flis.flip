@@ -45,6 +45,7 @@
           <th>Title in English</th>
           <th>Lead organisation</th>
           <th>Geographical scope</th>
+          <th>Published</th>
         </tr>
       </thead>
       <tbody>
@@ -54,6 +55,13 @@
             <td><a href="{% url 'study_metadata_detail' pk=source.pk %}">{{ source.title }}</a></td>
             <td>{{ source.lead_author }}</td>
             <td>{{ source.geographical_scope }}</td>
+            <td>
+              {% if source.draft %}
+                <span class="glyphicon glyphicon-remove"></span>
+              {% else %}
+                <span class="glyphicon glyphicon-ok"></span>
+              {% endif %}
+            </td>
           </tr>
         {% endfor %}
       </tbody>

@@ -153,3 +153,7 @@ li.right-float ul.dropdown-menu{
 .table>tbody>tr>td, .table>tfoot>tr>td {
     border: none;
 }
+
+div.outcome {
+    margin-top: 10px;
+}

@@ -1,6 +1,7 @@
 
 {% extends '_layout.html' %}
 {% load widget_tweaks %}
+{% load utils %}
 
 
 {% block scripts %}
@@ -105,8 +106,15 @@
 
   {% include '_messages.html' %}
 
+  <div class="row">
+    {% if study %}
+      <div class="col-md-11">
+    {% else %}
+      <div class="col-md-12">
+    {% endif %}
+
   {% if form.errors %}
-    <div class="alert alert-danger">There were errors while saving this study. Please see the error messages below.</div>
+    <div class="alert alert-danger">There were errors while saving this study.Please see the error messages below.</div>
   {% endif %}
 
   <form id="study-form" method="POST" role="form"
@@ -366,5 +374,31 @@
     {% include 'study/_footer.html' %}
 
   </form>
+  </div> {# col #}
+
+  {% if study %}
+    {% can_edit_study study as can_edit_study %}
+    {% if can_edit_study and study.blossom %}
+      <div class="col-md-1">
+        <a class="btn btn-primary launch-modal" data-toggle="modal"
+           data-target="#myModal"
+           data-action="{% url 'study_context_edit' study.id %}"
+           data-title="Edit context">Edit context
+        </a>
+      </div>
+
+      <div class="col-md-1 outcome">
+        <a class="btn btn-primary launch-modal" data-toggle="modal"
+           data-target="#myModal"
+           data-action="{% url 'study_outcomes_edit' study.id %}"
+           data-title="Add outcome">Add outcome
+        </a>
+      </div>
+    {% endif %}
+  {% endif %}
+
+</div>
+  {% include 'study/_modal.html'%}
+
 
 {% endblock %}

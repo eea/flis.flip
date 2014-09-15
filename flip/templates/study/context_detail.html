@@ -1,25 +1,8 @@
 
-{% extends '_layout.html' %}
 {% load utils %}
 
 
-{% block title %}
-
-  {{ block.super }} -  Study Context
-
-{% endblock %}
-
-
 {% block content %}
-
-  {% include '_studies_nav.html' %}
-
-  <a href="{% url 'studies_overview' %}" role="button" class="btn btn-link">
-    Back to listing
-  </a>
-  <h2 class="page-title">{{ study }}</h2>
-
-  {% include 'study/_nav.html' %}
 
   {% include '_messages.html' %}
 
