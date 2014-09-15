@@ -3,33 +3,29 @@
     "model": "flip.typeofoutcome",
     "pk": 1,
     "fields": {
-      "title": "Key messages"
+      "title": "Key messages",
+      "blossom": true
     }
   },
   {
     "model": "flip.typeofoutcome",
     "pk": 2,
     "fields": {
-      "title": "Interviews"
+      "title": "Interviews",
+      "blossom": true
     }
   },
   {
     "model": "flip.typeofoutcome",
     "pk": 3,
     "fields": {
-      "title": "Final overall report"
+      "title": "Final overall report",
+      "blossom": true
     }
   },
   {
     "model": "flip.typeofoutcome",
     "pk": 4,
-    "fields": {
-      "title": "SWOT tail diagram"
-    }
-  },
-  {
-    "model": "flip.typeofoutcome",
-    "pk": 11,
     "fields": {
       "title": "Stakeholders involvement"
     }
@@ -50,33 +46,30 @@
   },
   {
     "model": "flip.typeofoutcome",
-    "pk":7,
+    "pk": 7,
+    "fields": {
+      "title": "Barriers in use of forward-looking information in policy"
+    }
+  },
+  {
+    "model": "flip.typeofoutcome",
+    "pk": 8,
+    "fields": {
+      "title": "Communication of results"
+    }
+  },
+  {
+    "model": "flip.typeofoutcome",
+    "pk": 9,
+    "fields": {
+      "title": "Governance practice (governance, institutional set up, regulatory mechanism and processes, actors, culture, level of political support)"
+    }
+  },
+  {
+    "model": "flip.typeofoutcome",
+    "pk": 10,
     "fields": {
       "title": "SWOT tail diagram",
-      "blossom": true
-    }
-  },
-  {
-    "model": "flip.typeofoutcome",
-    "pk":8,
-    "fields": {
-      "title": "Final overall report",
-      "blossom": true
-    }
-  },
-  {
-    "model": "flip.typeofoutcome",
-    "pk":9,
-    "fields": {
-      "title": "Interviews",
-      "blossom": true
-    }
-  },
-  {
-    "model": "flip.typeofoutcome",
-    "pk":10,
-    "fields": {
-      "title": "Key messages",
       "blossom": true
     }
   }
