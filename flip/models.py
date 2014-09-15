@@ -239,6 +239,7 @@ class Country(Model):
 class TypeOfOutcome(Model):
 
     title = CharField(max_length=256)
+    blossom = BooleanField(default=False)
 
     class Meta:
         ordering = ('-pk',)

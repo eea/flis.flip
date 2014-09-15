@@ -4,7 +4,9 @@ from django.forms import DateField, DateInput, ChoiceField, ModelChoiceField
 from django.forms import ModelForm, Form
 from django.forms.models import BaseInlineFormSet
 
-from flip.models import Study, Outcome, PhasesOfPolicy, ForesightApproaches
+from flip.models import (
+    Study, Outcome, PhasesOfPolicy, ForesightApproaches, TypeOfOutcome
+)
 
 
 class StudyMetadataForm(ModelForm):
@@ -127,6 +129,9 @@ class OutcomeForm(ModelForm):
     def __init__(self, *args, **kwargs):
         self.study = kwargs.pop('study', None)
         super(OutcomeForm, self).__init__(*args, **kwargs)
+        if not self.study.blossom:
+            self.fields['type_of_outcome'].queryset = (
+                TypeOfOutcome.objects.filter(blossom=False))
 
     def save(self):
         outcome = super(OutcomeForm, self).save(commit=False)

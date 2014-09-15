@@ -26,5 +26,58 @@
     "fields": {
       "title": "SWOT tail diagram"
     }
+  },
+  {
+    "model": "flip.typeofoutcome",
+    "pk": 11,
+    "fields": {
+      "title": "Stakeholders involvement"
+    }
+  },
+  {
+    "model": "flip.typeofoutcome",
+    "pk":5,
+    "fields": {
+      "title": "Successes in use of forward-looking information in policy"
+    }
+  },
+  {
+    "model": "flip.typeofoutcome",
+    "pk":6,
+    "fields": {
+      "title": "Use of future techniques"
+    }
+  },
+  {
+    "model": "flip.typeofoutcome",
+    "pk":7,
+    "fields": {
+      "title": "SWOT tail diagram",
+      "blossom": true
+    }
+  },
+  {
+    "model": "flip.typeofoutcome",
+    "pk":8,
+    "fields": {
+      "title": "Final overall report",
+      "blossom": true
+    }
+  },
+  {
+    "model": "flip.typeofoutcome",
+    "pk":9,
+    "fields": {
+      "title": "Interviews",
+      "blossom": true
+    }
+  },
+  {
+    "model": "flip.typeofoutcome",
+    "pk":10,
+    "fields": {
+      "title": "Key messages",
+      "blossom": true
+    }
   }
 ]
