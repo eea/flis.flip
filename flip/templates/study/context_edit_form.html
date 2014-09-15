@@ -16,7 +16,7 @@
 
 {% endblock %}
 
-<form id="study-modal-form" role="form" method="POST"
+  <form id="study-modal-form" role="form" method="POST"
         data-edit-form="true">
     {% csrf_token %}
 
@@ -63,15 +63,15 @@
         <div class="form-group">
           <div class="row">
             <div class="col-md-4">
-              {{ form.phases_of_policy.label_tag }}
-              {% if form.phases_of_policy.field.required %}
+              {{ form.phase_of_policy.label_tag }}
+              {% if form.phase_of_policy.field.required %}
                 <span class="required">*</span>
               {% endif %}
-              {% if form.phases_of_policy.errors %}
+              {% if form.phase_of_policy.errors %}
                 <p class="text-danger">
-                  <small>{{ form.phases_of_policy.errors.0 }}</small></p>
+                  <small>{{ form.phase_of_policy.errors.0 }}</small></p>
               {% endif %}
-              {% render_field form.phases_of_policy class='form-control' rows=3 %}
+              {% render_field form.phase_of_policy class='form-control' rows=3 %}
             </div> {# col-md-4 #}
           </div> {# row #}
         </div>

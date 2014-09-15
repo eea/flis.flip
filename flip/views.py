@@ -265,7 +265,7 @@ class StudyOutcomeDetailView(LoginRequiredMixin,
 
     def get_context_data(self, **kwargs):
         context = {'study': self.study,
-                   'back_url': reverse('study_outcomes_detail',
+                   'back_url': reverse('study_metadata_detail',
                                        kwargs={'pk': self.study.pk})}
         context.update(kwargs)
         return super(StudyOutcomeDetailView, self).get_context_data(**context)

@@ -17,8 +17,6 @@
     <h2>{{ study }}</h2>
   </div>
 
-  {% include 'study/_nav.html' %}
-
   <div class="panel panel-default">
 
     <div class="panel-heading">
@@ -37,5 +35,6 @@
 
   </div> {# panel #}
 
+  <a href="{% url 'study_outcome_detail' study.id outcome.id %}" class="btn btn-link">Back</a>
 
 {% endblock %}

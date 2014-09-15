@@ -11,51 +11,10 @@
 {% block content %}
 
   {% include '_studies_nav.html' %}
-  {% include 'study/_nav.html' %}
   <h2 class="page-title">{{ study.title }}</h2>
-
-  <a href="{% url 'studies_overview' %}" role="button" class="btn btn-link">
-    Back to listing
-  </a>
-  <h2 class="page-title">{{ study }}</h2>
   {% include '_messages.html' %}
 
-  <table class="table table-detail">
-
-    <tr>
-      <th>{{ form.title.label }}</th>
-      <td>{{ study.title }}</td>
-    </tr>
-
-    {% if study.studylanguage_set.exists %}
-    <tr>
-      <th>Languages</th>
-      <td>
-        <ul class="list-unstyled">
-          {% for study_lang in study.studylanguage_set.all %}
-            <li>
-              <div><b>{{ study_lang.language }}</b></div>
-              <div>- {{ study_lang.title }}</div>
-            </li>
-          {% endfor %}
-        </ul>
-      </td>
-    </tr>
-    {% endif %}
-
-    <tr>
-      <th>{{ form.url.label }}</th>
-      <td><a href="{{ study.url }}">{{ study.url }}</a></td>
-    </tr>
-
-    <tr class="hd">
-      <th colspan="2">Approach used</th>
-    </tr>
-
-    <tr>
-      <th>{{ form.blossom.label }}</th>
-      <td>
-=======
+  {% can_edit_study study as can_edit_study %}
   {% if can_edit_study %}
     <div class="actions">
       <a href="{% url 'study_metadata_edit' pk=study.pk %}"
@@ -66,6 +25,10 @@
         Delete study</a>
     </div> {# /.actions #}
   {% endif %}
+
+  <a href="{% url 'studies_overview' %}" role="button" class="btn btn-link">
+    Back to listing
+  </a>
 
   <div class="row">
     <div class="col-sm-6">
@@ -114,7 +77,6 @@
           </td>
         </tr>
 
->>>>>>> [Study] Refactor views and templates
         {% if study.blossom %}
           <tr>
             <th>{{ form.requested_by.label }}</th>
@@ -300,15 +262,5 @@
     </div>
 
   </div> {# row #}
-
-  {% can_edit_study study as can_edit_study %}
-
-  {% if can_edit_study %}
-    <div class="actions">
-      <a href="{% url 'study_metadata_edit' pk=study.pk %}"
-         class="btn btn-primary">
-        Edit</a>
-    </div> {# /.actions #}
-  {% endif %}
 
 {% endblock %}
