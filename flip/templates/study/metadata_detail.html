@@ -1,4 +1,3 @@
-
 {% extends '_layout.html' %}
 {% load utils %}
 
@@ -24,11 +23,25 @@
          class="btn btn-danger">
         Delete study</a>
     </div> {# /.actions #}
-  {% endif %}
 
-  <a href="{% url 'studies_overview' %}" role="button" class="btn btn-link">
-    Back to listing
-  </a>
+    <div class="status">
+      {% url 'study_status_edit' pk=study.pk as status_url %}
+
+      {% if study.draft %}
+        <big><b>Study status: Draft</b></big>
+      {% else %}
+        <big><b>Study status: Published</b></big>
+      {% endif %}
+
+      <form action="{{ status_url }}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-info">
+          {% if study.draft %}Publish{% else %}Unpublish{% endif %}
+        </button>
+      </form>
+
+    </div>
+  {% endif %}
 
   <div class="row">
     <div class="col-sm-6">

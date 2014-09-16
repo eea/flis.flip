@@ -4,7 +4,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse
 from django.forms.models import inlineformset_factory
 from django.http import Http404
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.views import generic
 
 from flip import forms, models
@@ -131,6 +131,18 @@ class StudyDeleteView(LoginRequiredMixin,
         return reverse('studies_overview')
 
 
+class StudyStatusEditView(LoginRequiredMixin,
+                          EditPermissionRequiredMixin,
+                          generic.View):
+
+    def post(self, request, pk):
+        study = get_object_or_404(models.Study, pk=pk)
+        study.draft = not study.draft
+        study.save()
+        return redirect(reverse('study_metadata_detail',
+                                kwargs={'pk': pk}))
+
+
 class StudyContextDetailView(LoginRequiredMixin,
                              generic.DetailView):
 
@@ -244,7 +256,7 @@ class StudyOutcomeDeleteView(LoginRequiredMixin,
             )
 
     def get_success_url(self):
-        return reverse('study_outcomes_detail', kwargs={'pk': self.study.pk})
+        return reverse('study_metadata_detail', kwargs={'pk': self.study.pk})
 
     def get_context_data(self, **kwargs):
         context = {'study': self.study}
