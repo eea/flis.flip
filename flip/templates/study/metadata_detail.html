@@ -19,32 +19,32 @@
       <a href="{% url 'study_metadata_edit' pk=study.pk %}"
          class="btn btn-primary">
         Edit study</a>
-      <a href="{% url 'study_delete' pk=study.pk %}"
-         class="btn btn-danger">
-        Delete study</a>
-            {% url 'study_status_edit' pk=study.pk as status_url %}
 
-      <form class="status" action="{{ status_url }}" method="POST" enctype="multipart/form-data">
+      {% url 'study_status_edit' pk=study.pk as status_url %}
+      <form class="form-inline status " action="{{ status_url }}"
+            method="POST">
         {% csrf_token %}
-        {% if study.draft %}
-          <big><b>Study status: Draft</b></big>
-        {% else %}
-          <big><b>Study status: Published</b></big>
-        {% endif %}
         <button type="submit" class="btn btn-info">
           {% if study.draft %}Publish{% else %}Unpublish{% endif %}
         </button>
       </form>
 
+      <a href="{% url 'study_delete' pk=study.pk %}"
+         class="btn btn-danger pull-right">
+        Delete study</a>
+
+      <span class="btn disabled pull-right">
+        {% if study.draft %}
+          <b>Status: Draft</b>
+        {% else %}
+          <b>Status: Published</b>
+        {% endif %}
+      </span>
     </div> {# /.actions #}
-
-    <div class="status">
-
-    </div>
   {% endif %}
 
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-12">
 
       <h3>Study metadata</h3>
       <table class="table table-detail table-bordered">
@@ -55,19 +55,19 @@
         </tr>
 
         {% if study.studylanguage_set.exists %}
-        <tr>
-          <th>Languages</th>
-          <td>
-            <ul class="list-unstyled">
-              {% for study_lang in study.studylanguage_set.all %}
-                <li>
-                  <div><b>{{ study_lang.language }}</b></div>
-                  <div>- {{ study_lang.title }}</div>
-                </li>
-              {% endfor %}
-            </ul>
-          </td>
-        </tr>
+          <tr>
+            <th>Languages</th>
+            <td>
+              <ul class="list-unstyled">
+                {% for study_lang in study.studylanguage_set.all %}
+                  <li>
+                    <div><b>{{ study_lang.language }}</b></div>
+                    <div>- {{ study_lang.title }}</div>
+                  </li>
+                {% endfor %}
+              </ul>
+            </td>
+          </tr>
         {% endif %}
 
         <tr>
@@ -127,54 +127,9 @@
 
       </table>
     </div>
+  </div>
 
-    <div class="col-sm-6">
-      <h3 class="page-title">
-        Outcomes and activities <br>
-        <small>Outcomes related to the study/activities performed, by categories</small>
-      </h3>
-
-      <div class="panel panel-default">
-
-        <div class="panel-heading"><b>List of current documents</b></div>
-
-          <div class="panel-body">
-            <ul class="list-unstyled outcome-list">
-              {% for outcome in object.outcomes.all %}
-                {% url 'study_outcome_detail' pk=object.pk outcome_pk=outcome.pk as view_url %}
-                {% url 'study_outcome_delete' pk=object.pk outcome_pk=outcome.pk as delete_url %}
-              <li>
-                <div class="row">
-                  <div class="col-md-9">
-                    <p><b>{{ outcome.document_title }}</b></p>
-                    <p>
-                      {% if outcome.text %}
-                        {{ outcome.text|truncatewords:'30'|linebreaks }}
-                      {% else %}
-                        <p><i>No description</i></p>
-                      {% endif %}
-                    </p>
-                  </div> {# col-md-8 #}
-                  <div class="col-md-3 text-right">
-                    <a href="{{ view_url }}" class="btn btn-sm btn-primary">
-                      View</a>
-                    {% if can_edit_study and study.blossom %}
-                      <a href="{{ delete_url }}"
-                         class="btn btn-sm btn-danger delete">
-                        Delete</a>
-                    {% endif %}
-                  </div> {# col-md-4 #}
-                </div> {# row #}
-              </li>
-            {% empty %}
-              <li><p>No outcomes for this study.</p></li>
-            {% endfor %}
-          </ul>
-        </div> {# panel-body #}
-
-      </div> {# panel #}
-    </div>
-
+  <div class="row">
     <div class="col-sm-6">
       <h3>Study context</h3>
       <table class="table table-detail table-bordered">
@@ -190,7 +145,9 @@
         </tr>
 
         <tr class="hd">
-          <th colspan="2">Support to policy-making cycle and domain of application</th>
+          <th colspan="2">Support to policy-making cycle and domain of
+            application
+          </th>
         </tr>
 
         <tr>
@@ -270,8 +227,60 @@
               </ul>
           </tr>
         {% endif %}
-
       </table>
+    </div>
+
+    <div class="col-sm-6">
+      <h3>Outcomes and activities</h3>
+      {#      <small>Outcomes related to the study/activities performed, by#}
+      {#        categories#}
+      {#      </small>#}
+
+      <div class="panel panel-default">
+
+        <div class="panel-heading"><b>List of current documents</b></div>
+
+        <div class="panel-body">
+          <ul class="list-unstyled outcome-list">
+            {% for outcome in object.outcomes.all %}
+              {% url 'study_outcome_detail' pk=object.pk outcome_pk=outcome.pk as view_url %}
+              {% url 'study_outcome_delete' pk=object.pk outcome_pk=outcome.pk as delete_url %}
+              <li>
+                <div class="row">
+                  <div class="col-md-8">
+                    <p><b>{{ outcome.document_title }}</b></p>
+
+                    <p>
+                      {% if outcome.text %}
+                        {{ outcome.text|truncatewords:'30'|linebreaks }}
+                      {% else %}
+                        <p><i>No description</i></p>
+                      {% endif %}
+                    </p>
+                  </div>
+                  {# col-md-8 #}
+                  <div class="col-md-4 text-right">
+                    <a href="{{ view_url }}" class="btn btn-sm btn-primary">
+                      View</a>
+                    {% if can_edit_study and study.blossom %}
+                      <a href="{{ delete_url }}"
+                         class="btn btn-sm btn-danger delete">
+                        Delete</a>
+                    {% endif %}
+                  </div>
+                  {# col-md-4 #}
+                </div>
+                {# row #}
+              </li>
+            {% empty %}
+              <li><p>No outcomes for this study.</p></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {# panel-body #}
+
+      </div>
+      {# panel #}
     </div>
 
   </div> {# row #}
