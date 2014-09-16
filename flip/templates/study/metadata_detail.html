@@ -261,7 +261,7 @@
 
         {% if study.countries.exists %}
           <tr>
-            <th>{{ form.countries.label }}</th>
+            <th>{{ context_form.countries.label }}</th>
             <td>
               <ul class="list-unstyled">
                 {% for country in study.countries.all %}
