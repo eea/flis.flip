@@ -48,12 +48,19 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.RemoteUserMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'frame.middleware.SeenMiddleware',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'frame.backends.FrameUserBackend',
 )
 
 TEMPLATE_LOADERS = (
-    'frame.middleware.Loader',
+    'frame.loaders.Loader',
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 )
@@ -122,6 +129,11 @@ LOGGING = {
                 },
     }
 
+FRAME_SEEN_MODELS = (
+    ('flip.models.Study', 'created_on'),
+)
+
+FRAME_SEEN_EXCLUDE = ('/_lastseencount/', )
 
 try:
     from local_settings import *
