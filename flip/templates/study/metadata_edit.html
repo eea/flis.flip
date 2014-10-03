@@ -1,4 +1,3 @@
-
 {% extends '_layout.html' %}
 {% load widget_tweaks %}
 {% load utils %}
@@ -8,7 +7,7 @@
 
   <script>
     $(function () {
-      $('#id_blossom').on('change', function () {
+      $('#id_blossom').on('change',function () {
         $('[data-show-if=blossom]')
             .toggleClass('hide', $(this).val() != '1');
       }).change();
@@ -19,10 +18,10 @@
       var title = $('#id_title');
 
       $('#study-languages').on('change', 'select', function () {
-        if($(this).val() == 'en') {
+        if ($(this).val() == 'en') {
           var title_original = $(this).parents('.row').find('input[type=text]');
           var title = $('#id_title');
-          if($.trim(title_original)) {
+          if ($.trim(title_original)) {
             title_original.val(title.val());
           }
         }
@@ -34,7 +33,7 @@
         var nr_forms = study_languages.find('.form-group').length;
         var total_forms = $('#id_studylanguage_set-TOTAL_FORMS');
 
-        if(nr_forms < max_forms) {
+        if (nr_forms < max_forms) {
 
           var html = $($('#study-languages-empty-form').html());
           html.find('label').each(function () {
@@ -53,28 +52,28 @@
           total_forms.val(parseInt(total_forms.val()) + 1);
         }
 
-        if(nr_forms == (max_forms - 1)) {
+        if (nr_forms == (max_forms - 1)) {
           $(this).hide();
         }
 
       });
 
       $('#study-languages')
-        .on('click', '.language-remove a', function () {
+          .on('click', '.language-remove a', function () {
 
-        var total_forms = $('#id_studylanguage_set-TOTAL_FORMS');
-        var can_delete = $(this).parents('.language-remove')
-                                .find('.delete');
-        $(this).parents('.form-group').fadeOut('fast', function () {
-          $('#study-languages-add').show();
-          if(can_delete.length == 0) {
-            $(this).remove();
-            total_forms.val(parseInt(total_forms.val()) - 1);
-          } else {
-            can_delete.prop('checked', true);
-          }
-        });
-      });
+            var total_forms = $('#id_studylanguage_set-TOTAL_FORMS');
+            var can_delete = $(this).parents('.language-remove')
+                .find('.delete');
+            $(this).parents('.form-group').fadeOut('fast', function () {
+              $('#study-languages-add').show();
+              if (can_delete.length == 0) {
+                $(this).remove();
+                total_forms.val(parseInt(total_forms.val()) - 1);
+              } else {
+                can_delete.prop('checked', true);
+              }
+            });
+          });
 
     });
   </script>
@@ -85,10 +84,10 @@
 {% block title %}
 
   {{ block.super }} - {% if study %}
-    Study Metadata
-  {% else %}
-    New study
-  {% endif %}
+  Study Metadata
+{% else %}
+  New study
+{% endif %}
 
 {% endblock %}
 
@@ -106,126 +105,134 @@
   {% include '_messages.html' %}
 
   <div class="row">
-    {% if study %}
-      <div class="col-md-11">
-    {% else %}
-      <div class="col-md-12">
-    {% endif %}
-
-  {% if form.errors %}
-    <div class="alert alert-danger">There were errors while saving this study.Please see the error messages below.</div>
+  {% if study %}
+    <div class="col-md-10">
+  {% else %}
+    <div class="col-md-12">
   {% endif %}
 
-  <form id="study-form" method="POST" role="form"
-        data-edit-form="true">
+{% if form.errors %}
+  <div class="alert alert-danger">There were errors while saving this
+    study.Please see the error messages below.
+  </div>
+{% endif %}
 
-    {% csrf_token %}
+<form id="study-form" method="POST" role="form"
+      data-edit-form="true">
 
-    <div class="form-group">
-      {{ form.title.label_tag }}
-      {% if form.title.field.required %}
-        <span class="required">*</span>
-      {% endif %}
-      {% render_field form.title class='form-control' %}
-      {% if form.title.errors %}
-        <p class="text-danger">
-          <small>{{ form.title.errors.0 }}</small></p>
-      {% endif %}
+{% csrf_token %}
+
+<div class="form-group">
+  {{ form.title.label_tag }}
+  {% if form.title.field.required %}
+    <span class="required">*</span>
+  {% endif %}
+  {% render_field form.title class='form-control' %}
+  {% if form.title.errors %}
+    <p class="text-danger">
+      <small>{{ form.title.errors.0 }}</small>
+    </p>
+  {% endif %}
+</div>
+
+<div id="study-languages-empty-form" class="hide">
+  <div class="form-group">
+    <div class="row">
+      <div class="col-md-4">
+        {{ formset.empty_form.language.label_tag }}
+        {% render_field formset.empty_form.language class='form-control' %}
+      </div>
+      <div class="col-md-7">
+        {{ formset.empty_form.title.label_tag }}
+        {% render_field formset.empty_form.title class='form-control' %}
+      </div>
+      <div class="col-md-1 text-center language-remove">
+        <a>
+          <span class="glyphicon glyphicon-minus-sign"></span>
+        </a>
+      </div>
     </div>
+  </div>
+  {# form-group #}
+</div>
+{# study-languages-empty-form #}
 
-    <div id="study-languages-empty-form" class="hide">
+<div id="study-languages" class="panel panel-default">
+
+  <div class="panel-body">
+    {{ formset.management_form }}
+
+    {% for set in formset %}
+      {{ set.id }}
       <div class="form-group">
         <div class="row">
           <div class="col-md-4">
-            {{ formset.empty_form.language.label_tag }}
-            {% render_field formset.empty_form.language class='form-control' %}
+            {{ set.language.label_tag }}
+            {% render_field set.language class='form-control' %}
+            {% if set.language.errors %}
+              <p class="text-danger">{{ set.language.errors.0 }}</p>
+            {% endif %}
           </div>
           <div class="col-md-7">
-            {{ formset.empty_form.title.label_tag }}
-            {% render_field formset.empty_form.title class='form-control' %}
+            {{ set.title.label_tag }}
+            {% render_field set.title class='form-control' %}
+            {% if set.title.errors %}
+              <p class="text-danger">{{ set.title.errors.0 }}</p>
+            {% endif %}
           </div>
-          <div class="col-md-1 text-center language-remove">
-            <a>
-              <span class="glyphicon glyphicon-minus-sign"></span>
-            </a>
-          </div>
+
+          {% if not forloop.first %}
+            <div class="col-md-1 text-center language-remove">
+              <div class="hide">
+                {% if formset.can_delete and formset.instance %}
+                  {{ set.DELETE|add_class:'delete' }}
+                {% endif %}
+              </div>
+              <a>
+                <span class="glyphicon glyphicon-minus-sign"></span>
+              </a>
+            </div>
+          {% endif %}
+
         </div>
       </div> {# form-group #}
-    </div> {# study-languages-empty-form #}
+    {% endfor %}
 
-    <div id="study-languages" class="panel panel-default">
-
-      <div class="panel-body">
-        {{ formset.management_form }}
-
-        {% for set in formset %}
-          {{ set.id }}
-          <div class="form-group">
-            <div class="row">
-              <div class="col-md-4">
-                {{ set.language.label_tag }}
-                {% render_field set.language class='form-control' %}
-                {% if set.language.errors %}
-                  <p class="text-danger">{{ set.language.errors.0 }}</p>
-                {% endif %}
-              </div>
-              <div class="col-md-7">
-                {{ set.title.label_tag }}
-                {% render_field set.title class='form-control' %}
-                {% if set.title.errors %}
-                  <p class="text-danger">{{ set.title.errors.0 }}</p>
-                {% endif %}
-              </div>
-
-              {% if not forloop.first %}
-                <div class="col-md-1 text-center language-remove">
-                  <div class="hide">
-                    {% if formset.can_delete and formset.instance %}
-                      {{ set.DELETE|add_class:'delete' }}
-                    {% endif %}
-                  </div>
-                  <a>
-                    <span class="glyphicon glyphicon-minus-sign"></span>
-                  </a>
-                </div>
-              {% endif %}
-
-            </div>
-          </div> {# form-group #}
-        {% endfor %}
-
-        <div id="study-languages-add">
-          <a>Add a new language</a>
-        </div>
-
-        {% if form.errors.language %}
-          <div class="text-danger" style="padding-top: 10px;">
-            <b>{{ form.errors.language.0 }}</b></div>
-        {% endif %}
-
-      </div> {# panel-body #}
-
-    </div> {# study-languages #}
-
-    <div class="form-group">
-      {{ form.url.label_tag }}
-      {% if form.url.field.required %}
-        <span class="required">*</span>
-      {% endif %}
-      {% render_field form.url class='form-control' %}
-      {% if form.url.errors %}
-        <p class="text-danger">
-          <small>{{ form.url.errors.0 }}</small></p>
-      {% endif %}
+    <div id="study-languages-add">
+      <a>Add a new language</a>
     </div>
 
-    <div class="panel panel-default">
-      <div class="panel-heading"><b>Approach used</b></div>
-      <div class="panel-body">
+    {% if form.errors.language %}
+      <div class="text-danger" style="padding-top: 10px;">
+        <b>{{ form.errors.language.0 }}</b></div>
+    {% endif %}
 
-          <div class="col-md-8">
-            <div class="row">
-              <div class="form-group">
+  </div>
+  {# panel-body #}
+
+</div>
+{# study-languages #}
+
+<div class="form-group">
+  {{ form.url.label_tag }}
+  {% if form.url.field.required %}
+    <span class="required">*</span>
+  {% endif %}
+  {% render_field form.url class='form-control' %}
+  {% if form.url.errors %}
+    <p class="text-danger">
+      <small>{{ form.url.errors.0 }}</small>
+    </p>
+  {% endif %}
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading"><b>Approach used</b></div>
+  <div class="panel-body">
+
+    <div class="col-md-8">
+      <div class="row">
+        <div class="form-group">
                 <span data-container="#blossom-label"
                       data-toggle="popover"
                       data-placement="top"
@@ -239,100 +246,125 @@
                     <span class="required">*</span>
                   {% endif %}
                 </span>
-                <div class="row">
-                  <div class="col-md-3">
-                    {% render_field form.blossom class='form-control' %}
-                    {% if form.blossom.errors %}
-                      <p class="text-danger">
-                        <small>{{ form.blossom.errors.0 }}</small></p>
-                    {% endif %}
-                  </div> {# col-md-3 #}
-                </div> {# row #}
-              </div> {# form-group #}
-            </div> {# row #}
 
-            <div class="row">
-              <div class="form-group hide" data-show-if="blossom">
-                {{ form.requested_by.label_tag }}
-                <span class="required">*</span>
-                <div class="row">
-                  <div class="col-md-7">
-                    {% render_field form.requested_by class='form-control' %}
-                    {% if form.requested_by.errors %}
-                      <p class="text-danger">
-                        <small>{{ form.requested_by.errors.0 }}</small></p>
-                    {% endif %}
-                  </div> {# col-md-7 #}
-                </div> {# row #}
-              </div> {# form-group #}
-            </div> {# row #}
-          </div> {# col-md-8 #}
-
-          <div class="col-md-4">
-            <div class="well well-sm hide" data-show-if="blossom">
-              <h5>BLOSSOM resources</h5>
-              <ul>
-                <li><a href="">Guidelines</a></li>
-                <li><a href="">Checklist for study</a></li>
-              </ul>
+          <div class="row">
+            <div class="col-md-3">
+              {% render_field form.blossom class='form-control' %}
+              {% if form.blossom.errors %}
+                <p class="text-danger">
+                  <small>{{ form.blossom.errors.0 }}</small>
+                </p>
+              {% endif %}
             </div>
-          </div> {# col-md-4 #}
+            {# col-md-3 #}
+          </div>
+          {# row #}
+        </div>
+        {# form-group #}
+      </div>
+      {# row #}
 
-      </div> {# panel-body #}
-    </div> {# panel #}
+      <div class="row">
+        <div class="form-group hide" data-show-if="blossom">
+          {{ form.requested_by.label_tag }}
+          <span class="required">*</span>
 
-    <div class="panel panel-default">
-      <div class="panel-heading"><b>Timing of study production</b></div>
-      <div class="panel-body">
-
-        <div class="form-group">
           <div class="row">
-            <div class="col-md-3">
-              {{ form.start_date.label_tag }}
-              <span class="required hide" data-show-if="blossom">*</span>
-              <div class="input-group">
-                {% render_field form.start_date class='form-control' data-date-format="DD/MM/YYYY" %}
+            <div class="col-md-7">
+              {% render_field form.requested_by class='form-control' %}
+              {% if form.requested_by.errors %}
+                <p class="text-danger">
+                  <small>{{ form.requested_by.errors.0 }}</small>
+                </p>
+              {% endif %}
+            </div>
+            {# col-md-7 #}
+          </div>
+          {# row #}
+        </div>
+        {# form-group #}
+      </div>
+      {# row #}
+    </div>
+    {# col-md-8 #}
+
+    <div class="col-md-4">
+      <div class="well well-sm hide" data-show-if="blossom">
+        <h5>BLOSSOM resources</h5>
+        <ul>
+          <li><a href="">Guidelines</a></li>
+          <li><a href="">Checklist for study</a></li>
+        </ul>
+      </div>
+    </div>
+    {# col-md-4 #}
+
+  </div>
+  {# panel-body #}
+</div>
+{# panel #}
+
+<div class="panel panel-default">
+  <div class="panel-heading"><b>Timing of study production</b></div>
+  <div class="panel-body">
+
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-3">
+          {{ form.start_date.label_tag }}
+          <span class="required hide" data-show-if="blossom">*</span>
+
+          <div class="input-group">
+            {% render_field form.start_date class='form-control' data-date-format="DD/MM/YYYY" %}
                 <span class="input-group-addon">
                   <i class="glyphicon glyphicon glyphicon-calendar"></i>
                 </span>
-              </div>
-              {% if form.start_date.errors %}
-                <p class="text-danger">
-                  <small>{{ form.start_date.errors.0 }}</small></p>
-              {% endif %}
-            </div> {# col-md-3 #}
-          </div> {# row #}
+          </div>
+          {% if form.start_date.errors %}
+            <p class="text-danger">
+              <small>{{ form.start_date.errors.0 }}</small>
+            </p>
+          {% endif %}
         </div>
+        {# col-md-3 #}
+      </div>
+      {# row #}
+    </div>
 
-        <div class="form-group">
-          <div class="row">
-            <div class="col-md-3">
-              {{ form.end_date.label_tag }}
-              {% if form.end_date.field.required %}
-                <span class="required">*</span>
-              {% endif %}
-              <div class="input-group">
-                {% render_field form.end_date class='form-control' data-date-format="DD/MM/YYYY" %}
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-3">
+          {{ form.end_date.label_tag }}
+          {% if form.end_date.field.required %}
+            <span class="required">*</span>
+          {% endif %}
+          <div class="input-group">
+            {% render_field form.end_date class='form-control' data-date-format="DD/MM/YYYY" %}
                 <span class="input-group-addon">
                   <i class="glyphicon glyphicon glyphicon-calendar"></i>
                 </span>
-              </div>
-              {% if form.end_date.errors %}
-                <p class="text-danger">
-                  <small>{{ form.end_date.errors.0 }}</small></p>
-              {% endif %}
-            </div> {# col-md-3 #}
-          </div> {# row #}
+          </div>
+          {% if form.end_date.errors %}
+            <p class="text-danger">
+              <small>{{ form.end_date.errors.0 }}</small>
+            </p>
+          {% endif %}
         </div>
+        {# col-md-3 #}
+      </div>
+      {# row #}
+    </div>
 
-      </div> {# panel-body #}
-    </div> {# panel #}
+  </div>
+  {# panel-body #}
+</div>
+{# panel #}
 
-    <div class="panel panel-default">
-      <div class="panel-heading"><b>References and contact information</b></div>
-      <div class="panel-body">
+<div class="panel panel-default">
+  <div class="panel-heading"><b>References and contact information</b></div>
+  <div class="panel-body">
 
-        <div class="form-group">
+    <div class="form-group">
           <span data-container="#lead-author-label"
                 data-toggle="popover"
                 data-placement="top"
@@ -344,14 +376,15 @@
               <span class="required">*</span>
             {% endif %}
           </span>
-          {% render_field form.lead_author class='form-control' rows=3 %}
-          {% if form.lead_author.errors %}
-            <p class="text-danger">
-              <small>{{ form.lead_author.errors.0 }}</small></p>
-          {% endif %}
-        </div>
+      {% render_field form.lead_author class='form-control' rows=3 %}
+      {% if form.lead_author.errors %}
+        <p class="text-danger">
+          <small>{{ form.lead_author.errors.0 }}</small>
+        </p>
+      {% endif %}
+    </div>
 
-        <div class="form-group">
+    <div class="form-group">
           <span data-container="#other-label"
                 data-toggle="popover"
                 data-placement="top"
@@ -360,44 +393,46 @@
                 id="other-label">
             {{ form.other.label_tag }}
           </span>
-          {% render_field form.other class='form-control' rows=3 %}
-          {% if form.other.errors %}
-            <p class="text-danger">
-              <small>{{ form.other.errors.0 }}</small></p>
-          {% endif %}
-        </div>
+      {% render_field form.other class='form-control' rows=3 %}
+      {% if form.other.errors %}
+        <p class="text-danger">
+          <small>{{ form.other.errors.0 }}</small>
+        </p>
+      {% endif %}
+    </div>
 
-      </div> {# panel-body #}
-    </div> {# panel #}
+  </div>
+  {# panel-body #}
+</div>
+{# panel #}
 
-    {% include 'study/_footer.html' %}
+{% include 'study/_footer.html' %}
 
-  </form>
-  </div> {# col #}
+</form>
+</div> {# col #}
 
-  {% if study %}
-    {% can_edit_study study as can_edit_study %}
-    {% if can_edit_study and study.blossom %}
-      <div class="col-md-1">
-        <a class="btn btn-primary launch-modal" data-toggle="modal"
-           data-target="#myModal"
-           data-action="{% url 'study_context_edit' study.id %}"
-           data-title="Edit context">Edit context
-        </a>
-      </div>
-
-      <div class="col-md-1 outcome">
-        <a class="btn btn-primary launch-modal" data-toggle="modal"
-           data-target="#myModal"
-           data-action="{% url 'study_outcomes_edit' study.id %}"
-           data-title="Add outcome">Add outcome
-        </a>
-      </div>
-    {% endif %}
+{% if study %}
+  {% can_edit_study study as can_edit_study %}
+  {% if can_edit_study and study.blossom %}
+    <div class="col-md-2">
+      <a class="btn btn-primary launch-modal" data-toggle="modal"
+         data-target="#myModal"
+         data-action="{% url 'study_context_edit' study.id %}"
+         data-title="Edit context">Edit context
+      </a>
+      <br/>
+      <br/>
+      <a class="btn btn-primary launch-modal" data-toggle="modal"
+         data-target="#myModal"
+         data-action="{% url 'study_outcomes_edit' study.id %}"
+         data-title="Add outcome">Edit outcomes
+      </a>
+    </div>
   {% endif %}
+{% endif %}
 
 </div>
-  {% include 'study/_modal.html'%}
 
+  {% include 'study/_modal.html' %}
 
 {% endblock %}

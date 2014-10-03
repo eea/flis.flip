@@ -164,7 +164,7 @@ class StudyContextEditView(LoginRequiredMixin,
     model = models.Study
     form_class = forms.StudyContextForm
     template_name = 'study/context_edit_form.html'
-    success_message = 'The study was successfully updated'
+    success_message = 'The study context was successfully updated'
 
     def get_success_url(self):
         return reverse('study_context_detail',
@@ -321,7 +321,7 @@ class StudyOutcomeEditView(LoginRequiredMixin,
         return kwargs
 
     def get_success_url(self):
-        return reverse('study_outcomes_detail', kwargs={'pk': self.study.pk})
+        return reverse('study_metadata_detail', kwargs={'pk': self.study.pk})
 
 
 class StudiesView(LoginRequiredMixin,

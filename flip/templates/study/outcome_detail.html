@@ -13,16 +13,17 @@
 
   {% include '_studies_nav.html' %}
 
-  <div class="page-header">
-    <h3>{{ outcome.document_title }}</h3>
-  </div>
+  <h3>{{ outcome.document_title }}</h3>
+
+  <p>Type: {{ outcome.type_of_outcome }}</p>
+  <p>Content topic: {{ outcome.content_topic }}</p>
 
   {% if outcome.text %}
     <div style="padding-bottom: 20px;">{{ outcome.text|linebreaks }}</div>
   {% endif %}
 
   {% if outcome.file_id %}
-    <div class="panel panel-default" >
+    <div class="panel panel-default">
       <div class="panel-body">
         <b>File attached:</b>
         <a href="{{ outcome.file_id.url }}" target="_blank">
@@ -40,30 +41,16 @@
 
     <ul class="list-unstyled actions">
       <li>
-         <a href="{{ edit_url }}" class="btn btn-primary">Edit</a>
+        <a href="{{ edit_url }}" class="btn btn-primary">Edit</a>
       </li>
       <li>
-         <a href="{{ delete_url }}" class="btn btn-danger">Delete</a>
+        <a href="{{ delete_url }}" class="btn btn-danger">Delete</a>
       </li>
       <li>
-         <a href="{{ back_url }}" class="btn btn-link">Back to documents</a>
+        <a href="{{ back_url }}" class="btn btn-link">Back to documents</a>
       </li>
     </ul>
 
   {% endif %}
 
-  {% if outcome.text %}
-    <div style="padding-bottom: 20px;">{{ outcome.text|linebreaks }}</div>
-  {% endif %}
-
-  {% if outcome.file_id %}
-    <div class="panel panel-default" >
-      <div class="panel-body">
-        <b>File attached:</b>
-        <a href="{{ outcome.file_id.url }}" target="_blank">
-          <i class="glyphicon glyphicon-file"></i>
-          {{ outcome.file_id|filename }}</a>
-      </div>
-    </div>
-  {% endif %}
 {% endblock %}
