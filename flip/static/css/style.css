@@ -157,3 +157,11 @@ li.right-float ul.dropdown-menu{
 div.outcome {
     margin-top: 10px;
 }
+
+.status {
+    display: inline !important;
+}
+
+a:link{
+    color: #FFFFFF !important;
+}
