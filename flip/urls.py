@@ -184,6 +184,8 @@ urlpatterns = patterns(
 
     url(r'^settings/', include(settings_urls, namespace='settings')),
 
+    url(r'^_lastseencount/$', 'frame.utils.get_objects_from_last_seen_count'),
+
     url(r'^admin/', include(admin.site.urls)),
 
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
