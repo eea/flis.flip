@@ -69,8 +69,6 @@ class StudyMetadataForm(ModelForm):
 
 class StudyContextForm(ModelForm):
 
-    draft = BooleanField(required=False)
-
     def __init__(self, *args, **kwargs):
         super(StudyContextForm, self).__init__(*args, **kwargs)
 
@@ -96,7 +94,7 @@ class StudyContextForm(ModelForm):
 
     class Meta:
         model = Study
-        fields = ('draft', 'purpose_and_target', 'additional_information',
+        fields = ('purpose_and_target', 'additional_information',
                   'phase_of_policy', 'additional_information_phase',
                   'foresight_approaches', 'additional_information_foresight',
                   'stakeholder_participation',

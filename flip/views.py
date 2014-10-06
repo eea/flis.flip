@@ -170,13 +170,6 @@ class StudyContextEditView(LoginRequiredMixin,
         return reverse('study_context_detail',
                        kwargs={'pk': self.object.pk})
 
-    def get_context_data(self, **kwargs):
-        context = {'form': forms.StudyContextForm(),
-                   'cancel_url': reverse('study_context_detail',
-                                         kwargs={'pk': self.object.pk})}
-        context.update(kwargs)
-        return super(StudyContextEditView, self).get_context_data(**context)
-
 
 class StudyOutcomesDetailView(LoginRequiredMixin,
                               generic.DetailView):
