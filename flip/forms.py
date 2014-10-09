@@ -9,10 +9,6 @@ from flip.models import (
 )
 
 
-_MULTIPLE_SELECT_HELP_TEXT = ("To select several items from the list, "
-                              "press and hold the control key")
-
-
 class StudyMetadataForm(ModelForm):
 
     start_date = DateField(widget=DateInput(format='%d/%m/%Y'),
@@ -105,13 +101,6 @@ class StudyContextForm(ModelForm):
                   'additional_information_stakeholder', 'environmental_themes',
                   'geographical_scope', 'countries')
 
-
-        help_texts = {
-            'foresight_approaches': _MULTIPLE_SELECT_HELP_TEXT,
-            'environmental_themes': _MULTIPLE_SELECT_HELP_TEXT,
-            'countries': _MULTIPLE_SELECT_HELP_TEXT,
-
-        }
 
 class BaseStudyLanguageInlineFormSet(BaseInlineFormSet):
 
