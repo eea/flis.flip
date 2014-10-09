@@ -103,7 +103,7 @@
 
         <div class="form-group">
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-12">
               {{ form.foresight_approaches.label_tag }}
               {% if form.foresight_approaches.field.required %}
                 <span class="required">*</span>
@@ -113,6 +113,7 @@
                   <small>{{ form.foresight_approaches.errors.0 }}</small></p>
               {% endif %}
               {% render_field form.foresight_approaches class='form-control' %}
+              <i><small>{{ form.foresight_approaches.help_text }}</small></i>
             </div> {# col-md-4 #}
           </div> {# row #}
         </div>
@@ -181,7 +182,7 @@
       <div class="panel-body">
 
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-12">
             <div class="form-group">
                 {{ form.environmental_themes.label_tag }}
                 {% if form.environmental_themes.field.required %}
@@ -192,6 +193,7 @@
                     <small>{{ form.environmental_themes.errors.0 }}</small></p>
                 {% endif %}
                 {% render_field form.environmental_themes class='form-control' %}
+                <i><small>{{ form.environmental_themes.help_text }}</small></i>
             </div> {# form-group #}
           </div> {# col-md-4 #}
         </div> {# row #}
@@ -216,7 +218,7 @@
           </div> {# row #}
         </div> {# col-md-4 #}
 
-        <div class="col-md-5" data-show-if="geographical_scope">
+        <div class="col-md-7" data-show-if="geographical_scope">
           <div class="row">
             <div class="form-group">
               {{ form.countries.label_tag }} <span class="required">*</span>
@@ -225,6 +227,7 @@
                   <small>{{ form.countries.errors.0 }}</small></p>
               {% endif %}
               {% render_field form.countries class='form-control' %}
+              <i><small>{{ form.countries.help_text }}</small></i>
             </div> {# form-group #}
           </div> {# row #}
         </div> {# col-md-4 #}
