@@ -413,7 +413,7 @@
 
 {% if study %}
   {% can_edit_study study as can_edit_study %}
-  {% if can_edit_study and study.blossom %}
+  {% if can_edit_study %}
     <div class="col-md-2">
       <a class="btn btn-primary launch-modal" data-toggle="modal"
          data-target="#myModal"
