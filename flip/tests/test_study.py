@@ -72,12 +72,6 @@ class StudyMetadaTests(BaseWebTest):
             environmental_themes=data['environmental_themes'],
             geographical_scope=data['geographical_scope'])
 
-    def test_study_context_fail_if_not_blossom_edit(self):
-        study = StudyFactory()
-        url = reverse('study_context_edit', kwargs={'pk': study.pk})
-        resp = self.app.get(url, expect_errors=True)
-        self.assertEqual(404, resp.status_int)
-
     def test_study_context_fail_if_not_geographical_scope_country(self):
         study = StudyFactory(blossom=Study.YES)
         url = reverse('study_context_edit', kwargs={'pk': study.pk})
