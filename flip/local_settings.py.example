@@ -11,6 +11,7 @@ DATABASES = {
 DEBUG = TEMPLATE_DEBUG = ASSETS_DEBUG = True
 
 SECRET_KEY = 'secret'
+SKIP_EDIT_AUTH = True
 
 # FRAME_URL = 'path/to/frame/url'
 
