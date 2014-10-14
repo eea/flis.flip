@@ -13,16 +13,6 @@ from auth.views import AdminPermissionRequiredMixin
 from auth.views import is_admin
 
 
-class StudyBlossomRequiredMixin(object):
-
-    def dispatch(self, request, *args, **kwargs):
-        study = self.get_object()
-        if not study.blossom:
-            raise Http404
-        return super(StudyBlossomRequiredMixin, self).dispatch(
-            request, *args, **kwargs)
-
-
 class StudyLanguageFormMixin(object):
 
     def get_context_data(self, *args, **kwargs):
@@ -157,7 +147,6 @@ class StudyContextDetailView(LoginRequiredMixin,
 
 class StudyContextEditView(LoginRequiredMixin,
                            EditPermissionRequiredMixin,
-                           StudyBlossomRequiredMixin,
                            SuccessMessageMixin,
                            generic.UpdateView):
 
@@ -188,7 +177,6 @@ class StudyOutcomesDetailView(LoginRequiredMixin,
 
 class StudyOutcomesAddView(LoginRequiredMixin,
                            EditPermissionRequiredMixin,
-                           StudyBlossomRequiredMixin,
                            SuccessMessageMixin,
                            generic.CreateView):
 
@@ -209,18 +197,14 @@ class StudyOutcomesAddView(LoginRequiredMixin,
         self.study = study
         return study
 
-    def get_context_data(self, **kwargs):
-        kwargs = super(StudyOutcomesAddView, self).get_context_data(**kwargs)
-        kwargs['study'] = kwargs['object'] = self.study
-        return kwargs
-
     def get_form_kwargs(self):
         kwargs = super(StudyOutcomesAddView, self).get_form_kwargs()
-        kwargs['study'] = self.study
+        kwargs['study'] = self.get_object()
         return kwargs
 
     def get_success_url(self):
-        return reverse('study_outcomes_detail', kwargs={'pk': self.study.pk})
+        return reverse('study_outcomes_detail',
+                       kwargs={'pk': self.get_object().pk})
 
     def get_success_message(self, cleaned_data):
         return '{document_title} was successfully added'.format(**cleaned_data)
