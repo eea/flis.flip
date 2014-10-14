@@ -16,22 +16,26 @@ from flip.models import Study
 USER_ADMIN_DATA = {
     'user_id': 'admin',
     'user_roles': ['Administrator'],
-    'groups': []
+    'groups': [],
+    'frame_html': ''
 }
 USER_ANONYMOUS_DATA = {
     'user_id': 'anonymous',
     'user_roles': ['Anonymous'],
-    'groups': []
+    'groups': [],
+    'frame_html': ''
 }
 USER_CONTRIBUTOR_DATA = {
     'user_id': 'contribuitor',
     'user_roles': ['Contributor'],
-    'groups': []
+    'groups': [],
+    'frame_html': ''
 }
 USER_VIEWER_DATA = {
     'user_id': 'viewer',
     'user_roles': ['Viewer'],
-    'groups': []
+    'groups': [],
+    'frame_html': ''
 }
 UserAdminMock = Mock(status_code=200,
                      json=lambda: USER_ADMIN_DATA)

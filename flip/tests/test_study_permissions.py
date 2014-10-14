@@ -267,22 +267,6 @@ class StudyContextPermissionTests(BaseWebTest):
         self.assertEqual(200, resp.status_int)
         self.assertIn('restricted.html', resp.templates[0].name)
 
-    @patch('frame.middleware.requests.get',
-           Mock(return_value=UserAdminMock))
-    def test_study_context_edit_get_if_not_blossom(self):
-        study = StudyFactory(blossom=Study.NO)
-        url = reverse('study_context_edit', kwargs={'pk': study.pk})
-        resp = self.app.get(url, expect_errors=True)
-        self.assertEqual(404, resp.status_int)
-
-    @patch('frame.middleware.requests.get',
-           Mock(return_value=UserAdminMock))
-    def test_study_context_edit_post_if_not_blossom(self):
-        study = StudyFactory(blossom=Study.NO)
-        url = reverse('study_context_edit', kwargs={'pk': study.pk})
-        resp = self.app.post(url, expect_errors=True)
-        self.assertEqual(404, resp.status_int)
-
 
 @override_settings(SKIP_EDIT_AUTH=False, FRAME_URL=True)
 class StudyOutcomePermissionTests(BaseWebTest):
