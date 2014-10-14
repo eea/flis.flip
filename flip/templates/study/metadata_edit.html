@@ -140,10 +140,16 @@
     <div class="row">
       <div class="col-md-4">
         {{ formset.empty_form.language.label_tag }}
+        {% if formset.empty_form.language.field.required %}
+            <span class="required">*</span>
+        {% endif %}
         {% render_field formset.empty_form.language class='form-control' %}
       </div>
       <div class="col-md-7">
         {{ formset.empty_form.title.label_tag }}
+        {% if formset.empty_form.title.field.required %}
+            <span class="required">*</span>
+        {% endif %}
         {% render_field formset.empty_form.title class='form-control' %}
       </div>
       <div class="col-md-1 text-center language-remove">
@@ -168,6 +174,9 @@
         <div class="row">
           <div class="col-md-4">
             {{ set.language.label_tag }}
+            {% if set.language.field.required %}
+                <span class="required">*</span>
+            {% endif %}
             {% render_field set.language class='form-control' %}
             {% if set.language.errors %}
               <p class="text-danger">{{ set.language.errors.0 }}</p>
@@ -175,6 +184,9 @@
           </div>
           <div class="col-md-7">
             {{ set.title.label_tag }}
+            {% if set.title.field.required %}
+                <span class="required">*</span>
+            {% endif %}
             {% render_field set.title class='form-control' %}
             {% if set.title.errors %}
               <p class="text-danger">{{ set.title.errors.0 }}</p>
