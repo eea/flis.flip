@@ -47,6 +47,12 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'fost_authn.Middleware',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'fost_authn.FostBackend',
 )
 
 ROOT_URLCONF = 'common_dicts.urls'
@@ -82,3 +88,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+def FOST_AUTHN_GET_SECRET(request, key):
+    # use the same secret as the client
+    return 'secret'

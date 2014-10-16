@@ -122,10 +122,11 @@ class Study(Model):
         blank=True)
 
     geographical_scope = RemoteForeignKey(
-        model_url='http://localhost:8000/slumber/common_dicts/GeographicalScope',
+        model_url='slumber://common_dicts/GeographicalScope',
         verbose_name='geographical scope',
         null=True,
-        blank=True)
+        blank=True,
+    )
 
     countries = ManyToManyField(
         'Country',
