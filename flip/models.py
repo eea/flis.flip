@@ -8,6 +8,9 @@ from django.db.models import Model
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 
+from slumber.fields import RemoteForeignKey
+from slumber import client
+
 
 class Study(Model):
 
@@ -119,8 +122,8 @@ class Study(Model):
         verbose_name='environmental themes',
         blank=True)
 
-    geographical_scope = ForeignKey(
-        'GeographicalScope',
+    geographical_scope = RemoteForeignKey(
+        model_url='http://localhost:8000/slumber/common_dicts/GeographicalScope',
         verbose_name='geographical scope',
         null=True,
         blank=True)
@@ -132,6 +135,8 @@ class Study(Model):
 
     def __unicode__(self):
         return self.title
+
+#GeographicalScope = client.common_dicts.GeographicalScope
 
 
 class Outcome(Model):
@@ -214,17 +219,6 @@ class EnvironmentalTheme(Model):
     def __unicode__(self):
         return self.title
 
-
-class GeographicalScope(Model):
-
-    title = CharField(max_length=128)
-    require_country = BooleanField(default=False)
-
-    class Meta:
-        ordering = ('-pk',)
-
-    def __unicode__(self):
-        return self.title
 
 
 class Country(Model):

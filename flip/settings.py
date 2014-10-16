@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'gunicorn',
     'auth',
     'flip',
+    'slumber',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -136,6 +137,9 @@ FRAME_SEEN_MODELS = (
 FRAME_SEEN_EXCLUDE = ('/_lastseencount/', )
 
 SKIP_EDIT_AUTH = False
+
+# SLUMBER STUFF
+SLUMBER_DIRECTORY = 'http://localhost:9000/slumber'
 
 try:
     from local_settings import *
