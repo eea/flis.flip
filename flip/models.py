@@ -1,4 +1,4 @@
-
+from django import forms
 from django.db.models import BooleanField, IntegerField
 from django.db.models import CharField, URLField, TextField, FileField
 from django.db.models import DateField, DateTimeField
@@ -9,10 +9,22 @@ from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 
 from slumber.fields import RemoteForeignKey
+from slumber import client
+
+
+class RemoteForeignKeySelect(RemoteForeignKey):
+    def _queryset(self):
+        return client.common_dicts.GeographicalScope.instances()
+
+    queryset = property(_queryset)
+
+    def formfield(self, **kwargs):
+        kwargs.setdefault('widget', forms.Select)
+        self._choices = self.queryset
+        return super(RemoteForeignKeySelect, self).formfield(**kwargs)
 
 
 class Study(Model):
-
     EEA = 'eea'
     OTHER = 'other'
     REQUESTED_BY_CHOICES = (
@@ -121,7 +133,7 @@ class Study(Model):
         verbose_name='environmental themes',
         blank=True)
 
-    geographical_scope = RemoteForeignKey(
+    geographical_scope = RemoteForeignKeySelect(
         model_url='slumber://common_dicts/GeographicalScope',
         verbose_name='geographical scope',
         null=True,
@@ -138,7 +150,6 @@ class Study(Model):
 
 
 class Outcome(Model):
-
     study = ForeignKey(Study, related_name='outcomes')
 
     type_of_outcome = ForeignKey(
@@ -165,7 +176,6 @@ class Outcome(Model):
 
 
 class Language(Model):
-
     code = CharField(max_length=3, primary_key=True)
     title = CharField(max_length=32)
 
@@ -174,7 +184,6 @@ class Language(Model):
 
 
 class StudyLanguage(Model):
-
     language = ForeignKey(Language, verbose_name='language of the study')
 
     study = ForeignKey(Study)
@@ -186,7 +195,6 @@ class StudyLanguage(Model):
 
 
 class PhasesOfPolicy(Model):
-
     title = CharField(max_length=128)
 
     class Meta:
@@ -197,7 +205,6 @@ class PhasesOfPolicy(Model):
 
 
 class ForesightApproaches(Model):
-
     title = CharField(max_length=128)
 
     class Meta:
@@ -208,7 +215,6 @@ class ForesightApproaches(Model):
 
 
 class EnvironmentalTheme(Model):
-
     title = CharField(max_length=128)
 
     class Meta:
@@ -218,9 +224,7 @@ class EnvironmentalTheme(Model):
         return self.title
 
 
-
 class Country(Model):
-
     iso = CharField(max_length=2, primary_key=True)
     name = CharField(max_length=128)
 
@@ -229,7 +233,6 @@ class Country(Model):
 
 
 class TypeOfOutcome(Model):
-
     title = CharField(max_length=256)
     blossom = BooleanField(default=False)
 
@@ -241,7 +244,6 @@ class TypeOfOutcome(Model):
 
 
 class ContentTopic(Model):
-
     title = CharField(max_length=256)
 
     class Meta:
