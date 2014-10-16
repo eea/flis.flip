@@ -139,7 +139,7 @@ FRAME_SEEN_EXCLUDE = ('/_lastseencount/', )
 SKIP_EDIT_AUTH = False
 
 # SLUMBER STUFF
-SLUMBER_DIRECTORY = 'http://localhost:9000/slumber'
+SLUMBER_DIRECTORY = 'http://localhost:9000/slumber/'
 
 try:
     from local_settings import *

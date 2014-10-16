@@ -9,7 +9,6 @@ from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 
 from slumber.fields import RemoteForeignKey
-from slumber import client
 
 
 class Study(Model):
@@ -135,8 +134,6 @@ class Study(Model):
 
     def __unicode__(self):
         return self.title
-
-#GeographicalScope = client.common_dicts.GeographicalScope
 
 
 class Outcome(Model):
