@@ -12,6 +12,8 @@ from auth.views import LoginRequiredMixin, EditPermissionRequiredMixin
 from auth.views import AdminPermissionRequiredMixin
 from auth.views import is_admin
 
+#from slumber import client
+
 
 class StudyLanguageFormMixin(object):
 
@@ -219,7 +221,7 @@ class StudyOutcomeDeleteView(LoginRequiredMixin,
     template_name = 'study/outcome_confirm_delete.html'
 
     def dispatch(self, request, pk, outcome_pk):
-        self.study = get_object_or_404(models.Study, pk=pk)
+#        self.study = get_object_or_404(models.Study, pk=pk)
         return super(StudyOutcomeDeleteView, self).dispatch(request, pk)
 
     def get_queryset(self, queryset=None):
@@ -483,8 +485,9 @@ class SettingsGeographicalScopesView(LoginRequiredMixin,
                                      AdminPermissionRequiredMixin,
                                      generic.ListView):
 
-    model = models.GeographicalScope
-    template_name = 'settings/geographical_scopes.html'
+    pass
+    #model = client.common_dicts.GeographicalScope
+    #template_name = 'settings/geographical_scopes.html'
 
 
 class SettingsGeographicalScopesAddView(LoginRequiredMixin,
@@ -492,12 +495,13 @@ class SettingsGeographicalScopesAddView(LoginRequiredMixin,
                                         SuccessMessageMixin,
                                         generic.CreateView):
 
-    model = models.GeographicalScope
-    template_name = 'settings/geographical_scopes_edit.html'
-    success_message = 'Scope updated successfully'
+    pass
+    #model = client.common_dicts.GeographicalScope
+    #template_name = 'settings/geographical_scopes_edit.html'
+    #success_message = 'Scope updated successfully'
 
-    def get_success_url(self):
-        return reverse('settings:geographical_scopes')
+    #def get_success_url(self):
+    #    return reverse('settings:geographical_scopes')
 
 
 class SettingsGeographicalScopesEditView(LoginRequiredMixin,
@@ -505,23 +509,25 @@ class SettingsGeographicalScopesEditView(LoginRequiredMixin,
                                          SuccessMessageMixin,
                                          generic.UpdateView):
 
-    model = models.GeographicalScope
-    template_name = 'settings/geographical_scopes_edit.html'
-    success_message = 'Scope updated successfully'
+    pass
+    #model = client.common_dicts.GeographicalScope
+    #template_name = 'settings/geographical_scopes_edit.html'
+    #success_message = 'Scope updated successfully'
 
-    def get_success_url(self):
-        return reverse('settings:geographical_scopes')
+    #def get_success_url(self):
+    #    return reverse('settings:geographical_scopes')
 
 
 class SettingsGeographicalScopesDeleteView(LoginRequiredMixin,
                                            AdminPermissionRequiredMixin,
                                            generic.DeleteView):
 
-    model = models.GeographicalScope
-    template_name = 'settings/geographical_scopes_confirm_delete.html'
+    pass
+    #model = client.common_dicts.GeographicalScope
+    #template_name = 'settings/geographical_scopes_confirm_delete.html'
 
-    def get_success_url(self):
-        return reverse('settings:geographical_scopes')
+    #def get_success_url(self):
+    #    return reverse('settings:geographical_scopes')
 
 
 class SettingsOutcomesView(LoginRequiredMixin,

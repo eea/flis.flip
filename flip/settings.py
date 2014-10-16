@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'gunicorn',
     'auth',
     'flip',
+    'slumber',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -49,6 +50,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.RemoteUserMiddleware',
+    'slumber.connector.middleware.ForwardAuthentication',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'frame.middleware.SeenMiddleware',
@@ -136,6 +138,11 @@ FRAME_SEEN_MODELS = (
 FRAME_SEEN_EXCLUDE = ('/_lastseencount/', )
 
 SKIP_EDIT_AUTH = False
+
+# SLUMBER STUFF
+SLUMBER_DIRECTORY = 'http://localhost:9000/slumber/'
+SLUMBER_SERVICE = 'common_dicts'
+SLUMBER_LOCAL_PREFIX = 'http://localhost.local/'
 
 try:
     from local_settings import *
