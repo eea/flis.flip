@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'gunicorn',
     'auth',
     'flip',
+    'raven.contrib.django.raven_compat',
 )
 
 MIDDLEWARE_CLASSES = (
