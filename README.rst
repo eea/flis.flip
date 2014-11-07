@@ -13,7 +13,7 @@ be run as an unprivileged user in the product directory::
 
 1. Clone the repository::
 
-    git svn clone https://svn.eionet.europa.eu/repositories/Python/flip/
+    git clone https://github.com/eea/flis.flip.git
 
 2. Create & activate a virtual environment::
 
@@ -23,7 +23,7 @@ be run as an unprivileged user in the product directory::
 
 3. Install dependencies::
 
-    pip install -r dev-requirements.txt
+    pip install -r requirements-dev.txt
 
 4. Create a configuration file::
 
