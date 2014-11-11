@@ -101,14 +101,14 @@ class ForesightApproachesFactory(DjangoModelFactory):
 
 class EnvironmentalThemeFactory(DjangoModelFactory):
 
-    FACTORY_FOR = 'flip.EnvironmentalTheme'
+    FACTORY_FOR = 'common.EnvironmentalTheme'
 
     title = fuzzy.FuzzyText()
 
 
 class GeographicalScopeFactory(DjangoModelFactory):
 
-    FACTORY_FOR = 'flip.GeographicalScope'
+    FACTORY_FOR = 'common.GeographicalScope'
 
     title = fuzzy.FuzzyText()
 
