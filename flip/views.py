@@ -3,11 +3,11 @@ import time
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse
 from django.forms.models import inlineformset_factory
-from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect
 from django.views import generic
 
 from flip import forms, models
+from flis_metadata import common
 from auth.views import LoginRequiredMixin, EditPermissionRequiredMixin
 from auth.views import AdminPermissionRequiredMixin
 from auth.views import is_admin
@@ -438,7 +438,7 @@ class SettingsEnvironmentalThemesView(LoginRequiredMixin,
                                       AdminPermissionRequiredMixin,
                                       generic.ListView):
 
-    model = models.EnvironmentalTheme
+    model = common.models.EnvironmentalTheme
     template_name = 'settings/environmental_themes.html'
 
 
@@ -447,7 +447,7 @@ class SettingsEnvironmentalThemesAddView(LoginRequiredMixin,
                                          SuccessMessageMixin,
                                          generic.CreateView):
 
-    model = models.EnvironmentalTheme
+    model = common.models.EnvironmentalTheme
     template_name = 'settings/environmental_themes_edit.html'
     success_message = 'Theme updated successfully'
 
@@ -460,7 +460,7 @@ class SettingsEnvironmentalThemesEditView(LoginRequiredMixin,
                                           SuccessMessageMixin,
                                           generic.UpdateView):
 
-    model = models.EnvironmentalTheme
+    model = common.models.EnvironmentalTheme
     template_name = 'settings/environmental_themes_edit.html'
     success_message = 'Theme updated successfully'
 
@@ -472,7 +472,7 @@ class SettingsEnvironmentalThemesDeleteView(LoginRequiredMixin,
                                             AdminPermissionRequiredMixin,
                                             generic.DeleteView):
 
-    model = models.EnvironmentalTheme
+    model = common.models.EnvironmentalTheme
     template_name = 'settings/environmental_themes_confirm_delete.html'
 
     def get_success_url(self):
@@ -483,7 +483,7 @@ class SettingsGeographicalScopesView(LoginRequiredMixin,
                                      AdminPermissionRequiredMixin,
                                      generic.ListView):
 
-    model = models.GeographicalScope
+    model = common.models.GeographicalScope
     template_name = 'settings/geographical_scopes.html'
 
 
@@ -492,7 +492,7 @@ class SettingsGeographicalScopesAddView(LoginRequiredMixin,
                                         SuccessMessageMixin,
                                         generic.CreateView):
 
-    model = models.GeographicalScope
+    model = common.models.GeographicalScope
     template_name = 'settings/geographical_scopes_edit.html'
     success_message = 'Scope updated successfully'
 
@@ -505,7 +505,7 @@ class SettingsGeographicalScopesEditView(LoginRequiredMixin,
                                          SuccessMessageMixin,
                                          generic.UpdateView):
 
-    model = models.GeographicalScope
+    model = common.models.GeographicalScope
     template_name = 'settings/geographical_scopes_edit.html'
     success_message = 'Scope updated successfully'
 
@@ -517,7 +517,7 @@ class SettingsGeographicalScopesDeleteView(LoginRequiredMixin,
                                            AdminPermissionRequiredMixin,
                                            generic.DeleteView):
 
-    model = models.GeographicalScope
+    model = common.models.GeographicalScope
     template_name = 'settings/geographical_scopes_confirm_delete.html'
 
     def get_success_url(self):
