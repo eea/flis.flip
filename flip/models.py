@@ -115,18 +115,18 @@ class Study(Model):
         blank=True)
 
     environmental_themes = ManyToManyField(
-        'EnvironmentalTheme',
+        'common.EnvironmentalTheme',
         verbose_name='environmental themes',
         blank=True)
 
     geographical_scope = ForeignKey(
-        'GeographicalScope',
+        'common.GeographicalScope',
         verbose_name='geographical scope',
         null=True,
         blank=True)
 
     countries = ManyToManyField(
-        'Country',
+        'common.Country',
         verbose_name='countries',
         blank=True)
 
