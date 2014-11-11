@@ -7,7 +7,6 @@ from django.shortcuts import get_object_or_404, redirect
 from django.views import generic
 
 from flip import forms, models
-from flis_metadata import common
 from auth.views import LoginRequiredMixin, EditPermissionRequiredMixin
 from auth.views import AdminPermissionRequiredMixin
 from auth.views import is_admin
@@ -432,96 +431,6 @@ class SettingsForesightApproachesDeleteView(LoginRequiredMixin,
 
     def get_success_url(self):
         return reverse('settings:foresight_approaches')
-
-
-class SettingsEnvironmentalThemesView(LoginRequiredMixin,
-                                      AdminPermissionRequiredMixin,
-                                      generic.ListView):
-
-    model = common.models.EnvironmentalTheme
-    template_name = 'settings/environmental_themes.html'
-
-
-class SettingsEnvironmentalThemesAddView(LoginRequiredMixin,
-                                         AdminPermissionRequiredMixin,
-                                         SuccessMessageMixin,
-                                         generic.CreateView):
-
-    model = common.models.EnvironmentalTheme
-    template_name = 'settings/environmental_themes_edit.html'
-    success_message = 'Theme updated successfully'
-
-    def get_success_url(self):
-        return reverse('settings:environmental_themes')
-
-
-class SettingsEnvironmentalThemesEditView(LoginRequiredMixin,
-                                          AdminPermissionRequiredMixin,
-                                          SuccessMessageMixin,
-                                          generic.UpdateView):
-
-    model = common.models.EnvironmentalTheme
-    template_name = 'settings/environmental_themes_edit.html'
-    success_message = 'Theme updated successfully'
-
-    def get_success_url(self):
-        return reverse('settings:environmental_themes')
-
-
-class SettingsEnvironmentalThemesDeleteView(LoginRequiredMixin,
-                                            AdminPermissionRequiredMixin,
-                                            generic.DeleteView):
-
-    model = common.models.EnvironmentalTheme
-    template_name = 'settings/environmental_themes_confirm_delete.html'
-
-    def get_success_url(self):
-        return reverse('settings:environmental_themes')
-
-
-class SettingsGeographicalScopesView(LoginRequiredMixin,
-                                     AdminPermissionRequiredMixin,
-                                     generic.ListView):
-
-    model = common.models.GeographicalScope
-    template_name = 'settings/geographical_scopes.html'
-
-
-class SettingsGeographicalScopesAddView(LoginRequiredMixin,
-                                        AdminPermissionRequiredMixin,
-                                        SuccessMessageMixin,
-                                        generic.CreateView):
-
-    model = common.models.GeographicalScope
-    template_name = 'settings/geographical_scopes_edit.html'
-    success_message = 'Scope updated successfully'
-
-    def get_success_url(self):
-        return reverse('settings:geographical_scopes')
-
-
-class SettingsGeographicalScopesEditView(LoginRequiredMixin,
-                                         AdminPermissionRequiredMixin,
-                                         SuccessMessageMixin,
-                                         generic.UpdateView):
-
-    model = common.models.GeographicalScope
-    template_name = 'settings/geographical_scopes_edit.html'
-    success_message = 'Scope updated successfully'
-
-    def get_success_url(self):
-        return reverse('settings:geographical_scopes')
-
-
-class SettingsGeographicalScopesDeleteView(LoginRequiredMixin,
-                                           AdminPermissionRequiredMixin,
-                                           generic.DeleteView):
-
-    model = common.models.GeographicalScope
-    template_name = 'settings/geographical_scopes_confirm_delete.html'
-
-    def get_success_url(self):
-        return reverse('settings:geographical_scopes')
 
 
 class SettingsOutcomesView(LoginRequiredMixin,
