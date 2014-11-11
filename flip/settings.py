@@ -39,6 +39,8 @@ INSTALLED_APPS = (
     'south',
     'gunicorn',
     'auth',
+    'flis_metadata.common',
+    'flis_metadata.client',
     'flip',
     'raven.contrib.django.raven_compat',
 )
