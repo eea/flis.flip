@@ -2,12 +2,10 @@ from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
 
 from flip.models import (PhasesOfPolicy, ForesightApproaches,
-                         EnvironmentalTheme, GeographicalScope,
                          TypeOfOutcome)
 
 from .base import BaseWebTest
 from .base import (PhasesOfPolicyFactory, ForesightApproachesFactory,
-                   EnvironmentalThemeFactory, GeographicalScopeFactory,
                    TypeOfOutcomeFactory)
 
 
@@ -98,92 +96,6 @@ class SettingsForesightApproachesTests(BaseWebTest):
 
 
 @override_settings(SKIP_EDIT_AUTH=True, FRAME_URL=None)
-class SettingsEnvironmentalThemesTests(BaseWebTest):
-
-    def test_environmental_theme_new(self):
-        data = EnvironmentalThemeFactory.attributes()
-        url = reverse('settings:environmental_themes_edit')
-        resp = self.app.get(url)
-        form = resp.forms['environmental-themes-form']
-        self.populate_fields(form, self.normalize_data(data))
-        form.submit().follow()
-        self.assertObjectInDatabase(EnvironmentalTheme, title=data['title'])
-
-    def test_environmental_theme_edit(self):
-        theme = EnvironmentalThemeFactory()
-        data = EnvironmentalThemeFactory.attributes()
-        data['title'] = 'new title'
-        url = reverse('settings:environmental_themes_edit',
-                      kwargs={'pk': theme.pk})
-        resp = self.app.get(url)
-        form = resp.forms['environmental-themes-form']
-        self.populate_fields(form, self.normalize_data(data))
-        form.submit().follow()
-        self.assertEqual(1, EnvironmentalTheme.objects.count())
-        self.assertObjectInDatabase(EnvironmentalTheme, title=data['title'])
-
-    def test_environmental_theme_delete_confirm(self):
-        theme = EnvironmentalThemeFactory()
-        url = reverse('settings:environmental_themes_delete',
-                      kwargs={'pk': theme.pk})
-        resp = self.app.get(url)
-        self.assertEqual(200, resp.status_int)
-        self.assertIn('settings/environmental_themes_confirm_delete.html',
-                      resp.templates[0].name)
-
-    def test_environmental_theme_delete(self):
-        theme = EnvironmentalThemeFactory()
-        url = reverse('settings:environmental_themes_delete',
-                      kwargs={'pk': theme.pk})
-        resp = self.app.delete(url)
-        self.assertEqual(302, resp.status_int)
-        self.assertEqual(0, EnvironmentalTheme.objects.count())
-
-
-@override_settings(SKIP_EDIT_AUTH=True, FRAME_URL=None)
-class SettingsGeographicalScopesTests(BaseWebTest):
-
-    def test_geographical_scopes_new(self):
-        data = GeographicalScopeFactory.attributes()
-        url = reverse('settings:geographical_scopes_edit')
-        resp = self.app.get(url)
-        form = resp.forms['geographical-scopes-form']
-        self.populate_fields(form, self.normalize_data(data))
-        form.submit().follow()
-        self.assertObjectInDatabase(GeographicalScope, title=data['title'])
-
-    def test_geographical_scopes_edit(self):
-        scope = GeographicalScopeFactory()
-        data = GeographicalScopeFactory.attributes()
-        data['title'] = 'new title'
-        url = reverse('settings:geographical_scopes_edit',
-                      kwargs={'pk': scope.pk})
-        resp = self.app.get(url)
-        form = resp.forms['geographical-scopes-form']
-        self.populate_fields(form, self.normalize_data(data))
-        form.submit().follow()
-        self.assertEqual(1, GeographicalScope.objects.count())
-        self.assertObjectInDatabase(GeographicalScope, title=data['title'])
-
-    def test_geographical_scopes_delete_confirm(self):
-        scope = GeographicalScopeFactory()
-        url = reverse('settings:geographical_scopes_delete',
-                      kwargs={'pk': scope.pk})
-        resp = self.app.get(url)
-        self.assertEqual(200, resp.status_int)
-        self.assertIn('settings/geographical_scopes_confirm_delete.html',
-                      resp.templates[0].name)
-
-    def test_geographical_scopes_delete(self):
-        scope = GeographicalScopeFactory()
-        url = reverse('settings:geographical_scopes_delete',
-                      kwargs={'pk': scope.pk})
-        resp = self.app.delete(url)
-        self.assertEqual(302, resp.status_int)
-        self.assertEqual(0, GeographicalScope.objects.count())
-
-
-@override_settings(SKIP_EDIT_AUTH=True, FRAME_URL=None)
 class SettingsOutcomesTests(BaseWebTest):
 
     def test_geographical_scopes_new(self):
@@ -224,4 +136,3 @@ class SettingsOutcomesTests(BaseWebTest):
         resp = self.app.delete(url)
         self.assertEqual(302, resp.status_int)
         self.assertEqual(0, TypeOfOutcome.objects.count())
-
