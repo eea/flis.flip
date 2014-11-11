@@ -57,6 +57,7 @@ be run as an unprivileged user in the product directory::
 7. Load fixtures::
 
     ./manage.py loadfixtures
+    ./manage.py load_metadata_fixtures
 
 
 Create a migration after changes in models.py
