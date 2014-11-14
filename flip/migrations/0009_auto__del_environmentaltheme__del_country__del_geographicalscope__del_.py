@@ -1,30 +1,41 @@
 # -*- coding: utf-8 -*-
 from south.utils import datetime_utils as datetime
 from south.db import db
-from south.v2 import DataMigration
+from south.v2 import SchemaMigration
 from django.db import models
 
-class Migration(DataMigration):
+
+class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        for country in orm.Country.objects.all():
-            new_c = orm['common.Country'](iso=country.iso, name=country.name)
-            new_c.save()
+        # Deleting model 'EnvironmentalTheme'
+        db.delete_table(u'flip_environmentaltheme')
 
-        for geo_scope in orm.GeographicalScope.objects.all():
-            new_g = orm['common.GeographicalScope'](
-                title=geo_scope.title,
-                require_country=geo_scope.require_country,
-                id=geo_scope.id)
-            new_g.save()
-        for env_theme in orm.EnvironmentalTheme.objects.all():
-            new_e = orm['common.EnvironmentalTheme'](
-                title=env_theme.title,
-                id=env_theme.id)
-            new_e.save()
+        # Deleting model 'Country'
+        db.delete_table(u'flip_country')
+
+        # Deleting model 'GeographicalScope'
+        db.delete_table(u'flip_geographicalscope')
+
+        # Deleting field 'Study.geographical_scope'
+        db.delete_column(u'flip_study', 'geographical_scope_id')
+
+        # Removing M2M table for field environmental_themes on 'Study'
+        db.delete_table(db.shorten_name(u'flip_study_environmental_themes'))
+
+        # Removing M2M table for field countries on 'Study'
+        db.delete_table(db.shorten_name(u'flip_study_countries'))
+
+        db.rename_table(db.shorten_name(u'flip_study_fake_countries'),
+                        db.shorten_name(u'flip_study_countries'))
+        db.rename_table(db.shorten_name(u'flip_study_fake_environmental_themes'),
+                        db.shorten_name(u'flip_study_environmental_themes'))
+        db.rename_column('flip_study', 'fake_geographical_scope_id',
+                         'geographical_scope_id')
+
 
     def backwards(self, orm):
-        raise RuntimeError('This migration can not be undone')
+        raise RuntimeError("This migration can't be undone")
 
     models = {
         u'common.country': {
@@ -51,25 +62,9 @@ class Migration(DataMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '256'})
         },
-        u'flip.country': {
-            'Meta': {'object_name': 'Country'},
-            'iso': ('django.db.models.fields.CharField', [], {'max_length': '2', 'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '128'})
-        },
-        u'flip.environmentaltheme': {
-            'Meta': {'ordering': "('-pk',)", 'object_name': 'EnvironmentalTheme'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '128'})
-        },
         u'flip.foresightapproaches': {
             'Meta': {'ordering': "('-pk',)", 'object_name': 'ForesightApproaches'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '128'})
-        },
-        u'flip.geographicalscope': {
-            'Meta': {'ordering': "('-pk',)", 'object_name': 'GeographicalScope'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'require_country': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '128'})
         },
         u'flip.language': {
@@ -99,13 +94,13 @@ class Migration(DataMigration):
             'additional_information_phase': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'additional_information_stakeholder': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'blossom': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'countries': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['common.Country']", 'symmetrical': 'False', 'blank': 'True'}),
             'created_on': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'draft': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'end_date': ('django.db.models.fields.DateField', [], {}),
+            'countries': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['common.Country']", 'symmetrical': 'False', 'blank': 'True'}),
             'environmental_themes': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['common.EnvironmentalTheme']", 'symmetrical': 'False', 'blank': 'True'}),
-            'foresight_approaches': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['flip.ForesightApproaches']", 'symmetrical': 'False'}),
             'geographical_scope': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['common.GeographicalScope']", 'null': 'True', 'blank': 'True'}),
+            'foresight_approaches': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['flip.ForesightApproaches']", 'symmetrical': 'False'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'languages': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['flip.Language']", 'through': u"orm['flip.StudyLanguage']", 'symmetrical': 'False'}),
             'last_updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'auto_now_add': 'True', 'blank': 'True'}),
@@ -136,4 +131,3 @@ class Migration(DataMigration):
     }
 
     complete_apps = ['flip']
-    symmetrical = True

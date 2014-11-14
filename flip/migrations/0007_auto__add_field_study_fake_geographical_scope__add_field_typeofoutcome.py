@@ -8,38 +8,47 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Deleting model 'EnvironmentalTheme'
-        db.delete_table(u'flip_environmentaltheme')
+        # Adding field 'Study.fake_geographical_scope'
+        db.add_column(u'flip_study', 'fake_geographical_scope',
+                      self.gf('django.db.models.fields.related.ForeignKey')(to=orm['common.GeographicalScope'], null=True, blank=True),
+                      keep_default=False)
 
-        # Deleting model 'Country'
-        db.delete_table(u'flip_country')
+        # Adding M2M table for field fake_environmental_themes on 'Study'
+        m2m_table_name = db.shorten_name(u'flip_study_fake_environmental_themes')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('study', models.ForeignKey(orm[u'flip.study'], null=False)),
+            ('environmentaltheme', models.ForeignKey(orm[u'common.environmentaltheme'], null=False))
+        ))
+        db.create_unique(m2m_table_name, ['study_id', 'environmentaltheme_id'])
 
-        # Deleting model 'GeographicalScope'
-        db.delete_table(u'flip_geographicalscope')
+        # Adding M2M table for field fake_countries on 'Study'
+        m2m_table_name = db.shorten_name(u'flip_study_fake_countries')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('study', models.ForeignKey(orm[u'flip.study'], null=False)),
+            ('country', models.ForeignKey(orm[u'common.country'], null=False))
+        ))
+        db.create_unique(m2m_table_name, ['study_id', 'country_id'])
+
+        # Adding field 'TypeOfOutcome.blossom'
+        db.add_column(u'flip_typeofoutcome', 'blossom',
+                      self.gf('django.db.models.fields.BooleanField')(default=False),
+                      keep_default=False)
 
 
     def backwards(self, orm):
-        # Adding model 'EnvironmentalTheme'
-        db.create_table(u'flip_environmentaltheme', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=128)),
-        ))
-        db.send_create_signal(u'flip', ['EnvironmentalTheme'])
+        # Deleting field 'Study.fake_geographical_scope'
+        db.delete_column(u'flip_study', 'fake_geographical_scope_id')
 
-        # Adding model 'Country'
-        db.create_table(u'flip_country', (
-            ('iso', self.gf('django.db.models.fields.CharField')(max_length=2, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=128)),
-        ))
-        db.send_create_signal(u'flip', ['Country'])
+        # Removing M2M table for field fake_environmental_themes on 'Study'
+        db.delete_table(db.shorten_name(u'flip_study_fake_environmental_themes'))
 
-        # Adding model 'GeographicalScope'
-        db.create_table(u'flip_geographicalscope', (
-            ('require_country', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=128)),
-        ))
-        db.send_create_signal(u'flip', ['GeographicalScope'])
+        # Removing M2M table for field fake_countries on 'Study'
+        db.delete_table(db.shorten_name(u'flip_study_fake_countries'))
+
+        # Deleting field 'TypeOfOutcome.blossom'
+        db.delete_column(u'flip_typeofoutcome', 'blossom')
 
 
     models = {
@@ -67,9 +76,25 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '256'})
         },
+        u'flip.country': {
+            'Meta': {'object_name': 'Country'},
+            'iso': ('django.db.models.fields.CharField', [], {'max_length': '2', 'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '128'})
+        },
+        u'flip.environmentaltheme': {
+            'Meta': {'ordering': "('-pk',)", 'object_name': 'EnvironmentalTheme'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '128'})
+        },
         u'flip.foresightapproaches': {
             'Meta': {'ordering': "('-pk',)", 'object_name': 'ForesightApproaches'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '128'})
+        },
+        u'flip.geographicalscope': {
+            'Meta': {'ordering': "('-pk',)", 'object_name': 'GeographicalScope'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'require_country': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '128'})
         },
         u'flip.language': {
@@ -99,13 +124,16 @@ class Migration(SchemaMigration):
             'additional_information_phase': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'additional_information_stakeholder': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'blossom': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'countries': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['common.Country']", 'symmetrical': 'False', 'blank': 'True'}),
+            'countries': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['flip.Country']", 'symmetrical': 'False', 'blank': 'True'}),
             'created_on': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'draft': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'end_date': ('django.db.models.fields.DateField', [], {}),
-            'environmental_themes': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['common.EnvironmentalTheme']", 'symmetrical': 'False', 'blank': 'True'}),
+            'environmental_themes': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['flip.EnvironmentalTheme']", 'symmetrical': 'False', 'blank': 'True'}),
+            'fake_countries': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['common.Country']", 'symmetrical': 'False', 'blank': 'True'}),
+            'fake_environmental_themes': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['common.EnvironmentalTheme']", 'symmetrical': 'False', 'blank': 'True'}),
+            'fake_geographical_scope': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['common.GeographicalScope']", 'null': 'True', 'blank': 'True'}),
             'foresight_approaches': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['flip.ForesightApproaches']", 'symmetrical': 'False'}),
-            'geographical_scope': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['common.GeographicalScope']", 'null': 'True', 'blank': 'True'}),
+            'geographical_scope': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['flip.GeographicalScope']", 'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'languages': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['flip.Language']", 'through': u"orm['flip.StudyLanguage']", 'symmetrical': 'False'}),
             'last_updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'auto_now_add': 'True', 'blank': 'True'}),
