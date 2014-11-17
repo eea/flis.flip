@@ -7,6 +7,9 @@ from django.forms.models import BaseInlineFormSet
 from flip.models import (
     Study, Outcome, PhasesOfPolicy, ForesightApproaches, TypeOfOutcome
 )
+from flis_metadata.common.models import (
+    Country, EnvironmentalTheme, GeographicalScope
+)
 
 
 class StudyMetadataForm(ModelForm):
@@ -76,6 +79,12 @@ class StudyContextForm(ModelForm):
         self.fields['phase_of_policy'].required = True
         self.fields['environmental_themes'].required = True
         self.fields['geographical_scope'].required = True
+        self.fields['geographical_scope'].queryset = (
+            GeographicalScope.objects.filter(is_deleted=False))
+        self.fields['countries'].queryset = (
+            Country.objects.filter(is_deleted=False))
+        self.fields['environmental_themes'].queryset = (
+            EnvironmentalTheme.objects.filter(is_deleted=False))
 
     def clean(self):
         cleaned_data = super(StudyContextForm, self).clean()
