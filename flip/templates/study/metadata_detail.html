@@ -20,6 +20,13 @@
          class="btn btn-primary">
         Edit study</a>
 
+      <a class="btn btn-primary launch-modal" data-toggle="modal"
+         data-target="#myModal"
+         data-backdrop="static"
+         data-action="{% url 'study_outcomes_add' study.id %}"
+         data-title="Add outcome">Add outcome
+      </a>
+
       {% url 'study_status_edit' pk=study.pk as status_url %}
       <form class="form-inline status " action="{{ status_url }}"
             method="POST">
@@ -287,5 +294,7 @@
     </div>
 
   </div> {# row #}
+
+  {% include 'study/_modal.html' %}
 
 {% endblock %}

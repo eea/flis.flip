@@ -117,9 +117,9 @@ study_urls = patterns(
         views.StudyOutcomesDetailView.as_view(),
         name='study_outcomes_detail'),
 
-    url(r'^(?P<pk>\d+)/outcomes/edit$',
+    url(r'^(?P<pk>\d+)/outcomes/new$',
         views.StudyOutcomesAddView.as_view(),
-        name='study_outcomes_edit'),
+        name='study_outcomes_add'),
 
     url(r'^(?P<pk>\d+)/outcomes/(?P<outcome_pk>\d+)/detail$',
         views.StudyOutcomeDetailView.as_view(),
