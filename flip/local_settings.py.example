@@ -13,6 +13,7 @@ DEBUG = TEMPLATE_DEBUG = ASSETS_DEBUG = True
 SECRET_KEY = 'secret'
 SKIP_EDIT_AUTH = True
 
+# Do not use FRAME_URL in development
 # FRAME_URL = 'path/to/frame/url'
 
 # not for production
