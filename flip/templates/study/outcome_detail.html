@@ -34,7 +34,7 @@
   {% endif %}
 
   {% can_edit_study study as can_edit_study %}
-  {% if can_edit_study and study.blossom %}
+  {% if can_edit_study %}
 
     {% url 'study_outcome_edit' pk=study.pk outcome_pk=outcome.pk as edit_url %}
     {% url 'study_outcome_delete' pk=study.pk outcome_pk=outcome.pk as delete_url %}
