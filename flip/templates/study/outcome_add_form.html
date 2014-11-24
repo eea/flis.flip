@@ -4,7 +4,7 @@
     <small>You can enter your text directly and/or attach relevant files</small>
   </div>
   <div class="panel-body">
-      {% url 'study_outcomes_edit' pk=object.pk as url %}
+      {% url 'study_outcomes_add' pk=object.pk as url %}
       <form action="{{ url }}" role="form" method="POST"
             id="study-modal-form"
             enctype="multipart/form-data"
