@@ -244,6 +244,7 @@
           <ul class="list-unstyled outcome-list">
             {% for outcome in object.outcomes.all %}
               {% url 'study_outcome_detail' pk=object.pk outcome_pk=outcome.pk as view_url %}
+              {% url 'study_outcome_edit' pk=object.pk outcome_pk=outcome.pk as edit_url %}
               {% url 'study_outcome_delete' pk=object.pk outcome_pk=outcome.pk as delete_url %}
               <li>
                 <div class="row">
@@ -263,6 +264,8 @@
                     <a href="{{ view_url }}" class="btn btn-sm btn-primary">
                       View</a>
                     {% if can_edit_study %}
+                      <a href="{{ edit_url }}" class="btn btn-sm btn-primary">
+                        Edit</a>
                       <a href="{{ delete_url }}"
                          class="btn btn-sm btn-danger delete">
                         Delete</a>
