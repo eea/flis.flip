@@ -213,7 +213,8 @@ class StudyOutcomesAddView(LoginRequiredMixin,
                        kwargs={'pk': self.get_object().pk})
 
     def get_success_message(self, cleaned_data):
-        return '{document_title} was successfully added'.format(**cleaned_data)
+        return u'{document_title} was successfully added'.format(
+            **cleaned_data)
 
 
 class StudyOutcomeDeleteView(LoginRequiredMixin,
@@ -309,7 +310,7 @@ class StudyOutcomeEditView(LoginRequiredMixin,
                        kwargs={'pk': self.study.pk})
 
     def get_success_message(self, cleaned_data):
-        return '{document_title} was successfully updated'.format(
+        return u'{document_title} was successfully updated'.format(
             **cleaned_data)
 
 
