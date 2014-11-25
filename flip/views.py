@@ -77,6 +77,12 @@ class StudyMetadataDetailView(LoginRequiredMixin,
         return super(StudyMetadataDetailView, self).get_context_data(**context)
 
 
+class StudyOutcomesSectionView(LoginRequiredMixin,
+                               generic.DetailView):
+    model = models.Study
+    template_name = 'study/outcomes_section.html'
+
+
 class StudyMetadataEditView(LoginRequiredMixin,
                             EditPermissionRequiredMixin,
                             StudyLanguageFormMixin,

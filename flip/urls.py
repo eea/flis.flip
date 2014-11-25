@@ -133,6 +133,10 @@ study_urls = patterns(
         views.StudyOutcomeEditView.as_view(),
         name='study_outcome_edit'),
 
+    url(r'^(?P<pk>\d+)/outcomes_section$',
+        views.StudyOutcomesSectionView.as_view(),
+        name='study_outcomes_section'),
+
 )
 
 
