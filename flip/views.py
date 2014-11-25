@@ -101,7 +101,8 @@ class StudyMetadataEditView(LoginRequiredMixin,
 
     def get_context_data(self, **kwargs):
         context = {'cancel_url': reverse('study_metadata_detail',
-                                         kwargs={'pk': self.object.pk})}
+                                         kwargs={'pk': self.object.pk}),
+                   'edit_mode': True}
         context.update(kwargs)
         return super(StudyMetadataEditView, self).get_context_data(**context)
 
