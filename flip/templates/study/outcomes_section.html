@@ -1,3 +1,6 @@
+{% load utils %}
+{% can_edit_study study as can_edit_study %}
+
 <div class="col-sm-12">
     <h3>Outcomes and activities</h3>
     {#      <small>Outcomes related to the study/activities performed, by#}
@@ -30,8 +33,12 @@
                 <a href="{{ view_url }}" class="btn btn-sm btn-primary">
                     View</a>
                 {% if can_edit_study %}
-                    <a href="{{ edit_url }}" class="btn btn-sm btn-primary">
-                    Edit</a>
+                    <a class="btn btn-sm btn-primary launch-modal" data-toggle="modal"
+                        data-target="#myModal"
+                        data-backdrop="static"
+                        data-action="{{ edit_url }}"
+                        data-title="Edit outcome">Edit
+                    </a>
                     <a href="{{ delete_url }}"
                         class="btn btn-sm btn-danger delete">
                     Delete</a>

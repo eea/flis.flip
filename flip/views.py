@@ -268,6 +268,7 @@ class StudyOutcomeDetailView(LoginRequiredMixin,
 
 class StudyOutcomeEditView(LoginRequiredMixin,
                            EditPermissionRequiredMixin,
+                           SuccessMessageMixin,
                            generic.UpdateView):
 
     model = models.Outcome
@@ -304,7 +305,12 @@ class StudyOutcomeEditView(LoginRequiredMixin,
         return kwargs
 
     def get_success_url(self):
-        return reverse('study_metadata_detail', kwargs={'pk': self.study.pk})
+        return reverse('study_outcomes_detail',
+                       kwargs={'pk': self.study.pk})
+
+    def get_success_message(self, cleaned_data):
+        return '{document_title} was successfully updated'.format(
+            **cleaned_data)
 
 
 class StudiesView(LoginRequiredMixin,

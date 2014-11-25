@@ -24,7 +24,6 @@
          data-target="#myModal"
          data-backdrop="static"
          data-action="{% url 'study_outcomes_add' study.id %}"
-         outcomes-url="{% url 'study_outcomes_section' study.id %}"
          data-title="Add outcome">Add outcome
       </a>
 
@@ -239,7 +238,8 @@
     </div>
   </div>
 
-  <div class="row" id="outcomes">
+  <div class="row" id="outcomes"
+      outcomes-url="{% url 'study_outcomes_section' study.id %}">
     {% include 'study/outcomes_section.html' %}
   </div> {# row #}
 

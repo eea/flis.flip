@@ -20,17 +20,17 @@ $(function () {
         placeholder: "All foresight approaches"
     });
 
-    $('.launch-modal').on('click', function () {
+    $('body').on('click', '.launch-modal', function () {
         var url = $(this).data('action');
         var title = $(this).data('title');
-        $('#add-modal-submit').show();
+        $('#modal-submit').show();
         $.ajax({
             type: "GET",
             url: url,
             success: function (data) {
                 $('.modal-body').html(data);
                 $('h4.modal-title').html(title)
-                $('#add-modal-submit').data('action', url)
+                $('#modal-submit').data('action', url)
             },
             error: function (data) {
                 alert('Error launching the modal')
@@ -38,10 +38,10 @@ $(function () {
         })
     });
 
-    $('#add-modal-submit').on('click', function () {
+    $('body').on('click', '#modal-submit', function () {
         var form = $('#study-modal-form');
         var url = $(this).data('action');
-        var outcomes_url = $('.launch-modal').attr('outcomes-url');
+        var outcomes_url = $('#outcomes').attr('outcomes-url');
         var formdata = false;
         if (window.FormData){
             formdata = new FormData(form[0]);
@@ -56,7 +56,7 @@ $(function () {
             success: function (data) {
                 $('.modal-body').html(data);
                 if (data.indexOf('text-danger') == -1)
-                    $('#add-modal-submit').hide();
+                    $('#modal-submit').hide();
                 $.ajax({
                     type: "GET",
                     url: outcomes_url,
