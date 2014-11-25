@@ -20,6 +20,13 @@
          class="btn btn-primary">
         Edit study</a>
 
+      <a class="btn btn-primary launch-modal" data-toggle="modal"
+         data-target="#myModal"
+         data-backdrop="static"
+         data-action="{% url 'study_outcomes_add' study.id %}"
+         data-title="Add outcome">Add outcome
+      </a>
+
       {% url 'study_status_edit' pk=study.pk as status_url %}
       <form class="form-inline status " action="{{ status_url }}"
             method="POST">
@@ -231,60 +238,11 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-sm-12">
-      <h3>Outcomes and activities</h3>
-      {#      <small>Outcomes related to the study/activities performed, by#}
-      {#        categories#}
-      {#      </small>#}
-
-      <div class="panel panel-default">
-
-        <div class="panel-heading"><b>List of current documents</b></div>
-
-        <div class="panel-body">
-          <ul class="list-unstyled outcome-list">
-            {% for outcome in object.outcomes.all %}
-              {% url 'study_outcome_detail' pk=object.pk outcome_pk=outcome.pk as view_url %}
-              {% url 'study_outcome_delete' pk=object.pk outcome_pk=outcome.pk as delete_url %}
-              <li>
-                <div class="row">
-                  <div class="col-md-8">
-                    <p><b>{{ outcome.document_title }}</b></p>
-
-                    <p>
-                      {% if outcome.text %}
-                        {{ outcome.text|truncatewords:'30'|linebreaks }}
-                      {% else %}
-                        <p><i>No description</i></p>
-                      {% endif %}
-                    </p>
-                  </div>
-                  {# col-md-8 #}
-                  <div class="col-md-4 text-right">
-                    <a href="{{ view_url }}" class="btn btn-sm btn-primary">
-                      View</a>
-                    {% if can_edit_study and study.blossom %}
-                      <a href="{{ delete_url }}"
-                         class="btn btn-sm btn-danger delete">
-                        Delete</a>
-                    {% endif %}
-                  </div>
-                  {# col-md-4 #}
-                </div>
-                {# row #}
-              </li>
-            {% empty %}
-              <li><p>No outcomes for this study.</p></li>
-            {% endfor %}
-          </ul>
-        </div>
-        {# panel-body #}
-
-      </div>
-      {# panel #}
-    </div>
-
+  <div class="row" id="outcomes"
+      outcomes-url="{% url 'study_outcomes_section' study.id %}">
+    {% include 'study/outcomes_section.html' %}
   </div> {# row #}
+
+  {% include 'study/_modal.html' %}
 
 {% endblock %}

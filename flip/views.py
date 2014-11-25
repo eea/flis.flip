@@ -3,7 +3,6 @@ import time
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse
 from django.forms.models import inlineformset_factory
-from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect
 from django.views import generic
 
@@ -76,6 +75,12 @@ class StudyMetadataDetailView(LoginRequiredMixin,
         }
         context.update(kwargs)
         return super(StudyMetadataDetailView, self).get_context_data(**context)
+
+
+class StudyOutcomesSectionView(LoginRequiredMixin,
+                               generic.DetailView):
+    model = models.Study
+    template_name = 'study/outcomes_section.html'
 
 
 class StudyMetadataEditView(LoginRequiredMixin,
@@ -208,7 +213,8 @@ class StudyOutcomesAddView(LoginRequiredMixin,
                        kwargs={'pk': self.get_object().pk})
 
     def get_success_message(self, cleaned_data):
-        return '{document_title} was successfully added'.format(**cleaned_data)
+        return u'{document_title} was successfully added'.format(
+            **cleaned_data)
 
 
 class StudyOutcomeDeleteView(LoginRequiredMixin,
@@ -263,6 +269,7 @@ class StudyOutcomeDetailView(LoginRequiredMixin,
 
 class StudyOutcomeEditView(LoginRequiredMixin,
                            EditPermissionRequiredMixin,
+                           SuccessMessageMixin,
                            generic.UpdateView):
 
     model = models.Outcome
@@ -299,7 +306,12 @@ class StudyOutcomeEditView(LoginRequiredMixin,
         return kwargs
 
     def get_success_url(self):
-        return reverse('study_metadata_detail', kwargs={'pk': self.study.pk})
+        return reverse('study_outcomes_detail',
+                       kwargs={'pk': self.study.pk})
+
+    def get_success_message(self, cleaned_data):
+        return u'{document_title} was successfully updated'.format(
+            **cleaned_data)
 
 
 class StudiesView(LoginRequiredMixin,
