@@ -13,7 +13,7 @@
         <ul class="list-unstyled outcome-list">
         {% for outcome in object.outcomes.all %}
             {% url 'study_outcome_detail' pk=object.pk outcome_pk=outcome.pk as view_url %}
-            {% url 'study_outcome_edit' pk=object.pk outcome_pk=outcome.pk as edit_url %}
+            {% url 'study_outcome_edit_modal' pk=object.pk outcome_pk=outcome.pk as edit_url %}
             {% url 'study_outcome_delete' pk=object.pk outcome_pk=outcome.pk as delete_url %}
             <li>
             <div class="row">

@@ -1,16 +1,18 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <b>Edit {{ outcome.document_title }}</b> <br>
-    <small>You can enter your text directly and/or attach relevant files</small>
+{% extends '_layout.html' %}
+{% load utils %}
+
+{% block title %}
+  {{ block.super }} - Edit {{ outcome.document_title }}
+{% endblock %}
+
+{% block content %}
+  {% include '_studies_nav.html' %}
+  <div class="page-title">
+      <h2>{{ study }}</h2>
   </div>
-  <div class="panel-body">
-      {% url 'study_outcome_edit' pk=study.pk outcome_pk=outcome.pk as url %}
-      <form action="{{ url }}" method="POST"
-            id="study-modal-form"
-            enctype="multipart/form-data"
-            data-edit-form="true">
-        {% csrf_token %}
-        {% include 'study/_outcome_form.html' %}
-      </form>
-  </div> {# panel-body #}
-</div> {# panel #}
+
+  {% include 'study/outcome_edit_form.html' with button=True %}
+
+  <a href="{% url 'study_outcome_detail' study.id outcome.id %}"
+     class="btn btn-link">Back</a>
+{% endblock %}
