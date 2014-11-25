@@ -41,6 +41,7 @@ $(function () {
     $('#add-modal-submit').on('click', function () {
         var form = $('#study-modal-form');
         var url = $(this).data('action');
+        var outcomes_url = $('.launch-modal').attr('outcomes-url');
         var formdata = false;
         if (window.FormData){
             formdata = new FormData(form[0]);
@@ -56,6 +57,13 @@ $(function () {
                 $('.modal-body').html(data);
                 if (data.indexOf('text-danger') == -1)
                     $('#add-modal-submit').hide();
+                $.ajax({
+                    type: "GET",
+                    url: outcomes_url,
+                    success: function(data) {
+                        $('#outcomes').html(data);
+                    }
+                })
             },
             error: function (data) {
                 alert('Error saving the data')

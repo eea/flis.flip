@@ -3,7 +3,6 @@ import time
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse
 from django.forms.models import inlineformset_factory
-from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect
 from django.views import generic
 
@@ -76,6 +75,12 @@ class StudyMetadataDetailView(LoginRequiredMixin,
         }
         context.update(kwargs)
         return super(StudyMetadataDetailView, self).get_context_data(**context)
+
+
+class StudyOutcomesSectionView(LoginRequiredMixin,
+                               generic.DetailView):
+    model = models.Study
+    template_name = 'study/outcomes_section.html'
 
 
 class StudyMetadataEditView(LoginRequiredMixin,
