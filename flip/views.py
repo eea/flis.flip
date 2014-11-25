@@ -276,7 +276,6 @@ class StudyOutcomeEditView(LoginRequiredMixin,
     form_class = forms.OutcomeForm
     pk_url_kwarg = 'outcome_pk'
     template_name = 'study/outcome_edit.html'
-    success_message = 'Outcome was successfully update'
 
     def dispatch(self, request, pk, outcome_pk):
         self.study = get_object_or_404(models.Study, pk=pk)
@@ -306,12 +305,18 @@ class StudyOutcomeEditView(LoginRequiredMixin,
         return kwargs
 
     def get_success_url(self):
-        return reverse('study_outcomes_detail',
-                       kwargs={'pk': self.study.pk})
+        return reverse('study_metadata_detail', kwargs={'pk': self.study.pk})
 
     def get_success_message(self, cleaned_data):
         return u'{document_title} was successfully updated'.format(
             **cleaned_data)
+
+
+class StudyOutcomeEditModalView(StudyOutcomeEditView):
+    template_name = 'study/outcome_edit_form.html'
+
+    def get_success_url(self):
+        return reverse('study_outcomes_detail', kwargs={'pk': self.study.pk})
 
 
 class StudiesView(LoginRequiredMixin,

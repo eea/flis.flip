@@ -1,0 +1,16 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <b>Edit {{ outcome.document_title }}</b> <br>
+    <small>You can enter your text directly and/or attach relevant files</small>
+  </div>
+  <div class="panel-body">
+      {% url 'study_outcome_edit' pk=study.pk outcome_pk=outcome.pk as url %}
+      <form action="{{ url }}" method="POST"
+            id="study-modal-form"
+            enctype="multipart/form-data"
+            data-edit-form="true">
+        {% csrf_token %}
+        {% include 'study/_outcome_form.html' %}
+      </form>
+  </div> {# panel-body #}
+</div> {# panel #}
