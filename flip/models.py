@@ -115,18 +115,18 @@ class Study(Model):
         blank=True)
 
     environmental_themes = ManyToManyField(
-        'EnvironmentalTheme',
+        'common.EnvironmentalTheme',
         verbose_name='environmental themes',
         blank=True)
 
     geographical_scope = ForeignKey(
-        'GeographicalScope',
+        'common.GeographicalScope',
         verbose_name='geographical scope',
         null=True,
         blank=True)
 
     countries = ManyToManyField(
-        'Country',
+        'common.Country',
         verbose_name='countries',
         blank=True)
 
@@ -202,38 +202,6 @@ class ForesightApproaches(Model):
 
     def __unicode__(self):
         return self.title
-
-
-class EnvironmentalTheme(Model):
-
-    title = CharField(max_length=128)
-
-    class Meta:
-        ordering = ('-pk',)
-
-    def __unicode__(self):
-        return self.title
-
-
-class GeographicalScope(Model):
-
-    title = CharField(max_length=128)
-    require_country = BooleanField(default=False)
-
-    class Meta:
-        ordering = ('-pk',)
-
-    def __unicode__(self):
-        return self.title
-
-
-class Country(Model):
-
-    iso = CharField(max_length=2, primary_key=True)
-    name = CharField(max_length=128)
-
-    def __unicode__(self):
-        return self.name
 
 
 class TypeOfOutcome(Model):

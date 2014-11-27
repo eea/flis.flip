@@ -62,7 +62,7 @@ class StudyMetadaTests(BaseWebTest):
         url = reverse('study_context_edit', kwargs={'pk': study.pk})
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
-        form = resp.forms['study-context-form']
+        form = resp.forms[0]
         self.populate_fields(form, self.normalize_data(data))
         form.submit().follow()
         self.assertObjectInDatabase(

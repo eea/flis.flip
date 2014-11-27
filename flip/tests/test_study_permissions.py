@@ -179,7 +179,6 @@ class StudyContextPermissionTests(BaseWebTest):
         url = reverse('study_context_detail', kwargs={'pk': study.pk})
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
-        self.assertEqual(1, resp.pyquery('.actions').length)
         self.assertIn('study/context_detail', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
@@ -189,7 +188,6 @@ class StudyContextPermissionTests(BaseWebTest):
         url = reverse('study_context_detail', kwargs={'pk': study.pk})
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
-        self.assertEqual(0, resp.pyquery('.actions').length)
         self.assertIn('study/context_detail', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
@@ -199,7 +197,6 @@ class StudyContextPermissionTests(BaseWebTest):
         url = reverse('study_context_detail', kwargs={'pk': study.pk})
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
-        self.assertEqual(1, resp.pyquery('.actions').length)
         self.assertIn('study/context_detail', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
@@ -219,7 +216,6 @@ class StudyContextPermissionTests(BaseWebTest):
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
         self.assertIn('study/context_detail.html', resp.templates[0].name)
-        self.assertEqual(0, resp.pyquery('.actions').length)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAdminMock))
@@ -229,7 +225,6 @@ class StudyContextPermissionTests(BaseWebTest):
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
         self.assertIn('study/context_detail.html', resp.templates[0].name)
-        self.assertEqual(1, resp.pyquery('.actions').length)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAdminMock))
@@ -238,7 +233,7 @@ class StudyContextPermissionTests(BaseWebTest):
         url = reverse('study_context_edit', kwargs={'pk': study.pk})
         resp = self.app.get(url)
         self.assertEqual(200, resp.status_int)
-        self.assertIn('study/context_edit.html', resp.templates[0].name)
+        self.assertIn('study/context_edit_form.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAdminMock))
@@ -247,7 +242,7 @@ class StudyContextPermissionTests(BaseWebTest):
         url = reverse('study_context_edit', kwargs={'pk': study.pk})
         resp = self.app.post(url)
         self.assertEqual(200, resp.status_int)
-        self.assertIn('study/context_edit.html', resp.templates[0].name)
+        self.assertIn('study/context_edit_form.html', resp.templates[0].name)
 
     @patch('frame.middleware.requests.get',
            Mock(return_value=UserAnonymousMock))
