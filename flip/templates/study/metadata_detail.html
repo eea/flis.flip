@@ -1,6 +1,23 @@
 {% extends '_layout.html' %}
 {% load utils %}
 
+{% block scripts %}
+
+{% if open_popup %}
+  <script>
+    $(window).load(function(){
+        var display_message = "You have successfully registered the study
+                               {{ study.title }}. You can register outputs
+                               now, or do it later.";
+        $('#add-output').data('message', display_message);
+        $('#add-output').click();
+        $('#add-output').data('message', '');
+      });
+  </script>
+{% endif %}
+
+{% endblock %}
+
 {% block title %}
 
   {{ block.super }} -  Study Metadata
@@ -24,7 +41,8 @@
          data-target="#myModal"
          data-backdrop="static"
          data-action="{% url 'study_outcomes_add' study.id %}"
-         data-title="Add outcome">Add outcome
+         data-title="Add output"
+         id = "add-output">Add output
       </a>
 
       {% url 'study_status_edit' pk=study.pk as status_url %}
