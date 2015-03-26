@@ -256,6 +256,41 @@
     </div>
   </div>
 
+  {% if can_edit_study %}
+    <div class="actions">
+      <a href="{% url 'study_metadata_edit' pk=study.pk %}"
+         class="btn btn-primary">
+        Edit study</a>
+
+      <a class="btn btn-primary launch-modal" data-toggle="modal"
+         data-target="#myModal"
+         data-backdrop="static"
+         data-action="{% url 'study_outcomes_add' study.id %}"
+         data-title="Add output">Add output
+      </a>
+
+      {% url 'study_status_edit' pk=study.pk as status_url %}
+      <form class="form-inline status " action="{{ status_url }}"
+            method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-info">
+          {% if study.draft %}Publish{% else %}Unpublish{% endif %}
+        </button>
+      </form>
+
+      <a href="{% url 'study_delete' pk=study.pk %}"
+         class="btn btn-danger pull-right">
+        Delete study</a>
+
+      <span class="btn disabled pull-right">
+        {% if study.draft %}
+          <b>Status: Draft</b>
+        {% else %}
+          <b>Status: Published</b>
+        {% endif %}
+      </span>
+    </div> {# /.actions #}
+  {% endif %}
   <div class="row" id="outcomes"
       outcomes-url="{% url 'study_outcomes_section' study.id %}">
     {% include 'study/outcomes_section.html' %}
