@@ -53,7 +53,8 @@ class StudyMetadataAddView(LoginRequiredMixin,
     success_message = 'The study was successfully updated'
 
     def get_success_url(self):
-        return reverse('study_metadata_edit',
+        self.request.session['first_time_edit'] = True
+        return reverse('study_metadata_detail',
                        kwargs={'pk': self.object.pk})
 
     def get_context_data(self, **kwargs):
@@ -73,6 +74,9 @@ class StudyMetadataDetailView(LoginRequiredMixin,
             'form': forms.StudyMetadataForm(),
             'context_form': forms.StudyContextForm(),
         }
+        if 'first_time_edit' in self.request.session:
+            context['open_popup'] = True
+            self.request.session.clear()
         context.update(kwargs)
         return super(StudyMetadataDetailView, self).get_context_data(**context)
 
