@@ -3,7 +3,7 @@
 
 {% block title %}
 
-  {{ block.super }} -  Settings (Outcomes)
+  {{ block.super }} -  Settings (Outputs)
 
 {% endblock %}
 
@@ -15,7 +15,7 @@
 
   {% url 'settings:outcomes_edit' as add_url %}
   <div class="actions">
-    <a href="{{ add_url }}" class="btn btn-primary">Add new outcome</a>
+    <a href="{{ add_url }}" class="btn btn-primary">Add new output</a>
   </div>
 
   {% if object_list %}

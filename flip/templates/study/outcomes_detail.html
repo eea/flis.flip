@@ -3,14 +3,14 @@
 {% block content %}
 
 {#  <h2 class="page-title">#}
-{#    Outcomes and activities <br>#}
-{#    <small>Outcomes related to the study/activities performed, by categories</small>#}
+{#    Outputs and activities <br>#}
+{#    <small>Outputs related to the study/activities performed, by categories</small>#}
 {#  </h2>#}
 
   {% include '_messages.html' %}
 
   {% if form.errors %}
-    <p class="text-danger">There were errors while saving this outcome. Please see the error messages below.</p>
+    <p class="text-danger">There were errors while saving this output. Please see the error messages below.</p>
   {% endif %}
 
   {% can_edit_study study as can_edit_study %}
@@ -36,7 +36,7 @@
             </div> {# row #}
           </li>
         {% empty %}
-          <li><p>No outcomes for this study.</p></li>
+          <li><p>No outputs for this study.</p></li>
         {% endfor %}
       </ul>
     </div> {# panel-body #}
