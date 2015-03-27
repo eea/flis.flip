@@ -73,6 +73,7 @@ class StudyMetadataDetailView(LoginRequiredMixin,
         context = {
             'form': forms.StudyMetadataForm(),
             'context_form': forms.StudyContextForm(),
+            'show_submit_create': True,
         }
         if 'first_time_edit' in self.request.session:
             context['open_popup'] = True

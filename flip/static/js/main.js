@@ -37,8 +37,6 @@ $(function () {
                 }
                 $('#modal-submit').data('action', url);
                 $('#modal-submit-create').data('action', url);
-                $('#modal-submit').data('message', message);
-                $('#modal-submit-create').data('message', message);
             },
             error: function (data) {
                 alert('Error launching the modal')
