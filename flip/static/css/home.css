@@ -138,32 +138,26 @@ display: block;
 
 /* line 163, ../sass/screen.scss */
 .item-1 {
-left: 0.0px;
-top: -200px;
+left: -140px;
+top: -130px;
 }
 
 /* line 163, ../sass/screen.scss */
 .item-2 {
-left: 190.2113px;
-top: -61.8034px;
+left: 140px;
+top: -130px;
 }
 
 /* line 163, ../sass/screen.scss */
 .item-3 {
-left: 117.55705px;
-top: 161.8034px;
+left: 140px;
+top: 130px;
 }
 
 /* line 163, ../sass/screen.scss */
 .item-4 {
-left: -117.55705px;
-top: 161.8034px;
-}
-
-/* line 163, ../sass/screen.scss */
-.item-5 {
-left: -190.2113px;
-top: -61.8034px;
+left: -140px;
+top: 130px;
 }
 
 /* line 169, ../sass/screen.scss */
@@ -171,9 +165,9 @@ top: -61.8034px;
 margin: -50% auto 0;
 width: 200px;
 position: relative;
-font-size: 13px;
+font-size: 25px;
 left: 10px;
-text-align: left;
+text-align: center;
 position: relative;
 top: 50%;
 -webkit-transform: translateY(-50%);
@@ -195,5 +189,9 @@ list-style-type: none !important;
 list-style-image: none !important;
 padding: 0 !important;
 margin: 0 !important;
+}
+
+a.redlink:hover {
+color: red;
 }
 
