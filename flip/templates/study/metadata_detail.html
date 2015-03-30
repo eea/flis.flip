@@ -1,6 +1,23 @@
 {% extends '_layout.html' %}
 {% load utils %}
 
+{% block scripts %}
+
+{% if open_popup %}
+  <script>
+    $(window).load(function(){
+        var display_message = "You have successfully registered the study \
+                               {{ study.title }}. You can register outputs \
+                               now, or do it later.";
+        $('#add-output').data('message', display_message);
+        $('#add-output').click();
+        $('#add-output').data('message', '');
+    });
+  </script>
+{% endif %}
+
+{% endblock %}
+
 {% block title %}
 
   {{ block.super }} -  Study Metadata
