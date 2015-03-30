@@ -3,7 +3,7 @@
     "model": "flip.phasesofpolicy",
     "pk": 1,
     "fields": {
-      "title": "Problem definition"
+      "title": "Exploratory identification of long term issues"
     }
   },
   {
@@ -24,14 +24,7 @@
     "model": "flip.phasesofpolicy",
     "pk": 4,
     "fields": {
-      "title": "Policy implementation"
-    }
-  },
-  {
-    "model": "flip.phasesofpolicy",
-    "pk":5,
-    "fields": {
-      "title": "Policy evaluation"
+      "title": "Policy implementation and evaluation"
     }
   }
 ]
