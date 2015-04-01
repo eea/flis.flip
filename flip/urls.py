@@ -101,6 +101,10 @@ study_urls = patterns(
         views.StudyDeleteView.as_view(),
         name='study_delete'),
 
+    url(r'^overview/$',
+        views.StudiesView.as_view(),
+        name='studies_overview'),
+
     url(r'^(?P<pk>\d+)/change/status$',
         views.StudyStatusEditView.as_view(),
         name='study_status_edit'),
@@ -143,6 +147,17 @@ study_urls = patterns(
 
 )
 
+evaluation_urls = patterns(
+
+    '',
+
+    #for now just render the studies
+    url(r'^overview/$',
+        views.StudiesView.as_view(),
+        name='studies_overview'),
+
+)
+
 
 urlpatterns = patterns(
 
@@ -152,11 +167,9 @@ urlpatterns = patterns(
         TemplateView.as_view(template_name="home.html"),
         name='home_view'),
 
-    url(r'^studies/overview/$',
-        views.StudiesView.as_view(),
-        name='studies_overview'),
-
     url(r'^studies/', include(study_urls)),
+
+    url(r'^evaluations/', include(evaluation_urls)),
 
     url(r'^settings/', include(settings_urls, namespace='settings')),
 
