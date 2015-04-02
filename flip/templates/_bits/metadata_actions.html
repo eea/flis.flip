@@ -7,7 +7,8 @@
      data-target="#myModal"
      data-backdrop="static"
      data-action="{% url 'study_outcomes_add' study.id %}"
-     data-title="Add output">Add output
+     data-title="Add output"
+     id="add-output">Add output
   </a>
 
   {% url 'study_status_edit' pk=study.pk as status_url %}
