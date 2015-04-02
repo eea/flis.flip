@@ -111,7 +111,7 @@ a {
 }
 
 .white{
-    color: #fff;
+    color: #fff !important;
 }
 
 .legend{

@@ -192,6 +192,6 @@ margin: 0 !important;
 }
 
 a.redlink:hover {
-color: red;
+    color: red !important;
 }
 
