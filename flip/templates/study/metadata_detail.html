@@ -38,7 +38,6 @@
   <div class="row">
     <div class="col-sm-12">
 
-      <h3>Study metadata</h3>
       <table class="table table-detail table-bordered">
 
         <tr>
@@ -67,25 +66,20 @@
           <td>{{ study.url }}</td>
         </tr>
 
-        <tr class="hd">
-          <th colspan="2">Approach used</th>
-        </tr>
+        {% if study.study_type == 'evaluation' %}
+          <tr class="hd">
+            <th colspan="2">Approach to evaluation</th>
+          </tr>
 
-        <tr>
-          <th>{{ form.blossom.label }}</th>
-          <td>
-            {% if study.blossom %}
-              <i class="glyphicon glyphicon-ok"></i>
-            {% else %}
-              -
-            {% endif %}
-          </td>
-        </tr>
-
-        {% if study.blossom %}
           <tr>
-            <th>{{ form.requested_by.label }}</th>
-            <td>{{ study.requested_by }}</td>
+            <th>{{ form.blossom.label }}</th>
+            <td>
+              {% if study.blossom %}
+                <i class="glyphicon glyphicon-ok"></i>
+              {% else %}
+                -
+              {% endif %}
+            </td>
           </tr>
         {% endif %}
 
@@ -104,6 +98,42 @@
         </tr>
 
         <tr class="hd">
+          <th colspan="2">Scope of the {{ study.study_type }}</th>
+        </tr>
+
+        {% if study.study_type == 'evaluation' %}
+          <tr>
+            <th>{{ form.environmental_themes.label }}</th>
+            <td>
+              <ul class="list-unstyled">
+                {% for theme in study.environmental_themes.all %}
+                  <li>{{ theme }}</li>
+                {% empty %}
+                  <li>None</li>
+                {% endfor %}
+              </ul>
+            </td>
+          </tr>
+        {% endif %}
+
+        <tr>
+          <th>{{ form.geographical_scope.label }}</th>
+          <td>{{ study.geographical_scope|default:'None' }}</td>
+        </tr>
+
+        {% if study.countries.exists %}
+          <tr>
+            <th>{{ form.countries.label }}</th>
+            <td>
+              <ul class="list-unstyled">
+                {% for country in study.countries.all %}
+                  <li>{{ country }}</li>
+                {% endfor %}
+              </ul>
+          </tr>
+        {% endif %}
+
+        <tr class="hd">
           <th colspan="2">References and contact information</th>
         </tr>
 
@@ -117,14 +147,9 @@
           <td>{{ study.other }}</td>
         </tr>
 
-      </table>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-12">
-      <h3>Study context</h3>
-      <table class="table table-detail table-bordered">
+        <tr class="hd">
+          <th colspan="2">Purpose and target audience</th>
+        </tr>
 
         <tr>
           <th>{{ context_form.purpose_and_target.label }}</th>
@@ -136,87 +161,57 @@
           <td>{{ study.additional_information|default:'None' }}</td>
         </tr>
 
-        <tr class="hd">
-          <th colspan="2">Support to policy-making cycle and domain of
-            application
-          </th>
-        </tr>
+        {% if study.study_type == 'activity' %}
+          <tr class="hd">
+            <th colspan="2">Application of forward looking information in policy cycle</th>
+          </tr>
 
-        <tr>
-          <th>{{ context_form.phase_of_policy.label }}</th>
-          <td>{{ study.phase_of_policy|default:'None' }}</td>
-        </tr>
-
-        <tr>
-          <th>{{ context_form.additional_information_phase.label }}</th>
-          <td>{{ study.additional_information_phase|default:'None' }}</td>
-        </tr>
-
-        <tr>
-          <th>{{ context_form.foresight_approaches.label }}</th>
-          <td>
-            <ul class="list-unstyled">
-              {% for foresight in study.foresight_approaches.all %}
-                <li>{{ foresight }}</li>
-              {% empty %}
-                <li>None</li>
-              {% endfor %}
-            </ul>
-          </td>
-        </tr>
-
-        <tr>
-          <th>{{ context_form.additional_information_foresight.label }}</th>
-          <td>{{ study.additional_information_foresight|default:'None' }}</td>
-        </tr>
-
-        <tr>
-          <th>{{ context_form.stakeholder_participation.label }}</th>
-          <td>
-            {% if study.stakeholder_participation %}
-              <i class="glyphicon glyphicon-ok"></i>
-            {% else %}
-              -
-            {% endif %}
-          </td>
-        </tr>
-
-        <tr>
-          <th>{{ form.additional_information_stakeholder.label }}</th>
-          <td>{{ study.additional_information_stakeholder|default:'None' }}</td>
-        </tr>
-
-        <tr class="hd">
-          <th colspan="2">Scope of the study</th>
-        </tr>
-
-        <tr>
-          <th>{{ context_form.environmental_themes.label }}</th>
-          <td>
-            <ul class="list-unstyled">
-              {% for theme in study.environmental_themes.all %}
-                <li>{{ theme }}</li>
-              {% empty %}
-                <li>None</li>
-              {% endfor %}
-            </ul>
-          </td>
-        </tr>
-
-        <tr>
-          <th>{{ context_form.geographical_scope.label }}</th>
-          <td>{{ study.geographical_scope|default:'None' }}</td>
-        </tr>
-
-        {% if study.countries.exists %}
           <tr>
-            <th>{{ context_form.countries.label }}</th>
+            <th>{{ context_form.phase_of_policy.label }}</th>
+            <td>{{ study.phase_of_policy|default:'None' }}</td>
+          </tr>
+
+          <tr>
+            <th>{{ context_form.additional_information_phase.label }}</th>
+            <td>{{ study.additional_information_phase|default:'None' }}</td>
+          </tr>
+
+          <tr class="hd">
+            <th colspan="2">Methods and methodology used</th>
+          </tr>
+
+          <tr>
+            <th>{{ context_form.foresight_approaches.label }}</th>
             <td>
               <ul class="list-unstyled">
-                {% for country in study.countries.all %}
-                  <li>{{ country }}</li>
+                {% for foresight in study.foresight_approaches.all %}
+                  <li>{{ foresight }}</li>
+                {% empty %}
+                  <li>None</li>
                 {% endfor %}
               </ul>
+            </td>
+          </tr>
+
+          <tr>
+            <th>{{ context_form.additional_information_foresight.label }}</th>
+            <td>{{ study.additional_information_foresight|default:'None' }}</td>
+          </tr>
+
+          <tr>
+            <th>{{ context_form.stakeholder_participation.label }}</th>
+            <td>
+              {% if study.stakeholder_participation %}
+                <i class="glyphicon glyphicon-ok"></i>
+              {% else %}
+                -
+              {% endif %}
+            </td>
+          </tr>
+
+          <tr>
+            <th>{{ form.additional_information_stakeholder.label }}</th>
+            <td>{{ study.additional_information_stakeholder|default:'None' }}</td>
           </tr>
         {% endif %}
       </table>

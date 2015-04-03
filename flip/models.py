@@ -133,7 +133,7 @@ class Study(Model):
 
     environmental_themes = ManyToManyField(
         'common.EnvironmentalTheme',
-        verbose_name='environmental themes',
+        verbose_name='topics',
         blank=True)
 
     geographical_scope = ForeignKey(
