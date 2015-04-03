@@ -10,7 +10,7 @@
 {% if study_type %}
   <script>
     $(window).load(function() {
-      $('#id_study_type').val("{{ study_type }}");
+      $('#id_study_type').val('{{ study_type }}');
       decorate_form("{{ study_type }}");
       $('[data-show-if=selection-enabled]').addClass('hide');
     });
