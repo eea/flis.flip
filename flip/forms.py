@@ -27,13 +27,28 @@ class StudyMetadataForm(ModelForm):
         model = Study
         fields = ('title', 'url', 'blossom',
                   'requested_by', 'start_date', 'end_date', 'draft',
-                  'lead_author', 'other')
+                  'lead_author', 'other', 'study_type',
+                  'purpose_and_target', 'additional_information',
+                  'phase_of_policy', 'additional_information_phase',
+                  'foresight_approaches', 'additional_information_foresight',
+                  'stakeholder_participation',
+                  'additional_information_stakeholder', 'environmental_themes',
+                  'geographical_scope', 'countries')
 
     def __init__(self, *args, **kwargs):
         self.formset = kwargs.pop('formset', None)
         self.user_id = kwargs.pop('user_id', None)
         super(StudyMetadataForm, self).__init__(*args, **kwargs)
-        self.fields['blossom'].initial = ''
+        self.fields['purpose_and_target'].required = True
+        self.fields['geographical_scope'].required = True
+        self.fields['foresight_approaches'].required = False
+        self.fields['study_type'].required = False
+        self.fields['geographical_scope'].queryset = (
+            GeographicalScope.objects.filter(is_deleted=False))
+        self.fields['countries'].queryset = (
+            Country.objects.filter(is_deleted=False))
+        self.fields['environmental_themes'].queryset = (
+            EnvironmentalTheme.objects.filter(is_deleted=False))
 
     def clean(self):
         cleaned_data = super(StudyMetadataForm, self).clean()
@@ -42,22 +57,32 @@ class StudyMetadataForm(ModelForm):
             self._errors['language'] = self.error_class(
                 ['Language and original title are required.'])
 
-        requested_by_data = cleaned_data.get('requested_by')
         start_date_data = cleaned_data.get('start_date')
         blossom_data = cleaned_data.get('blossom')
 
-        requested_by = self.fields['requested_by']
         start_date = self.fields['start_date']
 
         if blossom_data == Study.YES:
-            if requested_by_data in requested_by.empty_values:
-                self._errors['requested_by'] = self.error_class(
-                    [requested_by.error_messages['required']])
-                cleaned_data.pop('requested_by', None)
             if start_date_data in start_date.empty_values:
                 self._errors['start_date'] = self.error_class(
                     [start_date.error_messages['required']])
                 cleaned_data.pop('start_date', None)
+
+        geographical_scope_data = cleaned_data.get('geographical_scope')
+        countries_data = cleaned_data.get('countries')
+        countries = self.fields['countries']
+
+        if (geographical_scope_data and
+            geographical_scope_data.require_country):
+            if len(countries_data) == 0:
+                self._errors['countries'] = self.error_class(
+                    [countries.error_messages['required']])
+                cleaned_data.pop('countries', None)
+
+        if cleaned_data['study_type'] == 'activity' and not cleaned_data['phase_of_policy']:
+            self._errors['phase_of_policy'] = self.error_class(
+                [self.fields['phase_of_policy'].error_messages['required']])
+            cleaned_data.pop('phase_of_policy', None)
 
         return cleaned_data
 
@@ -67,6 +92,7 @@ class StudyMetadataForm(ModelForm):
         study.save()
         # save languages
         self.formset.save(study)
+        self.save_m2m()
         return study
 
 

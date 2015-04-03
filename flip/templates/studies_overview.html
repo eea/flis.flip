@@ -22,7 +22,11 @@
   {% include '_messages.html' %}
   {% include '_studies_nav.html' %}
 
-  <a class="btn btn-primary" href="{% url 'study_metadata_edit' %}">New study</a>
+  {% if study_type %}
+    <a class="btn btn-primary"
+       href="{% url study_type|add:'_edit' %}?&type={{ study_type }}">
+       New {{ study_type }}s</a>
+  {% endif %}
 
   {% include '_filters.html' %}
 
@@ -41,6 +45,9 @@
       class="table table-condensed table-bordered table-hover">
       <thead>
         <tr>
+          {% if not study_type %}
+            <th>Type</th>
+          {% endif %}
           <th>Date</th>
           <th>Title in English</th>
           <th>Lead organisation</th>
@@ -51,8 +58,23 @@
       <tbody>
         {% for source in object_list %}
           <tr>
+            {% if not study_type %}
+              <td>{{ source.study_type }}</td>
+            {% endif %}
             <td>{{ source.start_date }}</td>
-            <td><a href="{% url 'study_metadata_detail' pk=source.pk %}">{{ source.title }}</a></td>
+            {% if study_type %}
+              <td>
+                <a href="{% url study_type|add:'_detail' pk=source.pk %}">
+                    {{ source.title }}
+                </a>
+              </td>
+            {% else %}
+              <td>
+                <a href="{% url 'study_metadata_detail' pk=source.pk %}">
+                    {{ source.title }}
+                </a>
+              </td>
+            {% endif %}
             <td>{{ source.lead_author }}</td>
             <td>{{ source.geographical_scope }}</td>
             <td>

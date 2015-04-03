@@ -33,6 +33,18 @@ class Study(Model):
         (NON_POLICY, 'Non-policy (research, civil initiative, NGOs...'),
     )
 
+    ACTIVITY = 'activity'
+    EVALUATION = 'evaluation'
+    TYPE_CHOICES = (
+        (ACTIVITY, 'Forward looking activity'),
+        (EVALUATION, 'Evaluation'),
+    )
+
+    BLOSSOM_CHOICES = (
+        (YES, 'BLOSSOM study'),
+        (NO, 'other study'),
+    )
+
     draft = BooleanField(default=True)
 
     created_on = DateTimeField(auto_now_add=True)
@@ -52,9 +64,15 @@ class Study(Model):
 
     url = URLField(blank=True)
 
+    study_type = CharField(
+        'I want to add a new',
+        choices=TYPE_CHOICES,
+        max_length=128,
+    )
+
     blossom = IntegerField(
-        'is it a BLOSSOM study?',
-        choices=YES_NO_CHOICES,
+        'Approach to evaluation',
+        choices=BLOSSOM_CHOICES,
         default=NO,
     )
 
@@ -94,8 +112,7 @@ class Study(Model):
         blank=True)
 
     additional_information_phase = TextField(
-        ('additional information about phase of policy cycle and '
-         'domain of application'),
+        ('additional information about the application'),
         blank=True)
 
     foresight_approaches = ManyToManyField(

@@ -6,6 +6,31 @@
   <a href="{% url 'home_view' %}">Home</a>
   </li>
 
+  <li class="{% active 'activities/' %}">
+    <a href="{% url 'activities_overview' %}?&type=activity">
+      {% new_studies as ns %}
+      Forward looking activities
+      {% if ns %}
+        ({{ ns }})
+      {% endif %}
+    </a>
+  </li>
+
+  <li class="{% active 'evaluations/' %}">
+    <a href="{% url 'evaluations_overview' %}?&type=evaluation">
+      Evaluations
+      {% if evals %}
+        {{ evals }}
+      {% endif %}
+    </a>
+  </li>
+
+  <li class="{% active 'new/' %}">
+    <a href="{% url 'add_new' %}">
+      Add new
+    </a>
+  </li>
+
   <li class="{% active 'studies' %}">
     <a href="{% url 'user_entries' %}">
       My entries
