@@ -25,17 +25,17 @@ class StudyMetadataForm(ModelForm):
 
     class Meta:
         model = Study
-        fields = ('title', 'url', 'blossom',
+        fields = ('study_type', 'title', 'url', 'blossom',
                   'requested_by', 'start_date', 'end_date', 'draft',
-                  'lead_author', 'other', 'study_type',
-                  'purpose_and_target', 'additional_information',
-                  'phase_of_policy', 'additional_information_phase',
-                  'foresight_approaches', 'additional_information_foresight',
-                  'stakeholder_participation',
+                  'lead_author', 'other', 'purpose_and_target',
+                  'additional_information', 'phase_of_policy',
+                  'additional_information_phase', 'foresight_approaches',
+                  'additional_information_foresight', 'stakeholder_participation',
                   'additional_information_stakeholder', 'environmental_themes',
                   'geographical_scope', 'countries')
 
     def __init__(self, *args, **kwargs):
+        self.study = kwargs.get('instance', None)
         self.formset = kwargs.pop('formset', None)
         self.user_id = kwargs.pop('user_id', None)
         super(StudyMetadataForm, self).__init__(*args, **kwargs)
@@ -52,6 +52,9 @@ class StudyMetadataForm(ModelForm):
 
     def clean(self):
         cleaned_data = super(StudyMetadataForm, self).clean()
+
+        if self.study:
+            cleaned_data['study_type'] = self.study.study_type
 
         if not self.formset.is_valid():
             self._errors['language'] = self.error_class(
@@ -79,7 +82,8 @@ class StudyMetadataForm(ModelForm):
                     [countries.error_messages['required']])
                 cleaned_data.pop('countries', None)
 
-        if cleaned_data['study_type'] == 'activity' and not cleaned_data['phase_of_policy']:
+        if (cleaned_data['study_type'] == 'activity' and
+                not cleaned_data['phase_of_policy']):
             self._errors['phase_of_policy'] = self.error_class(
                 [self.fields['phase_of_policy'].error_messages['required']])
             cleaned_data.pop('phase_of_policy', None)
