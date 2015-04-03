@@ -1,0 +1,499 @@
+{% load widget_tweaks %}
+{% load utils %}
+
+<form id="study-form" method="POST" role="form"
+      data-edit-form="true">
+
+  {% csrf_token %}
+
+  <div data-show-if="type-selected">
+
+    <div data-show-if="evaluation">
+      <b>Information about the evaluation </b>
+    </div>
+    <div data-show-if="activity">
+      <b>Information about the forward looking activity </b>
+    </div>
+
+    <div class="form-group" data-show-if="evaluation">
+      <div class="col-md-8">
+        <div class="row">
+          <div class="form-group">
+            <span data-container="#blossom-label"
+                  data-toggle="popover"
+                  data-placement="top"
+                  data-content="<a href=''>Does the study follow the methodology for BLOSSOM - Bridging long-term scenario and strategy analysis: organisation and methods?</a>"
+                  data-html="true"
+                  data-trigger="hover"
+                  id="blossom-label"
+                  class="label-container">
+              {{ form.blossom.label_tag }}
+              {% if form.blossom.field.required %}
+                <span class="required">*</span>
+              {% endif %}
+            </span>
+
+            <div class="row">
+              <div class="col-md-3">
+                {% render_field form.blossom class='form-control' %}
+                {% if form.blossom.errors %}
+                  <p class="text-danger">
+                    <small>{{ form.blossom.errors.0 }}</small>
+                  </p>
+                {% endif %}
+              </div>
+              {# col-md-3 #}
+            </div>
+            {# row #}
+          </div>
+          {# form-group #}
+        </div>
+        {# row #}
+      </div>
+      {# col-md-8 #}
+
+      <div class="col-md-4">
+        <div class="well well-sm hide" data-show-if="blossom">
+          <h5>Additional information about BLOSSOM</h5>
+          <ul>
+            <li><a href="">Guidelines</a></li>
+            <li><a href="">Checklist for study</a></li>
+            <li><a href="http://www.eea.europa.eu/publications/blossom">EEA BLOSSOM publications</a></li>
+          </ul>
+        </div>
+      </div>
+      {# col-md-4 #}
+
+    </div>
+    {# evaluation #}
+
+    <div class="form-group">
+      {{ form.title.label_tag }}
+      {% if form.title.field.required %}
+        <span class="required">*</span>
+      {% endif %}
+      {% render_field form.title class='form-control' %}
+      {% if form.title.errors %}
+        <p class="text-danger">
+          <small>{{ form.title.errors.0 }}</small>
+          </p>
+      {% endif %}
+    </div>
+    {# form-group #}
+
+    <div id="study-languages-empty-form" class="hide">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-4">
+            {{ formset.empty_form.language.label_tag }}
+            {% if formset.empty_form.language.field.required %}
+              <span class="required">*</span>
+            {% endif %}
+            {% render_field formset.empty_form.language class='form-control' %}
+          </div>
+          <div class="col-md-7">
+            {{ formset.empty_form.title.label_tag }}
+            {% if formset.empty_form.title.field.required %}
+              <span class="required">*</span>
+            {% endif %}
+            {% render_field formset.empty_form.title class='form-control' %}
+          </div>
+          <div class="col-md-1 text-center language-remove">
+            <a>
+              <span class="glyphicon glyphicon-minus-sign"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+      {# form-group #}
+    </div>
+    {# study-languages-empty-form #}
+
+    <div id="study-languages" class="panel panel-default">
+      <div class="panel-body">
+        {{ formset.management_form }}
+        {% for set in formset %}
+          {{ set.id }}
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-4">
+                {{ set.language.label_tag }}
+                {% if set.language.field.required %}
+                  <span class="required">*</span>
+                {% endif %}
+                {% render_field set.language class='form-control' %}
+                {% if set.language.errors %}
+                  <p class="text-danger">{{ set.language.errors.0 }}</p>
+                {% endif %}
+              </div>
+              <div class="col-md-7">
+                {{ set.title.label_tag }}
+                {% if set.title.field.required %}
+                  <span class="required">*</span>
+                {% endif %}
+                {% render_field set.title class='form-control' %}
+                {% if set.title.errors %}
+                  <p class="text-danger">{{ set.title.errors.0 }}</p>
+                {% endif %}
+              </div>
+
+              {% if not forloop.first %}
+                <div class="col-md-1 text-center language-remove">
+                  <div class="hide">
+                    {% if formset.can_delete and formset.instance %}
+                      {{ set.DELETE|add_class:'delete' }}
+                    {% endif %}
+                  </div>
+                  <a>
+                    <span class="glyphicon glyphicon-minus-sign"></span>
+                  </a>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+          {# form-group #}
+        {% endfor %}
+
+        <div id="study-languages-add">
+          <a>Add a new language</a>
+        </div>
+
+        {% if form.errors.language %}
+          <div class="text-danger" style="padding-top: 10px;">
+            <b>{{ form.errors.language.0 }}</b></div>
+        {% endif %}
+
+      </div>
+      {# panel-body #}
+
+    </div>
+    {# study-languages #}
+
+    <div class="form-group">
+      {{ form.url.label_tag }}
+      {% if form.url.field.required %}
+        <span class="required">*</span>
+      {% endif %}
+      {% render_field form.url class='form-control' %}
+      {% if form.url.errors %}
+        <p class="text-danger">
+          <small>{{ form.url.errors.0 }}</small>
+        </p>
+      {% endif %}
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><b>Timing of study production</b></div>
+      <div class="panel-body">
+
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-3">
+              {{ form.start_date.label_tag }}
+              <span class="required hide" data-show-if="blossom">*</span>
+
+              <div class="input-group">
+                {% render_field form.start_date class='form-control' data-date-format="DD/MM/YYYY" %}
+                    <span class="input-group-addon">
+                      <i class="glyphicon glyphicon glyphicon-calendar"></i>
+                    </span>
+              </div>
+              {% if form.start_date.errors %}
+                <p class="text-danger">
+                  <small>{{ form.start_date.errors.0 }}</small>
+                </p>
+              {% endif %}
+            </div>
+            {# col-md-3 #}
+          </div>
+          {# row #}
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-3">
+              {{ form.end_date.label_tag }}
+              {% if form.end_date.field.required %}
+                <span class="required">*</span>
+              {% endif %}
+              <div class="input-group">
+                {% render_field form.end_date class='form-control' data-date-format="DD/MM/YYYY" %}
+                    <span class="input-group-addon">
+                      <i class="glyphicon glyphicon glyphicon-calendar"></i>
+                    </span>
+              </div>
+              {% if form.end_date.errors %}
+                <p class="text-danger">
+                  <small>{{ form.end_date.errors.0 }}</small>
+                </p>
+              {% endif %}
+            </div>
+            {# col-md-3 #}
+          </div>
+          {# row #}
+        </div>
+
+      </div>
+      {# panel-body #}
+    </div>
+    {# panel #}
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-show-if="evaluation">
+          <b>Scope of the study</b>
+      </div>
+      <div class="panel-heading" data-show-if="activity">
+          <b>Scope of the activity</b>
+      </div>
+
+      <div class="panel-body">
+
+        <div class="row" data-show-if="activity">
+          <div class="col-md-12">
+            <div class="form-group">
+                {{ form.environmental_themes.label_tag }}
+                {% if form.environmental_themes.field.required %}
+                  <span class="required">*</span>
+                {% endif %}
+                {% if form.environmental_themes.errors %}
+                  <p class="text-danger">
+                    <small>{{ form.environmental_themes.errors.0 }}</small>
+                  </p>
+                {% endif %}
+                {% render_field form.environmental_themes class='form-control' %}
+                <i><small>To select several items from the list, press and hold the control key.</small></i>
+            </div> {# form-group #}
+          </div> {# col-md-4 #}
+        </div> {# row #}
+
+        <div class="col-md-5">
+          <div class="row">
+            <div class="form-group">
+              {{ form.geographical_scope.label_tag }}
+              {% if form.geographical_scope.field.required %}
+                <span class="required">*</span>
+              {% endif %}
+              <div class="row">
+                <div class="col-md-10">
+                  {% if form.geographical_scope.errors %}
+                    <p class="text-danger">
+                      <small>{{ form.geographical_scope.errors.0 }}</small></p>
+                  {% endif %}
+                  {% render_field form.geographical_scope class='form-control' %}
+                </div> {# col-md-10 #}
+              </div> {# row #}
+            </div> {# form-group #}
+          </div> {# row #}
+        </div> {# col-md-4 #}
+
+        <div class="col-md-7" data-show-if="geographical_scope">
+          <div class="row">
+            <div class="form-group">
+              {{ form.countries.label_tag }} <span class="required">*</span>
+              {% if form.countries.errors %}
+                <p class="text-danger">
+                  <small>{{ form.countries.errors.0 }}</small></p>
+              {% endif %}
+              {% render_field form.countries class='form-control' %}
+              <i><small>To select several items from the list, press and hold the control key.</small></i>
+            </div> {# form-group #}
+          </div> {# row #}
+        </div> {# col-md-4 #}
+
+      </div>
+      {# panel-body #}
+    </div>
+    {# panel #}
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><b>References and contact information</b></div>
+      <div class="panel-body">
+
+        <div class="form-group">
+              <span data-container="#lead-author-label"
+                    data-toggle="popover"
+                    data-placement="top"
+                    data-content="Enter name and contact details of lead author or organisation"
+                    data-trigger="hover"
+                    id="lead-author-label">
+                {{ form.lead_author.label_tag }}
+                {% if form.lead_author.field.required %}
+                  <span class="required">*</span>
+                {% endif %}
+              </span>
+          {% render_field form.lead_author class='form-control' rows=3 %}
+          {% if form.lead_author.errors %}
+            <p class="text-danger">
+              <small>{{ form.lead_author.errors.0 }}</small>
+            </p>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+              <span data-container="#other-label"
+                    data-toggle="popover"
+                    data-placement="top"
+                    data-content="Enter name and contact details of other authors or organisations involved in this study, or any other relevant contact persons"
+                    data-trigger="hover"
+                    id="other-label">
+                {{ form.other.label_tag }}
+              </span>
+          {% render_field form.other class='form-control' rows=3 %}
+          {% if form.other.errors %}
+            <p class="text-danger">
+              <small>{{ form.other.errors.0 }}</small>
+            </p>
+          {% endif %}
+        </div>
+
+      </div>
+      {# panel-body #}
+    </div>
+    {# panel #}
+
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><b>Purpose and target audience</b></div>
+      <div class="panel-body">
+
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-5">
+              {{ form.purpose_and_target.label_tag }}
+              {% if form.purpose_and_target.field.required %}
+                <span class="required">*</span>
+              {% endif %}
+              {% if form.purpose_and_target.errors %}
+                <p class="text-danger">
+                  <small>{{ form.purpose_and_target.errors.0 }}</small></p>
+              {% endif %}
+              {% render_field form.purpose_and_target class='form-control' %}
+            </div> {# col-md-5 #}
+          </div> {# row #}
+        </div>
+
+        <div class="form-group">
+          {{ form.additional_information.label_tag }}
+          {% if form.additional_information.field.required %}
+            <span class="required">*</span>
+          {% endif %}
+          {% if form.additional_information.errors %}
+            <p class="text-danger">
+              <small>{{ form.additional_information.errors.0 }}</small></p>
+          {% endif %}
+          {% render_field form.additional_information class='form-control' %}
+        </div>
+
+      </div>
+      {# panel-body #}
+    </div>
+    {# panel #}
+
+    <div class="panel panel-default" data-show-if="activity">
+      <div class="panel-heading">
+          <b>Application of forward looking information in policy cycle</b>
+      </div>
+      <div class="panel-body">
+
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-4">
+              {{ form.phase_of_policy.label_tag }}
+              <span class="required">*</span>
+              {% if form.phase_of_policy.errors %}
+                <p class="text-danger">
+                  <small>{{ form.phase_of_policy.errors.0 }}</small></p>
+              {% endif %}
+              {% render_field form.phase_of_policy class='form-control' rows=3 %}
+            </div> {# col-md-4 #}
+          </div> {# row #}
+        </div>
+
+        <div class="form-group">
+          <span data-container="#additional-information-phase-label"
+                data-toggle="popover"
+                data-placement="top"
+                data-content='Indicate application areas of the forward-looking information in the study (e.g. "strategies, working programmes, etc."), possible use of the forward-looking information, what is added value and impact.'
+                data-trigger="hover"
+                id="additional-information-phase-label">
+            {{ form.additional_information_phase.label_tag }}
+            {% if form.additional_information_phase.field.required %}
+              <span class="required">*</span>
+            {% endif %}
+          </span>
+          {% if form.additional_information_phase.errors %}
+            <p class="text-danger">
+              <small>{{ form.additional_information_phase.errors.0 }}</small></p>
+          {% endif %}
+          {% render_field form.additional_information_phase class='form-control' rows=3 %}
+        </div>
+
+      </div> {# panel-body #}
+    </div> {# panel #}
+
+    <div class="panel panel-default" data-show-if="activity">
+      <div class="panel-heading">
+          <b>Methods and methodology used</b>
+      </div>
+      <div class="panel-body">
+
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-12">
+              {{ form.foresight_approaches.label_tag }}
+              {% if form.foresight_approaches.field.required %}
+                <span class="required">*</span>
+              {% endif %}
+              {% if form.foresight_approaches.errors %}
+                <p class="text-danger">
+                  <small>{{ form.foresight_approaches.errors.0 }}</small></p>
+              {% endif %}
+              {% render_field form.foresight_approaches class='form-control' %}
+              <i><small>To select several items from the list, press and hold the control key.</small></i>
+            </div> {# col-md-4 #}
+          </div> {# row #}
+        </div>
+
+        <div class="form-group">
+            <div class="checkbox">
+              {% if form.stakeholder_participation.errors %}
+                <p class="text-danger">
+                  <small>{{ form.stakeholder_participation.errors.0 }}</small></p>
+              {% endif %}
+              <label>
+                {% render_field form.stakeholder_participation %}
+                {{ form.stakeholder_participation.label }}
+                {% if form.stakeholder_participation.field.required %}
+                  <span class="required">*</span>
+                {% endif %}
+              </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+          <span data-container="#additional-information-stakeholder-label"
+                data-toggle="popover"
+                data-placement="top"
+                data-content="Explain type of stakeholders involved (research, policy, sectors, NGOs) and their role, or any other information about the participatory aspect of the study process."
+                data-trigger="hover"
+                id="additional-information-stakeholder-label">
+              {{ form.additional_information_stakeholder.label_tag }}
+              {% if form.additional_information_stakeholder.field.required %}
+                <span class="required">*</span>
+              {% endif %}
+          </span>
+          {% if form.additional_information_stakeholder.errors %}
+            <p class="text-danger">
+              <small>{{ form.additional_information_stakeholder.errors.0 }}</small></p>
+          {% endif %}
+          {% render_field form.additional_information_stakeholder class='form-control' %}
+        </div>
+
+      </div> {# panel-body #}
+    </div> {# panel #}
+
+    {% include 'study/_footer.html' %}
+  </div>
+  {# type-selected #}
+
+</form>

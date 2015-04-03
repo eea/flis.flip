@@ -49,7 +49,7 @@ class StudyMetadataAddView(LoginRequiredMixin,
 
     model = models.Study
     form_class = forms.StudyMetadataForm
-    template_name = 'study/metadata_edit.html'
+    template_name = 'study/study_add.html'
     success_message = 'The study was successfully updated'
 
     def get_success_url(self):
@@ -59,6 +59,10 @@ class StudyMetadataAddView(LoginRequiredMixin,
 
     def get_context_data(self, **kwargs):
         context = {'cancel_url': reverse('studies_overview')}
+        study_type = self.request.GET.get('type')
+        if study_type:
+            context['study_type'] = study_type
+
         context.update(kwargs)
         return super(StudyMetadataAddView, self).get_context_data(**context)
 
@@ -96,7 +100,7 @@ class StudyMetadataEditView(LoginRequiredMixin,
 
     model = models.Study
     form_class = forms.StudyMetadataForm
-    template_name = 'study/metadata_edit.html'
+    template_name = 'study/study_edit.html'
     success_message = 'The study was successfully updated'
 
     def get_queryset(self, queryset=None):
@@ -362,6 +366,7 @@ class StudiesView(LoginRequiredMixin,
         self.foresight_approaches = self.request.GET.getlist(
             'foresight_approaches')
         self.my_entries = self.request.GET.get('my_entries')
+        self.type = self.request.GET.get('type')
 
         queryset = models.Study.objects.all()
         if self.my_entries:
@@ -375,6 +380,10 @@ class StudiesView(LoginRequiredMixin,
                 queryset = queryset.filter(
                     foresight_approaches__in=self.foresight_approaches
                 ).distinct()
+
+        if self.type:
+            queryset = queryset.filter(study_type=self.type)
+
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -385,6 +394,8 @@ class StudiesView(LoginRequiredMixin,
                              self.foresight_approaches,
                              self.my_entries])
         }
+        if self.type:
+            context['study_type'] = self.type;
         context.update(kwargs)
         return super(StudiesView, self).get_context_data(**context)
 

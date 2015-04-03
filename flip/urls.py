@@ -85,6 +85,10 @@ study_urls = patterns(
 
     '',
 
+    url(r'^overview/$',
+        views.StudiesView.as_view(),
+        name='studies_overview'),
+
     url(r'^new/$',
         views.StudyMetadataAddView.as_view(),
         name='study_metadata_edit'),
@@ -147,17 +151,47 @@ study_urls = patterns(
 
 )
 
-evaluation_urls = patterns(
-
+activity_urls = patterns(
     '',
 
-    #for now just render the studies
-    url(r'^overview/$',
+    url(r'^overview$',
         views.StudiesView.as_view(),
-        name='studies_overview'),
+        name='activities_overview'),
+
+    url(r'^new/$',
+        views.StudyMetadataAddView.as_view(),
+        name='activity_edit'),
+
+    url(r'^(?P<pk>\d+)/edit$',
+        views.StudyMetadataEditView.as_view(),
+        name='activity_edit'),
+
+    url(r'^(?P<pk>\d+)/detail$',
+        views.StudyMetadataDetailView.as_view(),
+        name='activity_detail'),
 
 )
 
+evaluation_urls = patterns(
+    '',
+
+    url(r'^overview$',
+        views.StudiesView.as_view(),
+        name='evaluations_overview'),
+
+    url(r'^new/$',
+        views.StudyMetadataAddView.as_view(),
+        name='evaluation_edit'),
+
+    url(r'^(?P<pk>\d+)/edit$',
+        views.StudyMetadataEditView.as_view(),
+        name='evaluation_edit'),
+
+    url(r'^(?P<pk>\d+)/detail$',
+        views.StudyMetadataDetailView.as_view(),
+        name='evaluation_detail'),
+
+)
 
 urlpatterns = patterns(
 
@@ -172,6 +206,14 @@ urlpatterns = patterns(
         name='user_entries'),
 
     url(r'^studies/', include(study_urls)),
+
+    url(r'^new/',
+        views.StudyMetadataAddView.as_view(),
+        name='add_new'),
+
+    url(r'^studies/', include(study_urls)),
+
+    url(r'^activities/', include(activity_urls)),
 
     url(r'^evaluations/', include(evaluation_urls)),
 

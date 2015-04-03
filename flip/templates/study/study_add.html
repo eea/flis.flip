@@ -1,0 +1,78 @@
+{% extends '_layout.html' %}
+{% load widget_tweaks %}
+{% load utils %}
+
+
+{% block scripts %}
+
+<script src="/static/js/_bits/_form_edit.js"></script>
+
+{% if study_type %}
+  <script>
+    $(window).load(function() {
+      $('#id_study_type').val("{{ study_type }}");
+      decorate_form("{{ study_type }}");
+      $('[data-show-if=selection-enabled]').addClass('hide');
+    });
+  </script>
+{% endif %}
+
+{% endblock %}
+
+
+{% block title %}
+
+  {{ block.super }} - {% if study %}
+  Study Metadata
+{% else %}
+  New study
+{% endif %}
+
+{% endblock %}
+
+
+{% block content %}
+
+  {% include '_studies_nav.html' %}
+
+  {% if study_type %}
+    <h2 class="page-title">Add a new {{ study_type }}</h2>
+  {% else %}
+    <h2 class="page-title">Select if you want to enter a forward looking activity or a new evaluation</h2>
+  {% endif %}
+  {% include '_messages.html' %}
+
+  <div class="row">
+  {% if study %}
+    <div class="col-md-10">
+  {% else %}
+    <div class="col-md-12">
+  {% endif %}
+
+  {% if form.errors %}
+    <div class="alert alert-danger">There were errors while saving this
+      study.Please see the error messages below.
+    </div>
+  {% endif %}
+
+  <form id="study-form" method="POST" role="form"
+        data-edit-form="true">
+
+  {% csrf_token %}
+  <div class="form-group" data-show-if="selection-enabled">
+    {{ form.study_type.label_tag }}
+    {% if form.study_type.field.required %}
+      <span class="required">*</span>
+    {% endif %}
+    {% if form.study_type.errors %}
+      <p class="text-danger">
+        <small>{{ form.study_type.errors }}</small></p>
+    {% endif %}
+    {% render_field form.study_type class='form-control' %}
+  </div>
+  {# selection-enabled #}
+
+  {% include 'study/_study_form.html' %}
+  {% include 'study/_modal.html' %}
+
+{% endblock %}
