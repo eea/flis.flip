@@ -100,47 +100,6 @@ class StudyMetadataForm(ModelForm):
         return study
 
 
-class StudyContextForm(ModelForm):
-
-    def __init__(self, *args, **kwargs):
-        super(StudyContextForm, self).__init__(*args, **kwargs)
-
-        self.fields['purpose_and_target'].required = True
-        self.fields['phase_of_policy'].required = True
-        self.fields['environmental_themes'].required = True
-        self.fields['geographical_scope'].required = True
-        self.fields['geographical_scope'].queryset = (
-            GeographicalScope.objects.filter(is_deleted=False))
-        self.fields['countries'].queryset = (
-            Country.objects.filter(is_deleted=False))
-        self.fields['environmental_themes'].queryset = (
-            EnvironmentalTheme.objects.filter(is_deleted=False))
-
-    def clean(self):
-        cleaned_data = super(StudyContextForm, self).clean()
-        geographical_scope_data = cleaned_data.get('geographical_scope')
-        countries_data = cleaned_data.get('countries')
-        countries = self.fields['countries']
-
-        if (geographical_scope_data and
-            geographical_scope_data.require_country):
-            if len(countries_data) == 0:
-                self._errors['countries'] = self.error_class(
-                    [countries.error_messages['required']])
-                cleaned_data.pop('countries', None)
-
-        return cleaned_data
-
-    class Meta:
-        model = Study
-        fields = ('purpose_and_target', 'additional_information',
-                  'phase_of_policy', 'additional_information_phase',
-                  'foresight_approaches', 'additional_information_foresight',
-                  'stakeholder_participation',
-                  'additional_information_stakeholder', 'environmental_themes',
-                  'geographical_scope', 'countries')
-
-
 class BaseStudyLanguageInlineFormSet(BaseInlineFormSet):
 
     def __init__(self, *args, **kwargs):
