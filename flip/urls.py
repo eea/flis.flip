@@ -113,14 +113,6 @@ study_urls = patterns(
         views.StudyStatusEditView.as_view(),
         name='study_status_edit'),
 
-    url(r'^(?P<pk>\d+)/context/detail$',
-        views.StudyContextDetailView.as_view(),
-        name='study_context_detail'),
-
-    url(r'^(?P<pk>\d+)/context/edit$',
-        views.StudyContextEditView.as_view(),
-        name='study_context_edit'),
-
     url(r'^(?P<pk>\d+)/outcomes/detail$',
         views.StudyOutcomesDetailView.as_view(),
         name='study_outcomes_detail'),

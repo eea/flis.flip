@@ -76,8 +76,6 @@ class StudyMetadataDetailView(LoginRequiredMixin,
     def get_context_data(self, **kwargs):
         context = {
             'form': forms.StudyMetadataForm(),
-            'context_form': forms.StudyContextForm(),
-            'show_submit_create': True,
         }
         if 'first_time_edit' in self.request.session:
             context['open_popup'] = True
@@ -146,33 +144,6 @@ class StudyStatusEditView(LoginRequiredMixin,
         study.save()
         return redirect(reverse('study_metadata_detail',
                                 kwargs={'pk': pk}))
-
-
-class StudyContextDetailView(LoginRequiredMixin,
-                             generic.DetailView):
-
-    model = models.Study
-    template_name = 'study/context_detail.html'
-
-    def get_context_data(self, **kwargs):
-        context = {'form': forms.StudyContextForm()}
-        context.update(kwargs)
-        return super(StudyContextDetailView, self).get_context_data(**context)
-
-
-class StudyContextEditView(LoginRequiredMixin,
-                           EditPermissionRequiredMixin,
-                           SuccessMessageMixin,
-                           generic.UpdateView):
-
-    model = models.Study
-    form_class = forms.StudyContextForm
-    template_name = 'study/context_edit_form.html'
-    success_message = 'The study context was successfully updated'
-
-    def get_success_url(self):
-        return reverse('study_context_detail',
-                       kwargs={'pk': self.object.pk})
 
 
 class StudyOutcomesDetailView(LoginRequiredMixin,

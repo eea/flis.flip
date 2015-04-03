@@ -60,12 +60,6 @@
     {% can_edit_study study as can_edit_study %}
     {% if can_edit_study %}
         <div class="col-md-2">
-          <a class="btn btn-primary launch-modal" data-toggle="modal"
-             data-target="#myModal"
-             data-action="{% url 'study_context_edit' study.id %}"
-             data-backdrop="static"
-             data-title="Edit context">Edit context
-          </a>
           <br/>
           <br/>
           <a class="btn btn-primary launch-modal" data-toggle="modal"
