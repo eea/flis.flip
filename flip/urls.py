@@ -167,6 +167,10 @@ urlpatterns = patterns(
         TemplateView.as_view(template_name="home.html"),
         name='home_view'),
 
+    url(r'^studies/entries/$',
+        views.UserEntriesView.as_view(),
+        name='user_entries'),
+
     url(r'^studies/', include(study_urls)),
 
     url(r'^evaluations/', include(evaluation_urls)),

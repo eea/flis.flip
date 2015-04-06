@@ -324,6 +324,29 @@ class StudyOutcomeEditModalView(StudyOutcomeEditView):
         return reverse('study_outcomes_detail', kwargs={'pk': self.study.pk})
 
 
+class UserEntriesView(LoginRequiredMixin,
+                  generic.ListView):
+
+    model = models.Study
+    template_name = 'user_entries.html'
+
+    def get(self, request, *args, **kwargs):
+        request.session['last_viewed'] = time.time()
+        return super(UserEntriesView, self).get(request, args, kwargs)
+
+    def get_queryset(self):
+        queryset = models.Study.objects.filter(user_id=self.request.user_id)
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = {
+            'filter_form': forms.FilterForm(self.request.GET),
+        }
+        context.update(kwargs)
+        return super(UserEntriesView, self).get_context_data(**context)
+
+
 class StudiesView(LoginRequiredMixin,
                   generic.ListView):
 
