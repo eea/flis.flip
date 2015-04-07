@@ -24,7 +24,7 @@
 
   {% if study_type %}
     <a class="btn btn-primary"
-       href="{% url study_type|add:'_edit' %}?&type={{ study_type }}">
+       href="{% url 'study_metadata_edit' study_type=study_type %}">
        New {{ study_type }}</a>
   {% endif %}
 
@@ -62,19 +62,11 @@
               <td>{{ source.study_type }}</td>
             {% endif %}
             <td>{{ source.start_date }}</td>
-            {% if study_type %}
-              <td>
-                <a href="{% url study_type|add:'_detail' pk=source.pk %}">
-                    {{ source.title }}
-                </a>
-              </td>
-            {% else %}
-              <td>
-                <a href="{% url 'study_metadata_detail' pk=source.pk %}">
-                    {{ source.title }}
-                </a>
-              </td>
-            {% endif %}
+            <td>
+              <a href="{% url 'study_metadata_detail' study_type=source.study_type pk=source.pk %}">
+                  {{ source.title }}
+              </a>
+            </td>
             <td>{{ source.lead_author }}</td>
             <td>{{ source.geographical_scope }}</td>
             <td>

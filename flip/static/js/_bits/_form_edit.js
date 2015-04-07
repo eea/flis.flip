@@ -16,8 +16,8 @@ function decorate_form(type) {
 
 $(function () {
     $('#id_blossom').on('change',function () {
-    $('[data-show-if=blossom]')
-        .toggleClass('hide', $(this).val() != '1');
+        $('[data-show-if=blossom]')
+            .toggleClass('hide', $(this).val() != '1');
     }).change();
     $('#id_start_date').datetimepicker({pickTime: false});
     $('#id_end_date').datetimepicker({pickTime: false});
@@ -88,13 +88,12 @@ $(function () {
     }).change();
 
     $('#id_geographical_scope').on('change', function () {
-        $('[data-show-if=geographical_scope]')
-            .toggleClass('hide', $(this).val() != '4' &&
-                                 $(this).val() != '6' &&
-                                 $(this).val() != '7');
-        if ($(this).val() != '4' && $(this).val() != '6' &&
-            $(this).val() != '7') {
-                $('#id_countries option').removeAttr('selected');
+        var require_country_option = $.inArray(
+            $(this).val(), $(this).parent().data('extra')) < 0;
+        $('[data-show-if=geographical_scope]').toggleClass(
+            'hide', require_country_option);
+        if (require_country_option) {
+            $('#id_countries option').removeAttr('selected');
         };
     }).change();
 });
