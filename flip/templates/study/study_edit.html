@@ -8,19 +8,9 @@
 <script src="/static/js/_bits/_form_edit.js"></script>
 
 <script>
-  {% if study.study_type == 'activity'  %}
-    $(window).load(function() {
-        $('[data-show-if=activity]').removeClass('hide');
-        $('[data-show-if=evaluation]').addClass('hide');
-    });
-  {% endif %}
-
-  {% if study.study_type == 'evaluation'  %}
-    $(window).load(function() {
-        $('[data-show-if=activity]').addClass('hide');
-        $('[data-show-if=evaluation]').removeClass('hide');
-    });
-  {% endif %}
+  $(window).load(function() {
+    decorate_form("{{ study.study_type }}");
+  });
 </script>
 
 {% endblock %}
@@ -28,11 +18,10 @@
 
 {% block title %}
 
-  {{ block.super }} - {% if study %}
-  Study Metadata
-{% else %}
-  New study
-{% endif %}
+  {{ block.super }} -
+  {% if study %}
+    Study Metadata
+  {% endif %}
 
 {% endblock %}
 
