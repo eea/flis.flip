@@ -22,11 +22,12 @@
 
 {% block title %}
 
-  {{ block.super }} - {% if study %}
-  Study Metadata
-{% else %}
-  New study
-{% endif %}
+  {{ block.super }} -
+    {% if study_type %}
+      New {{ study_type }}
+    {% else %}
+      New activity/evaluation
+    {% endif %}
 
 {% endblock %}
 
