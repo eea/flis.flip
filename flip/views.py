@@ -331,7 +331,6 @@ class UserEntriesView(LoginRequiredMixin,
     template_name = 'user_entries.html'
 
     def get(self, request, *args, **kwargs):
-        request.session['last_viewed'] = time.time()
         return super(UserEntriesView, self).get(request, args, kwargs)
 
     def get_queryset(self):
