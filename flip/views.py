@@ -54,7 +54,7 @@ class ParametersMixin(object):
             self.study_type = study_type
         if pk:
             self.pk = pk
-        return super(ParametersMixin, self).dispatch(request)
+        return super(ParametersMixin, self).dispatch(request, **kwargs)
 
 
 class StudyMetadataAddView(LoginRequiredMixin,
