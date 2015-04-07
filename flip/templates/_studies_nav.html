@@ -6,13 +6,9 @@
   <a href="{% url 'home_view' %}">Home</a>
   </li>
 
-  <li class="{% active 'studies/' %}">
-    <a href="{% url 'studies_overview' %}">
-      {% new_studies as ns %}
-      Studies overview
-      {% if ns %}
-        ({{ ns }})
-      {% endif %}
+  <li class="{% active 'studies' %}">
+    <a href="{% url 'user_entries' %}">
+      My entries
     </a>
   </li>
 

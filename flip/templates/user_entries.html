@@ -1,0 +1,48 @@
+{% extends '_layout.html' %}
+
+{% block content %}
+
+  {% include '_messages.html' %}
+  {% include '_studies_nav.html' %}
+
+  <div style="margin-top: 85px; clear:both;">
+    {% if not object_list %}
+      {% if filtering %}
+        No studies found.
+      {% else %}
+        No studies have been added yet.
+      {% endif %}
+    {% endif %}
+  </div>
+
+  {% if object_list %}
+    <table id="studies_listing" width="100%"
+      class="table table-condensed table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Last edited</th>
+          <th>Type</th>
+          <th>Title in English</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for source in object_list %}
+          <tr>
+            <td>{{ source.last_updated|date:"d/m/Y" }}</td>
+            <td>{{ source.study_type }}</td>
+            <td><a href="{% url 'study_metadata_detail' pk=source.pk %}">{{ source.title }}</a></td>
+            <td>
+              {% if source.draft %}
+                Draft
+              {% else %}
+                Published
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+
+{% endblock %}
