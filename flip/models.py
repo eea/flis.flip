@@ -68,6 +68,7 @@ class Study(Model):
         'I want to add a new',
         choices=TYPE_CHOICES,
         max_length=128,
+        null=True,
     )
 
     blossom = IntegerField(

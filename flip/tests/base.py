@@ -50,23 +50,7 @@ START_DATE = datetime.now().date()
 END_DATE = START_DATE + 5 * timedelta(days=365)
 
 
-class StudyFactory(DjangoModelFactory):
-
-    FACTORY_FOR = 'flip.Study'
-
-    title = fuzzy.FuzzyText()
-
-    blossom = Study.NO
-
-    end_date = fuzzy.FuzzyDate(START_DATE, END_DATE)
-
-    lead_author = fuzzy.FuzzyText()
-
-    languages = RelatedFactory('flip.tests.base.StudyLanguageFactory', 'study')
-
-
 class LanguageFactory(DjangoModelFactory):
-
     FACTORY_FOR = 'flip.Language'
     FACTORY_DJANGO_GET_OR_CREATE = ('code', 'title')
 
@@ -74,40 +58,25 @@ class LanguageFactory(DjangoModelFactory):
     title = 'English'
 
 
-class StudyLanguageFactory(DjangoModelFactory):
-
-    FACTORY_FOR = 'flip.StudyLanguage'
-
-    language = SubFactory(LanguageFactory)
-
-    study = SubFactory(StudyFactory)
-
-    title = fuzzy.FuzzyText()
-
-
 class PhasesOfPolicyFactory(DjangoModelFactory):
-
     FACTORY_FOR = 'flip.PhasesOfPolicy'
 
     title = fuzzy.FuzzyText()
 
 
 class ForesightApproachesFactory(DjangoModelFactory):
-
     FACTORY_FOR = 'flip.ForesightApproaches'
 
     title = fuzzy.FuzzyText()
 
 
 class EnvironmentalThemeFactory(DjangoModelFactory):
-
     FACTORY_FOR = 'common.EnvironmentalTheme'
 
     title = fuzzy.FuzzyText()
 
 
 class GeographicalScopeFactory(DjangoModelFactory):
-
     FACTORY_FOR = 'common.GeographicalScope'
 
     title = fuzzy.FuzzyText()
@@ -116,7 +85,6 @@ class GeographicalScopeFactory(DjangoModelFactory):
 
 
 class StudyContextFactory(Factory):
-
     ABSTRACT_FACTORY = True
 
     purpose_and_target = fuzzy.FuzzyChoice([Study.POLICY, Study.NON_POLICY])
@@ -129,25 +97,12 @@ class StudyContextFactory(Factory):
 
 
 class TypeOfOutcomeFactory(DjangoModelFactory):
-
     FACTORY_FOR = 'flip.TypeOfOutcome'
 
     title = fuzzy.FuzzyText()
 
 
-class OutcomeFactory(DjangoModelFactory):
-
-    FACTORY_FOR = 'flip.Outcome'
-
-    study = SubFactory(StudyFactory)
-
-    type_of_outcome = SubFactory(TypeOfOutcomeFactory)
-
-    document_title = fuzzy.FuzzyText()
-
-
 class BaseWebTest(WebTest):
-
     csrf_checks = False
 
     def populate_fields(self, form, data):
@@ -198,3 +153,43 @@ class BaseWebTest(WebTest):
             self.fail('Object "{}" with kwargs {} does not exist'.format(
                 model, str(kwargs)
             ))
+
+
+class StudyFactory(DjangoModelFactory):
+    FACTORY_FOR = 'flip.Study'
+
+    title = fuzzy.FuzzyText()
+
+    blossom = Study.NO
+
+    end_date = fuzzy.FuzzyDate(START_DATE, END_DATE)
+
+    lead_author = fuzzy.FuzzyText()
+
+    languages = RelatedFactory('flip.tests.base.StudyLanguageFactory', 'study')
+
+    study_type = 'evaluation'
+
+    purpose_and_target = fuzzy.FuzzyChoice([Study.POLICY, Study.NON_POLICY])
+
+    geographical_scope_id = '1'
+
+
+class StudyLanguageFactory(DjangoModelFactory):
+    FACTORY_FOR = 'flip.StudyLanguage'
+
+    language = SubFactory(LanguageFactory)
+
+    study = SubFactory(StudyFactory)
+
+    title = fuzzy.FuzzyText()
+
+
+class OutcomeFactory(DjangoModelFactory):
+    FACTORY_FOR = 'flip.Outcome'
+
+    study = SubFactory(StudyFactory)
+
+    type_of_outcome = SubFactory(TypeOfOutcomeFactory)
+
+    document_title = fuzzy.FuzzyText()

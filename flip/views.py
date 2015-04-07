@@ -73,7 +73,7 @@ class StudyMetadataAddView(LoginRequiredMixin,
         kwargs = {'pk': self.object.pk}
         if hasattr(self, 'study_type'):
             kwargs['study_type'] = self.study_type
-        return reverse('study_metadata_edit', kwargs=kwargs)
+        return reverse('study_metadata_detail', kwargs=kwargs)
 
     def get_context_data(self, **kwargs):
         require_country = [str(scope.id) for scope in GeographicalScope.

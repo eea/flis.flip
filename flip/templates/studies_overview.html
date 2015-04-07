@@ -24,7 +24,7 @@
 
   {% if study_type %}
     <a class="btn btn-primary"
-       href="{% url 'study_metadata_edit' study_type=study_type %}">
+       href="{% url 'study_metadata_add' study_type=study_type %}">
        New {{ study_type }}</a>
   {% endif %}
 
