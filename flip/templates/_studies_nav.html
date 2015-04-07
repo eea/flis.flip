@@ -6,8 +6,8 @@
   <a href="{% url 'home_view' %}">Home</a>
   </li>
 
-  <li class="{% active 'activities/' %}">
-    <a href="{% url 'activities_overview' %}?&type=activity">
+  <li class="{% active 'studies/activity' %}">
+    <a href="{% url 'studies_overview' study_type='activity' %}">
       {% new_studies as ns %}
       Forward looking activities
       {% if ns %}
@@ -16,8 +16,8 @@
     </a>
   </li>
 
-  <li class="{% active 'evaluations/' %}">
-    <a href="{% url 'evaluations_overview' %}?&type=evaluation">
+  <li class="{% active 'studies/evaluation' %}">
+    <a href="{% url 'studies_overview' study_type='evaluation' %}">
       Evaluations
       {% if evals %}
         {{ evals }}

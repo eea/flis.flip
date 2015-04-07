@@ -274,7 +274,7 @@
                 <span class="required">*</span>
               {% endif %}
               <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-10" data-extra="{{ require_country }}">
                   {% if form.geographical_scope.errors %}
                     <p class="text-danger">
                       <small>{{ form.geographical_scope.errors.0 }}</small></p>

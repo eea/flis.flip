@@ -5,12 +5,14 @@ from django.core.urlresolvers import reverse
 from django.forms.models import inlineformset_factory
 from django.shortcuts import get_object_or_404, redirect
 from django.views import generic
+from django.http import Http404
 
 from flip import forms, models
 from auth.views import LoginRequiredMixin, EditPermissionRequiredMixin
 from auth.views import AdminPermissionRequiredMixin
 from auth.views import is_admin
 
+from flis_metadata.common.models import GeographicalScope
 
 class StudyLanguageFormMixin(object):
 
@@ -41,10 +43,25 @@ class StudyLanguageFormMixin(object):
         return kwargs
 
 
+class ParametersMixin(object):
+    def dispatch(self, request, **kwargs):
+        study_type = kwargs.get('study_type', None)
+        pk = kwargs.get('pk', None)
+
+        if study_type:
+            if not study_type in dict(models.Study.TYPE_CHOICES).keys():
+                raise Http404
+            self.study_type = study_type
+        if pk:
+            self.pk = pk
+        return super(ParametersMixin, self).dispatch(request)
+
+
 class StudyMetadataAddView(LoginRequiredMixin,
                            EditPermissionRequiredMixin,
                            StudyLanguageFormMixin,
                            SuccessMessageMixin,
+                           ParametersMixin,
                            generic.CreateView):
 
     model = models.Study
@@ -53,21 +70,26 @@ class StudyMetadataAddView(LoginRequiredMixin,
     success_message = 'The study was successfully updated'
 
     def get_success_url(self):
-        self.request.session['first_time_edit'] = True
-        return reverse('study_metadata_detail',
-                       kwargs={'pk': self.object.pk})
+        kwargs = {'pk': self.object.pk}
+        if hasattr(self, 'study_type'):
+            kwargs['study_type'] = self.study_type
+        return reverse('study_metadata_edit', kwargs=kwargs)
 
     def get_context_data(self, **kwargs):
-        context = {'cancel_url': reverse('studies_overview')}
-        study_type = self.request.GET.get('type')
-        if study_type:
-            context['study_type'] = study_type
+        require_country = [str(scope.id) for scope in GeographicalScope.
+            objects.filter(require_country=True)]
+        context = {'cancel_url': reverse('studies_overview'),
+                   'require_country': require_country}
+
+        if hasattr(self, 'study_type'):
+            context['study_type'] = self.study_type
 
         context.update(kwargs)
         return super(StudyMetadataAddView, self).get_context_data(**context)
 
 
 class StudyMetadataDetailView(LoginRequiredMixin,
+                              ParametersMixin,
                               generic.DetailView):
 
     model = models.Study
@@ -94,6 +116,7 @@ class StudyMetadataEditView(LoginRequiredMixin,
                             EditPermissionRequiredMixin,
                             StudyLanguageFormMixin,
                             SuccessMessageMixin,
+                            ParametersMixin,
                             generic.UpdateView):
 
     model = models.Study
@@ -112,15 +135,20 @@ class StudyMetadataEditView(LoginRequiredMixin,
             )
 
     def get_context_data(self, **kwargs):
+        require_country = [str(scope.id) for scope in GeographicalScope.
+            objects.filter(require_country=True)]
         context = {'cancel_url': reverse('study_metadata_detail',
                                          kwargs={'pk': self.object.pk}),
-                   'edit_mode': True}
+                   'edit_mode': True,
+                   'require_country': require_country}
         context.update(kwargs)
         return super(StudyMetadataEditView, self).get_context_data(**context)
 
     def get_success_url(self):
-        return reverse('study_metadata_detail',
-                       kwargs={'pk': self.object.pk})
+        kwargs = {'pk': self.object.pk}
+        if hasattr(self, 'study_type'):
+            kwargs['study_type'] = self.study_type
+        return reverse('study_metadata_detail', kwargs=kwargs)
 
 
 class StudyDeleteView(LoginRequiredMixin,
@@ -138,12 +166,13 @@ class StudyStatusEditView(LoginRequiredMixin,
                           EditPermissionRequiredMixin,
                           generic.View):
 
-    def post(self, request, pk):
+    def post(self, request, pk, study_type):
         study = get_object_or_404(models.Study, pk=pk)
         study.draft = not study.draft
         study.save()
         return redirect(reverse('study_metadata_detail',
-                                kwargs={'pk': pk}))
+                                kwargs={'pk': pk,
+                                        'study_type': study_type}))
 
 
 class StudyOutcomesDetailView(LoginRequiredMixin,
@@ -322,6 +351,7 @@ class UserEntriesView(LoginRequiredMixin,
 
 
 class StudiesView(LoginRequiredMixin,
+                  ParametersMixin,
                   generic.ListView):
 
     model = models.Study
@@ -337,7 +367,6 @@ class StudiesView(LoginRequiredMixin,
         self.foresight_approaches = self.request.GET.getlist(
             'foresight_approaches')
         self.my_entries = self.request.GET.get('my_entries')
-        self.type = self.request.GET.get('type')
 
         queryset = models.Study.objects.all()
         if self.my_entries:
@@ -352,8 +381,8 @@ class StudiesView(LoginRequiredMixin,
                     foresight_approaches__in=self.foresight_approaches
                 ).distinct()
 
-        if self.type:
-            queryset = queryset.filter(study_type=self.type)
+        if hasattr(self, 'study_type'):
+            queryset = queryset.filter(study_type=self.study_type)
 
         return queryset
 
@@ -365,8 +394,8 @@ class StudiesView(LoginRequiredMixin,
                              self.foresight_approaches,
                              self.my_entries])
         }
-        if self.type:
-            context['study_type'] = self.type;
+        if hasattr(self, 'study_type'):
+            context['study_type'] = self.study_type
         context.update(kwargs)
         return super(StudiesView, self).get_context_data(**context)
 

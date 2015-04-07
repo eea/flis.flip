@@ -1,5 +1,5 @@
 <div class="actions">
-  <a href="{% url 'study_metadata_edit' pk=study.pk %}"
+  <a href="{% url 'study_metadata_edit' pk=study.pk study_type=study.study_type%}"
      class="btn btn-primary">
     Edit</a>
 
@@ -11,7 +11,7 @@
      id="add-output">Add output
   </a>
 
-  {% url 'study_status_edit' pk=study.pk as status_url %}
+  {% url 'study_status_edit' pk=study.pk study_type=study.study_type as status_url %}
   <form class="form-inline status " action="{{ status_url }}"
         method="POST">
     {% csrf_token %}
