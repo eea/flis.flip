@@ -165,3 +165,7 @@ div.outcome {
 .btn-danger {
     color: #FFFFFF !important;
 }
+
+.form-group {
+    clear: both;
+}
