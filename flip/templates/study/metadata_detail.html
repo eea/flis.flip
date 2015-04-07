@@ -152,12 +152,12 @@
         </tr>
 
         <tr>
-          <th>{{ context_form.purpose_and_target.label }}</th>
+          <th>{{ form.purpose_and_target.label }}</th>
           <td>{{ study.get_purpose_and_target_display|default:'None' }}</td>
         </tr>
 
         <tr>
-          <th>{{ context_form.additional_information.label }}</th>
+          <th>{{ form.additional_information.label }}</th>
           <td>{{ study.additional_information|default:'None' }}</td>
         </tr>
 
@@ -167,12 +167,12 @@
           </tr>
 
           <tr>
-            <th>{{ context_form.phase_of_policy.label }}</th>
+            <th>{{ form.phase_of_policy.label }}</th>
             <td>{{ study.phase_of_policy|default:'None' }}</td>
           </tr>
 
           <tr>
-            <th>{{ context_form.additional_information_phase.label }}</th>
+            <th>{{ form.additional_information_phase.label }}</th>
             <td>{{ study.additional_information_phase|default:'None' }}</td>
           </tr>
 
@@ -181,7 +181,7 @@
           </tr>
 
           <tr>
-            <th>{{ context_form.foresight_approaches.label }}</th>
+            <th>{{ form.foresight_approaches.label }}</th>
             <td>
               <ul class="list-unstyled">
                 {% for foresight in study.foresight_approaches.all %}
@@ -194,12 +194,12 @@
           </tr>
 
           <tr>
-            <th>{{ context_form.additional_information_foresight.label }}</th>
+            <th>{{ form.additional_information_foresight.label }}</th>
             <td>{{ study.additional_information_foresight|default:'None' }}</td>
           </tr>
 
           <tr>
-            <th>{{ context_form.stakeholder_participation.label }}</th>
+            <th>{{ form.stakeholder_participation.label }}</th>
             <td>
               {% if study.stakeholder_participation %}
                 <i class="glyphicon glyphicon-ok"></i>
