@@ -105,10 +105,6 @@ study_urls = patterns(
         views.StudyMetadataEditView.as_view(),
         name='study_metadata_edit'),
 
-    url(r'^(?P<pk>\d+)/edit$',
-        views.StudyMetadataEditView.as_view(),
-        name='study_metadata_edit'),
-
     url(r'^(?P<study_type>[^/]+)/(?P<pk>\d+)/detail$',
         views.StudyMetadataDetailView.as_view(),
         name='study_metadata_detail'),
