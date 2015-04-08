@@ -30,7 +30,7 @@
         {% for source in object_list %}
           <tr>
             <td>{{ source.last_updated|date:"d/m/Y" }}</td>
-            <td>{{ source.study_type }}</td>
+            <td>{{ source.study_type|capfirst }}</td>
             <td>
               <a href="{% url 'study_metadata_detail' study_type=source.study_type pk=source.pk %}">
                   {{ source.title }}
