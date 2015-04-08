@@ -139,14 +139,14 @@ class OutcomeForm(ModelForm):
 class FilterForm(Form):
 
     BLOSSOM_FILTER_CHOICES = (
-        ('', 'All studies'),
+        ('', 'All'),
         (Study.YES, 'Blossom'),
         (Study.NO, 'Non-Blossom'),
     )
 
     blossom = ChoiceField(
         choices=BLOSSOM_FILTER_CHOICES,
-        label='Filter studies by')
+        label='Filter entries by')
 
     phase_of_policy = ModelChoiceField(
         queryset=PhasesOfPolicy.objects.all(),

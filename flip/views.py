@@ -98,6 +98,7 @@ class StudyMetadataDetailView(LoginRequiredMixin,
     def get_context_data(self, **kwargs):
         context = {
             'form': forms.StudyMetadataForm(),
+            'show_submit_create': True,
         }
         if 'first_time_edit' in self.request.session:
             context['open_popup'] = True
@@ -374,12 +375,12 @@ class StudiesView(LoginRequiredMixin,
 
         if self.blossom:
             queryset = queryset.filter(blossom=self.blossom)
-            if self.phase_of_policy:
-                queryset = queryset.filter(phase_of_policy=self.phase_of_policy)
-            if self.foresight_approaches:
-                queryset = queryset.filter(
-                    foresight_approaches__in=self.foresight_approaches
-                ).distinct()
+        if self.phase_of_policy:
+            queryset = queryset.filter(phase_of_policy=self.phase_of_policy)
+        if self.foresight_approaches:
+            queryset = queryset.filter(
+                foresight_approaches__in=self.foresight_approaches
+            ).distinct()
 
         if hasattr(self, 'study_type'):
             queryset = queryset.filter(study_type=self.study_type)
