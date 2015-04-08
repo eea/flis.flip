@@ -171,8 +171,6 @@ urlpatterns = patterns(
         views.UserEntriesView.as_view(),
         name='user_entries'),
 
-    url(r'^studies/', include(study_urls)),
-
     url(r'^new/',
         views.StudyMetadataAddView.as_view(),
         name='add_new'),

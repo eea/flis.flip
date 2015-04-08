@@ -31,7 +31,11 @@
           <tr>
             <td>{{ source.last_updated|date:"d/m/Y" }}</td>
             <td>{{ source.study_type }}</td>
-            <td><a href="{% url 'study_metadata_detail' pk=source.pk %}">{{ source.title }}</a></td>
+            <td>
+              <a href="{% url 'study_metadata_detail' study_type=source.study_type pk=source.pk %}">
+                  {{ source.title }}
+              </a>
+            </td>
             <td>
               {% if source.draft %}
                 Draft
