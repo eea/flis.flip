@@ -1,11 +1,12 @@
 {% extends '_layout.html' %}
+{% load staticfiles %}
 {% load widget_tweaks %}
 {% load utils %}
 
 
 {% block scripts %}
 
-<script src="/static/js/_bits/_form_edit.js"></script>
+<script src="{% static "js/_bits/_form_edit.js" %}"></script>
 
 {% if study_type %}
   <script>
