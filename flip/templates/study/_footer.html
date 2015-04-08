@@ -1,8 +1,13 @@
 
 <div class="form-group form-footer" style="margin-bottom: 0">
 
-  <button type="submit" name="draft" value="false"
-          class="btn btn-primary">{{ edit_mode|yesno:"Save,Publish" }}</button>
+  {% if object and object.draft %}
+    <button type="submit" name="draft" value="false"
+          class="btn btn-primary">Publish</button>
+  {% else %}
+    <button type="submit" name="draft" value="false"
+            class="btn btn-primary">{{ edit_mode|yesno:"Save,Publish" }}</button>
+  {% endif %}
 
   {% if object %}
     {% if object.draft %}

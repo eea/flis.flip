@@ -47,20 +47,6 @@
     {% include 'study/_study_form.html' %}
     </div> {# col #}
 
-    {% can_edit_study study as can_edit_study %}
-    {% if can_edit_study %}
-        <div class="col-md-2">
-          <br/>
-          <br/>
-          <a class="btn btn-primary launch-modal" data-toggle="modal"
-             data-target="#myModal"
-             data-backdrop="static"
-             data-action="{% url 'study_outcomes_add' study.id %}"
-             data-title="Add outcome">Add outcome
-          </a>
-        </div>
-    {% endif %}
-
     </div>
 
   {% include 'study/_modal.html' %}
