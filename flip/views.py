@@ -70,9 +70,8 @@ class StudyMetadataAddView(LoginRequiredMixin,
     success_message = 'The study was successfully updated'
 
     def get_success_url(self):
-        kwargs = {'pk': self.object.pk}
-        if hasattr(self, 'study_type'):
-            kwargs['study_type'] = self.study_type
+        kwargs = {'pk': self.object.pk,
+                  'study_type': self.object.study_type}
         return reverse('study_metadata_detail', kwargs=kwargs)
 
     def get_context_data(self, **kwargs):
