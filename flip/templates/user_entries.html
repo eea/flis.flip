@@ -1,5 +1,15 @@
 {% extends '_layout.html' %}
 
+{% block scripts %}
+
+  <script>
+    $(function(){
+      $('#studies_listing').dataTable();
+    });
+  </script>
+
+{% endblock %}
+
 {% block content %}
 
   {% include '_messages.html' %}
@@ -8,9 +18,9 @@
   <div style="margin-top: 85px; clear:both;">
     {% if not object_list %}
       {% if filtering %}
-        No studies found.
+        No entries found.
       {% else %}
-        No studies have been added yet.
+        No entries have been added yet.
       {% endif %}
     {% endif %}
   </div>
