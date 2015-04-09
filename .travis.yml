@@ -1,0 +1,10 @@
+language: python
+python:
+  - "2.7"
+install: pip install -r requirements-dev.txt --use-mirrors
+script:  ./manage.py test flip
+after_success: coveralls
+notifications:
+  email:
+    recipients:
+      - purepython@eaudeweb.ro
