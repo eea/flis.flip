@@ -48,7 +48,7 @@ class StudyMetadataForm(ModelForm):
         self.fields['countries'].queryset = (
             Country.objects.filter(is_deleted=False))
         self.fields['environmental_themes'].queryset = (
-            EnvironmentalTheme.objects.filter(is_deleted=False))
+            EnvironmentalTheme.objects.filter(is_deleted=False).order_by('title'))
 
     def clean(self):
         cleaned_data = super(StudyMetadataForm, self).clean()
