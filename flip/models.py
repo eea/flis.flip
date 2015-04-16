@@ -54,7 +54,7 @@ class Study(Model):
     user_id = CharField(max_length=64, blank=True)
 
     title = CharField(
-        'study title in English',
+        'title in English',
         max_length=255)
 
     languages = ManyToManyField(
@@ -194,7 +194,7 @@ class StudyLanguage(Model):
 
     study = ForeignKey(Study)
 
-    title = CharField('study title in original language', max_length=255)
+    title = CharField('title in original language', max_length=255)
 
     def __unicode__(self):
         return self.title
