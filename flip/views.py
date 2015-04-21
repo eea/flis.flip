@@ -75,6 +75,7 @@ class StudyMetadataAddView(LoginRequiredMixin,
         return reverse('study_metadata_detail', kwargs=kwargs)
 
     def get_context_data(self, **kwargs):
+        self.request.session['first_time_edit'] = True
         require_country = [str(scope.id) for scope in GeographicalScope.
             objects.filter(require_country=True)]
         context = {'cancel_url': reverse('studies_overview'),
