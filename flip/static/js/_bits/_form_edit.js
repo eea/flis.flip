@@ -27,7 +27,9 @@ $(function () {
 
     $('#study-languages').on('change', 'select', function () {
         if ($(this).val() == 'en') {
-            var title_original = $(this).parents('.row').find('input[type=text]');
+            var title_original = (
+                $(this).parents('.row').first().find('input[type=text]')
+            );
             var title = $('#id_title');
             if ($.trim(title_original)) {
                 title_original.val(title.val());
