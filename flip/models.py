@@ -158,7 +158,7 @@ class Outcome(Model):
 
     type_of_outcome = ForeignKey(
         'TypeOfOutcome',
-        verbose_name='type of outcome or activity',
+        verbose_name='type of output',
         null=True,
         blank=True)
 
@@ -168,7 +168,7 @@ class Outcome(Model):
         null=True,
         blank=True)
 
-    document_title = CharField('document title', max_length=255)
+    document_title = CharField('title', max_length=255)
 
     text = TextField('text', null=True, blank=True)
 
