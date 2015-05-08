@@ -3,8 +3,7 @@ from django.test.utils import override_settings
 
 from flip.models import Study
 from .base import BaseWebTest
-from .base import (StudyFactory, EnvironmentalThemeFactory,
-                   StudyContextFactory, GeographicalScopeFactory)
+from .base import (StudyFactory)
 
 
 @override_settings(SKIP_EDIT_AUTH=True, FRAME_URL=None)
@@ -12,7 +11,8 @@ class StudyMetadaTests(BaseWebTest):
 
     def test_study_metadata_new(self):
         data = StudyFactory.attributes()
-        url = reverse('study_metadata_add', kwargs={'study_type': 'evaluation'})
+        url = reverse('study_metadata_add',
+                      kwargs={'study_type': 'assessment'})
         resp = self.app.get(url)
         form = resp.forms['study-form']
         self.populate_fields(form, self.normalize_data(data))
@@ -24,7 +24,8 @@ class StudyMetadaTests(BaseWebTest):
 
     def test_study_metadata_validate_blossom_and_requested_by(self):
         data = StudyFactory.attributes(extra={'blossom': Study.YES})
-        url = reverse('study_metadata_add', kwargs={'study_type': 'evaluation'})
+        url = reverse('study_metadata_add',
+                      kwargs={'study_type': 'assessment'})
         resp = self.app.get(url)
         form = resp.forms['study-form']
         self.populate_fields(form, self.normalize_data(data))

@@ -168,7 +168,7 @@ class StudyFactory(DjangoModelFactory):
 
     languages = RelatedFactory('flip.tests.base.StudyLanguageFactory', 'study')
 
-    study_type = 'evaluation'
+    study_type = 'assessment'
 
     purpose_and_target = fuzzy.FuzzyChoice([Study.POLICY, Study.NON_POLICY])
 

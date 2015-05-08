@@ -66,9 +66,9 @@
           <td>{{ study.url }}</td>
         </tr>
 
-        {% if study.study_type == 'evaluation' %}
+        {% if study.study_type == 'assessment' %}
           <tr class="hd">
-            <th colspan="2">Approach to evaluation</th>
+            <th colspan="2">Approach to assessment</th>
           </tr>
 
           <tr>
@@ -101,7 +101,7 @@
           <th colspan="2">Scope of the {{ study.study_type }}</th>
         </tr>
 
-        {% if study.study_type == 'evaluation' %}
+        {% if study.study_type == 'assessment' %}
           <tr>
             <th>{{ form.environmental_themes.label }}</th>
             <td>

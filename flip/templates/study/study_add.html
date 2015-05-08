@@ -27,7 +27,7 @@
     {% if study_type %}
       New {{ study_type }}
     {% else %}
-      New activity/evaluation
+      New activity/assessment
     {% endif %}
 
 {% endblock %}
@@ -40,7 +40,7 @@
   {% if study_type %}
     <h2 class="page-title">Add a new {{ study_type }}</h2>
   {% else %}
-    <h2 class="page-title">Select if you want to enter a forward looking activity or a new evaluation</h2>
+    <h2 class="page-title">Select if you want to enter a forward looking activity or a new assessment</h2>
   {% endif %}
   {% include '_messages.html' %}
 

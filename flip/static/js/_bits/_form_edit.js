@@ -1,12 +1,12 @@
 function decorate_form(type) {
-    if (type == 'evaluation') {
-        $('[data-show-if=evaluation]').removeClass('hide');
+    if (type == 'assessment') {
+        $('[data-show-if=assessment]').removeClass('hide');
         $('[data-show-if=activity]').addClass('hide');
         $('[data-show-if=type-selected]').removeClass('hide');
     }
     else if (type == 'activity') {
         $('[data-show-if=activity]').removeClass('hide');
-        $('[data-show-if=evaluation]').addClass('hide');
+        $('[data-show-if=assessment]').addClass('hide');
         $('[data-show-if=type-selected]').removeClass('hide');
     }
     else {

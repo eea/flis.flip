@@ -16,9 +16,10 @@
     </a>
   </li>
 
-  <li class="{% active 'studies/evaluation' %}">
-    <a href="{% url 'studies_overview' study_type='evaluation' %}">
-      Evaluations
+  <li class="{% active 'studies/assessment' %}">
+    <a href="{% url 'studies_overview' study_type='assessment' %}"
+       title="Assessments of embedding foresight in policymaking" >
+      Assessments
       {% if evals %}
         {{ evals }}
       {% endif %}

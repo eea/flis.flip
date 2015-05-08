@@ -34,10 +34,10 @@ class Study(Model):
     )
 
     ACTIVITY = 'activity'
-    EVALUATION = 'evaluation'
+    ASSESSMENT = 'assessment'
     TYPE_CHOICES = (
         (ACTIVITY, 'Forward looking activity'),
-        (EVALUATION, 'Evaluation'),
+        (ASSESSMENT, 'Assessment'),
     )
 
     BLOSSOM_CHOICES = (
@@ -72,7 +72,7 @@ class Study(Model):
     )
 
     blossom = IntegerField(
-        'Approach to evaluation',
+        'Approach to assessment',
         choices=BLOSSOM_CHOICES,
         default=NO,
     )
