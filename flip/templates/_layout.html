@@ -21,7 +21,8 @@
 
   <div class="content clearfix">
   <div class="logo text-right header">
-      <img src="http://projects.eionet.europa.eu/flis-services-project/flip/static/img/logo.png" width="90" height="100" alt="Live Catalogue">
+    <img src="{{STATIC_URL}}/img/logo.png" width="90" height="100" alt="Live Catalogue">
+    <img src="{{STATIC_URL}}/img/blossom.png" width="90" height="100" alt="Live Catalogue">
   </div>
     <h1>Uses of foresight in policymaking</h1>
 
@@ -39,8 +40,9 @@
   {% block scripts %}{% endblock %}
   <script>
       //Overwrite the came_from value for a correct redirect
-      $('a[href^="http://projects.eionet.europa.eu/flis-services-project/login_html?came_from"]')
-          .attr('href', 'http://projects.eionet.europa.eu/flis-services-project/login/login_form?disable_cookie_login__=1&came_from='+$(location).attr('href'));
+      var site_url = '{{SITE_URL}}';
+      $('a[href^="'+site_url+'/login_html?came_from"]')
+          .attr('href', site_url+'/login/login_form?disable_cookie_login__=1&came_from='+$(location).attr('href'));
       $('.breadcrumbitemlast a').attr('href', $(location).attr('href').split('study')[0]);
   </script>
 

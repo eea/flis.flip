@@ -130,13 +130,10 @@ li.right-float ul.dropdown-menu{
 }
 
 .logo {
-    background: #fff;
     float: right;
-    height: 60px;
+    height: 90px;
 }
 .logo img {
-    margin-left: -90px;
-    position: absolute;
     margin-top: -17px;
 }
 #middle_port h1 {
