@@ -11,7 +11,7 @@
     "model": "flip.typeofoutcome",
     "pk": 2,
     "fields": {
-      "title": "Interviews",
+      "title": "Governance practice (governance, institutional set up, regular mechanisms and processes, actors, culture, level of political support)",
       "blossom": true
     }
   },
@@ -19,58 +19,45 @@
     "model": "flip.typeofoutcome",
     "pk": 3,
     "fields": {
-      "title": "Final overall report",
-      "blossom": true
+      "title": "Methods and methodologies in the forward-looking activities",
+      "blossom": true,
+      "type": "assessment"
     }
   },
   {
     "model": "flip.typeofoutcome",
     "pk": 4,
     "fields": {
-      "title": "Stakeholders involvement"
+      "title": "Communication approaches"
     }
   },
   {
     "model": "flip.typeofoutcome",
     "pk":5,
     "fields": {
-      "title": "Successes in use of forward-looking information in policy"
+      "title": "Successes in use of forward-looking information in policy making"
     }
   },
   {
     "model": "flip.typeofoutcome",
     "pk":6,
     "fields": {
-      "title": "Use of future techniques"
+      "title": "Barriers in use of forward-looking information in policymaking"
     }
   },
   {
     "model": "flip.typeofoutcome",
     "pk": 7,
     "fields": {
-      "title": "Barriers in use of forward-looking information in policy"
+      "title": "SWOT diagram"
     }
   },
   {
     "model": "flip.typeofoutcome",
     "pk": 8,
     "fields": {
-      "title": "Communication of results"
-    }
-  },
-  {
-    "model": "flip.typeofoutcome",
-    "pk": 9,
-    "fields": {
-      "title": "Governance practice (governance, institutional set up, regulatory mechanism and processes, actors, culture, level of political support)"
-    }
-  },
-  {
-    "model": "flip.typeofoutcome",
-    "pk": 10,
-    "fields": {
-      "title": "SWOT tail diagram",
-      "blossom": true
+      "title": "Interviews and other participatory approaches",
+      "type": "assessment"
     }
   }
 ]
