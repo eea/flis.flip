@@ -21,7 +21,7 @@
     "fields": {
       "title": "Methods and methodologies in the forward-looking activities",
       "blossom": true,
-      "type": "assessment"
+      "doc_type": "assessment"
     }
   },
   {
@@ -57,7 +57,7 @@
     "pk": 8,
     "fields": {
       "title": "Interviews and other participatory approaches",
-      "type": "assessment"
+      "doc_type": "assessment"
     }
   }
 ]
