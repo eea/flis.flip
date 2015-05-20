@@ -141,6 +141,8 @@ FRAME_SEEN_EXCLUDE = ('/_lastseencount/', )
 
 SKIP_EDIT_AUTH = False
 
+SITE_URL = ''
+
 try:
     from local_settings import *
 except ImportError:
