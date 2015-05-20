@@ -226,9 +226,10 @@ class TypeOfOutcome(Model):
 
     title = CharField(max_length=256)
     blossom = BooleanField(default=False)
+    doc_type = CharField(max_length=64, default="any")
 
     class Meta:
-        ordering = ('-pk',)
+        ordering = ('pk',)
 
     def __unicode__(self):
         return self.title
