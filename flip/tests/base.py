@@ -172,7 +172,7 @@ class StudyFactory(DjangoModelFactory):
 
     purpose_and_target = fuzzy.FuzzyChoice([Study.POLICY, Study.NON_POLICY])
 
-    geographical_scope_id = '1'
+    geographical_scope = SubFactory(GeographicalScopeFactory)
 
 
 class StudyLanguageFactory(DjangoModelFactory):
