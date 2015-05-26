@@ -217,10 +217,21 @@ class ForesightApproaches(Model):
 
 
 class TypeOfOutcome(Model):
+    TYPE_CHOICES = (
+        ('any', 'Any'),
+        (Study.ACTIVITY, 'Forward looking activity'),
+        (Study.ASSESSMENT, 'Assessment'),
+    )
 
     title = CharField(max_length=256)
     blossom = BooleanField(default=False)
-    doc_type = CharField(max_length=64, default="any")
+    doc_type = CharField(
+        'Type',
+        choices=TYPE_CHOICES,
+        max_length=128,
+        null=True,
+        default = 'any'
+    )
 
     class Meta:
         ordering = ('pk',)
