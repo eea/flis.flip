@@ -1,11 +1,11 @@
 from django.conf import settings
 
 
-_VIEW_ROLES = ('Administrator', 'Contributor',)
+_VIEW_ROLES = ('Administrator', 'Contributor', 'Manager',)
 VIEW_ROLES = getattr(settings, 'VIEW_ROLES', _VIEW_ROLES)
 
 
-_EDIT_ROLES = ('Administrator', 'Contributor',)
+_EDIT_ROLES = ('Administrator', 'Contributor', 'Manager',)
 EDIT_ROLES = getattr(settings, 'EDIT_ROLES', _EDIT_ROLES)
 
 
