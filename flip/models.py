@@ -218,7 +218,7 @@ class ForesightApproaches(Model):
 
 class TypeOfOutcome(Model):
     TYPE_CHOICES = (
-        ('any', 'Any'),
+        ('all', 'All'),
         (Study.ACTIVITY, 'Forward looking activity'),
         (Study.ASSESSMENT, 'Assessment'),
     )
@@ -230,7 +230,7 @@ class TypeOfOutcome(Model):
         choices=TYPE_CHOICES,
         max_length=128,
         null=True,
-        default = 'any'
+        default = 'all'
     )
 
     class Meta:
