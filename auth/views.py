@@ -19,7 +19,7 @@ def is_admin(request):
     user_roles = getattr(request, 'user_roles', [])
     if user_id and 'Administrator' in user_roles:
         return True
-    return False
+    return request.user.is_authenticated() and request.user.is_superuser
 
 
 class LoginRequiredMixin(object):
