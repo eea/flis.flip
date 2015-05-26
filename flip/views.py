@@ -6,6 +6,7 @@ from django.forms.models import inlineformset_factory
 from django.shortcuts import get_object_or_404, redirect
 from django.views import generic
 from django.http import Http404
+from django.db.models import Q
 
 from flip import forms, models
 from auth.views import LoginRequiredMixin, EditPermissionRequiredMixin
@@ -384,6 +385,11 @@ class StudiesView(LoginRequiredMixin,
 
         if hasattr(self, 'study_type'):
             queryset = queryset.filter(study_type=self.study_type)
+
+        if not is_admin(self.request):
+            queryset = queryset.filter(
+                Q(draft=False) | Q(draft=True, user_id=self.request.user_id)
+            )
 
         return queryset
 
