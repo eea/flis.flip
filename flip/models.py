@@ -162,12 +162,6 @@ class Outcome(Model):
         null=True,
         blank=True)
 
-    content_topic = ForeignKey(
-        'ContentTopic',
-        verbose_name='content topic',
-        null=True,
-        blank=True)
-
     document_title = CharField('title', max_length=255)
 
     text = TextField('text', null=True, blank=True)
@@ -223,24 +217,24 @@ class ForesightApproaches(Model):
 
 
 class TypeOfOutcome(Model):
+    TYPE_CHOICES = (
+        ('all', 'All'),
+        (Study.ACTIVITY, 'Forward looking activity'),
+        (Study.ASSESSMENT, 'Assessment'),
+    )
 
     title = CharField(max_length=256)
     blossom = BooleanField(default=False)
-    doc_type = CharField(max_length=64, default="any")
+    doc_type = CharField(
+        'Type',
+        choices=TYPE_CHOICES,
+        max_length=128,
+        null=True,
+        default = 'all'
+    )
 
     class Meta:
         ordering = ('pk',)
-
-    def __unicode__(self):
-        return self.title
-
-
-class ContentTopic(Model):
-
-    title = CharField(max_length=256)
-
-    class Meta:
-        ordering = ('-pk',)
 
     def __unicode__(self):
         return self.title

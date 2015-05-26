@@ -39,6 +39,18 @@
               <small>{{ form.title.errors.0 }}</small></p>
           {% endif %}
         </div>
+        <div class="col-md-9">
+          {{ form.doc_type.label_tag }}
+          {% if form.doc_type.required %}
+            <span class="required">*</span>
+          {% endif %}
+
+          {% render_field form.doc_type class='form-control' %}
+          {% if form.doc_type.errors %}
+            <p class="text-danger">
+              <small>{{ form.doc_type.errors.0 }}</small></p>
+          {% endif %}
+        </div>
       </div>
     </div>
 

@@ -128,7 +128,7 @@ class OutcomeForm(ModelForm):
         super(OutcomeForm, self).__init__(*args, **kwargs)
         self.fields['type_of_outcome'].queryset = (
             TypeOfOutcome.objects.filter(
-                Q(doc_type=self.study.study_type) | Q(doc_type='any')))
+                Q(doc_type=self.study.study_type) | Q(doc_type='all')))
 
     def save(self):
         outcome = super(OutcomeForm, self).save(commit=False)
