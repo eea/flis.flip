@@ -61,23 +61,6 @@ settings_urls = patterns(
     url(r'^outcomes/(?P<pk>\d+)/delete$',
         views.SettingsOutcomesDeleteView.as_view(),
         name='outcomes_delete'),
-
-    url(r'^topics/$',
-        views.SettingsTopicsView.as_view(),
-        name='topics'),
-
-    url(r'^topics/new$',
-        views.SettingsTopicAddView.as_view(),
-        name='topics_add'),
-
-    url(r'^topics/(?P<pk>\d+)/edit$',
-        views.SettingsTopicEditView.as_view(),
-        name='topics_edit'),
-
-    url(r'^topics/(?P<pk>\d+)/delete$',
-        views.SettingsTopicDeleteView.as_view(),
-        name='topics_delete'),
-
 )
 
 

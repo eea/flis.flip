@@ -162,12 +162,6 @@ class Outcome(Model):
         null=True,
         blank=True)
 
-    content_topic = ForeignKey(
-        'ContentTopic',
-        verbose_name='content topic',
-        null=True,
-        blank=True)
-
     document_title = CharField('title', max_length=255)
 
     text = TextField('text', null=True, blank=True)
@@ -230,17 +224,6 @@ class TypeOfOutcome(Model):
 
     class Meta:
         ordering = ('pk',)
-
-    def __unicode__(self):
-        return self.title
-
-
-class ContentTopic(Model):
-
-    title = CharField(max_length=256)
-
-    class Meta:
-        ordering = ('-pk',)
 
     def __unicode__(self):
         return self.title
