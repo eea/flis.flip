@@ -388,7 +388,7 @@ class StudiesView(LoginRequiredMixin,
 
         if not is_admin(self.request):
             queryset = queryset.filter(
-                Q(draft=False) | Q(draft=True, user_id=self.request.user_id)
+                Q(draft=False) | Q(user_id=self.request.user_id)
             )
 
         return queryset
