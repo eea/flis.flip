@@ -197,23 +197,35 @@ class StudyLanguage(Model):
 class PhasesOfPolicy(Model):
 
     title = CharField(max_length=128)
+    sort_id = IntegerField(default=0, null=True, blank=True)
 
     class Meta:
-        ordering = ('-pk',)
+        ordering = ('sort_id',)
 
     def __unicode__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        existing_objs = self.__class__.objects.all()
+        self.sort_id = max(o.sort_id for o in existing_objs) + 1
+        super(self.__class__, self).save(args, kwargs)
 
 
 class ForesightApproaches(Model):
 
     title = CharField(max_length=128)
+    sort_id = IntegerField(default=0, null=True, blank=True)
 
     class Meta:
-        ordering = ('-pk',)
+        ordering = ('sort_id',)
 
     def __unicode__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        existing_objs = self.__class__.objects.all()
+        self.sort_id = max(o.sort_id for o in existing_objs) + 1
+        super(self.__class__, self).save(args, kwargs)
 
 
 class TypeOfOutcome(Model):
@@ -232,12 +244,18 @@ class TypeOfOutcome(Model):
         null=True,
         default = 'all'
     )
+    sort_id = IntegerField(default=0, null=True, blank=True)
 
     class Meta:
-        ordering = ('pk',)
+        ordering = ('sort_id',)
 
     def __unicode__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        existing_objs = self.__class__.objects.all()
+        self.sort_id = max(o.sort_id for o in existing_objs) + 1
+        super(self.__class__, self).save(args, kwargs)
 
 
 @receiver(pre_delete, sender=Outcome)

@@ -3,28 +3,32 @@
     "model": "flip.phasesofpolicy",
     "pk": 1,
     "fields": {
-      "title": "Exploratory identification of long term issues"
+      "title": "Exploratory identification of long term issues",
+      "sort_id": 1
     }
   },
   {
     "model": "flip.phasesofpolicy",
     "pk": 2,
     "fields": {
-      "title": "Agenda setting"
+      "title": "Agenda setting",
+      "sort_id": 2
     }
   },
   {
     "model": "flip.phasesofpolicy",
     "pk": 3,
     "fields": {
-      "title": "Policy development"
+      "title": "Policy development",
+      "sort_id": 3
     }
   },
   {
     "model": "flip.phasesofpolicy",
     "pk": 4,
     "fields": {
-      "title": "Policy implementation and assessment"
+      "title": "Policy implementation and assessment",
+      "sort_id": 4
     }
   }
 ]
