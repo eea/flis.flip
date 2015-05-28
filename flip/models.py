@@ -205,11 +205,6 @@ class PhasesOfPolicy(Model):
     def __unicode__(self):
         return self.title
 
-    def save(self, *args, **kwargs):
-        existing_objs = self.__class__.objects.all()
-        self.sort_id = max(o.sort_id for o in existing_objs) + 1
-        super(self.__class__, self).save(args, kwargs)
-
 
 class ForesightApproaches(Model):
 
@@ -221,11 +216,6 @@ class ForesightApproaches(Model):
 
     def __unicode__(self):
         return self.title
-
-    def save(self, *args, **kwargs):
-        existing_objs = self.__class__.objects.all()
-        self.sort_id = max(o.sort_id for o in existing_objs) + 1
-        super(self.__class__, self).save(args, kwargs)
 
 
 class TypeOfOutcome(Model):
@@ -251,11 +241,6 @@ class TypeOfOutcome(Model):
 
     def __unicode__(self):
         return self.title
-
-    def save(self, *args, **kwargs):
-        existing_objs = self.__class__.objects.all()
-        self.sort_id = max(o.sort_id for o in existing_objs) + 1
-        super(self.__class__, self).save(args, kwargs)
 
 
 @receiver(pre_delete, sender=Outcome)

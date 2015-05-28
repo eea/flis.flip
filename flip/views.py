@@ -556,11 +556,10 @@ class SettingsUpdateOrder(LoginRequiredMixin,
         setting_name = kwargs.get('setting_name', None)
         items = self.request.POST.getlist('items[]')
 
-        for i in items:
-            outcome = get_object_or_404(self.SETTING_NAME_TO_MODEL[setting_name],
-                                        sort_id = i)
-            outcome.sort_id = i
+        for sort_idx, pk in enumerate(items):
+            outcome = get_object_or_404(
+                self.SETTING_NAME_TO_MODEL[setting_name], pk=pk)
+            outcome.sort_id = sort_idx
             outcome.save()
 
         return HttpResponse()
-

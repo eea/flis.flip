@@ -34,7 +34,7 @@
       <tbody>
         {% for object in object_list %}
           {% url 'settings:phases_of_policy_edit' pk=object.pk as edit_url %}
-          <tr id="items-{{ object.sort_id }}">
+          <tr id="items-{{ object.pk }}">
             <td class="handler" width="20">
               <span class="glyphicon glyphicon-align-justify"></span>
             </td>
