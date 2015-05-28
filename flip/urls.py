@@ -61,6 +61,10 @@ settings_urls = patterns(
     url(r'^outcomes/(?P<pk>\d+)/delete$',
         views.SettingsOutcomesDeleteView.as_view(),
         name='outcomes_delete'),
+
+    url(r'^(?P<setting_name>[^/]+)/update_order$',
+        views.SettingsUpdateOrder.as_view(),
+        name='update_order'),
 )
 
 
