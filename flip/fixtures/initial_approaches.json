@@ -3,133 +3,152 @@
     "model": "flip.foresightapproaches",
     "pk": 1,
     "fields": {
-      "title": "Backcasting"
+      "title": "Backcasting",
+      "sort_id": 1
     }
   },
   {
     "model": "flip.foresightapproaches",
     "pk": 2,
     "fields": {
-      "title": "Environment scanning"
+      "title": "Environment scanning",
+      "sort_id": 2
     }
   },
   {
     "model": "flip.foresightapproaches",
     "pk": 3,
     "fields": {
-      "title": "Explorative scenario"
+      "title": "Explorative scenario",
+      "sort_id": 3
     }
   },
   {
     "model": "flip.foresightapproaches",
     "pk": 4,
     "fields": {
-      "title": "Forecasting"
+      "title": "Forecasting",
+      "sort_id": 4
     }
   },
   {
     "model": "flip.foresightapproaches",
     "pk":5,
     "fields": {
-      "title": "Impact assessment"
+      "title": "Impact assessment",
+      "sort_id": 5
     }
   },
   {
     "model": "flip.foresightapproaches",
     "pk":6,
     "fields": {
-      "title": "Normative scenario"
+      "title": "Normative scenario",
+      "sort_id": 6
     }
   },
   {
     "model": "flip.foresightapproaches",
     "pk":7,
     "fields": {
-      "title": "Pathways"
+      "title": "Pathways",
+      "sort_id": 7
     }
   },
   {
     "model": "flip.foresightapproaches",
     "pk":8,
     "fields": {
-      "title": "Qualitative"
+      "title": "Qualitative",
+      "sort_id": 8
     }
   },
   {
     "model": "flip.foresightapproaches",
     "pk":9,
     "fields": {
-      "title": "Quantitative"
+      "title": "Quantitative",
+      "sort_id": 9
     }
   },
   {
     "model": "flip.foresightapproaches",
     "pk":10,
     "fields": {
-      "title": "Roadmapping"
+      "title": "Roadmapping",
+      "sort_id": 10
     }
   },
   {
     "model": "flip.foresightapproaches",
     "pk":11,
     "fields": {
-      "title": "Strategy"
+      "title": "Strategy",
+      "sort_id": 11
     }
   },
   {
     "model": "flip.foresightapproaches",
     "pk":12,
     "fields": {
-      "title": "SWOT"
+      "title": "SWOT",
+      "sort_id": 12
     }
   },
   {
     "model": "flip.foresightapproaches",
     "pk":13,
     "fields": {
-      "title": "Tipping points"
+      "title": "Tipping points",
+      "sort_id": 13
     }
   },
   {
     "model": "flip.foresightapproaches",
     "pk":14,
     "fields": {
-      "title": "Trends analysis"
+      "title": "Trends analysis",
+      "sort_id": 14
     }
   },
   {
     "model": "flip.foresightapproaches",
     "pk":15,
     "fields": {
-      "title": "Uncertainties"
+      "title": "Uncertainties",
+      "sort_id": 15
     }
   },
   {
     "model": "flip.foresightapproaches",
     "pk":16,
     "fields": {
-      "title": "Visions"
+      "title": "Visions",
+      "sort_id": 16
     }
   },
   {
     "model": "flip.foresightapproaches",
     "pk":17,
     "fields": {
-      "title": "Weak signals"
+      "title": "Weak signals",
+      "sort_id": 17
     }
   },
   {
     "model": "flip.foresightapproaches",
     "pk":18,
     "fields": {
-      "title": "Wild cards"
+      "title": "Wild cards",
+      "sort_id": 18
     }
   },
   {
     "model": "flip.foresightapproaches",
     "pk":19,
     "fields": {
-      "title": "Wind tunneling"
+      "title": "Wind tunneling",
+      "sort_id": 19
     }
   }
 ]

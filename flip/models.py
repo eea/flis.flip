@@ -197,9 +197,10 @@ class StudyLanguage(Model):
 class PhasesOfPolicy(Model):
 
     title = CharField(max_length=128)
+    sort_id = IntegerField(default=0, null=True, blank=True)
 
     class Meta:
-        ordering = ('-pk',)
+        ordering = ('sort_id',)
 
     def __unicode__(self):
         return self.title
@@ -208,9 +209,10 @@ class PhasesOfPolicy(Model):
 class ForesightApproaches(Model):
 
     title = CharField(max_length=128)
+    sort_id = IntegerField(default=0, null=True, blank=True)
 
     class Meta:
-        ordering = ('-pk',)
+        ordering = ('sort_id',)
 
     def __unicode__(self):
         return self.title
@@ -232,9 +234,10 @@ class TypeOfOutcome(Model):
         null=True,
         default = 'all'
     )
+    sort_id = IntegerField(default=0, null=True, blank=True)
 
     class Meta:
-        ordering = ('pk',)
+        ordering = ('sort_id',)
 
     def __unicode__(self):
         return self.title

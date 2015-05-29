@@ -25,6 +25,7 @@ JS_ASSETS = (
     'js/lib/jquery.dataTables.min.js',
     'js/lib/select2.min.js',
     'js/main.js',
+    'js/lib/jquery.sortable.js',
 )
 
 

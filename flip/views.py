@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from django.forms.models import inlineformset_factory
 from django.shortcuts import get_object_or_404, redirect
 from django.views import generic
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.db.models import Q
 
 from flip import forms, models
@@ -540,3 +540,29 @@ class SettingsOutcomesDeleteView(LoginRequiredMixin,
 
     def get_success_url(self):
         return reverse('settings:outcomes')
+
+
+class SettingsUpdateOrder(LoginRequiredMixin,
+                          AdminPermissionRequiredMixin,
+                          generic.View):
+
+    SETTING_NAME_TO_MODEL = {
+        'policy': models.PhasesOfPolicy,
+        'approach': models.ForesightApproaches,
+        'outcome': models.TypeOfOutcome,
+    }
+
+    def post(self, request, *args, **kwargs):
+        setting_name = kwargs.get('setting_name', None)
+        items = self.request.POST.getlist('items[]')
+
+        if not setting_name in self.SETTING_NAME_TO_MODEL:
+            return Http404
+
+        for sort_idx, pk in enumerate(items):
+            outcome = get_object_or_404(
+                self.SETTING_NAME_TO_MODEL[setting_name], pk=pk)
+            outcome.sort_id = sort_idx
+            outcome.save()
+
+        return HttpResponse()

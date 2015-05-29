@@ -4,6 +4,7 @@
     "pk": 1,
     "fields": {
       "title": "Key messages",
+      "sort_id": 1,
       "blossom": true
     }
   },
@@ -12,6 +13,7 @@
     "pk": 2,
     "fields": {
       "title": "Governance practice (governance, institutional set up, regular mechanisms and processes, actors, culture, level of political support)",
+      "sort_id": 2,
       "blossom": true
     }
   },
@@ -20,6 +22,7 @@
     "pk": 3,
     "fields": {
       "title": "Methods and methodologies in the forward-looking activities",
+      "sort_id": 3,
       "blossom": true,
       "doc_type": "assessment"
     }
@@ -28,28 +31,32 @@
     "model": "flip.typeofoutcome",
     "pk": 4,
     "fields": {
-      "title": "Communication approaches"
+      "title": "Communication approaches",
+      "sort_id": 4
     }
   },
   {
     "model": "flip.typeofoutcome",
     "pk":5,
     "fields": {
-      "title": "Successes in use of forward-looking information in policy making"
+      "title": "Successes in use of forward-looking information in policy making",
+      "sort_id": 5
     }
   },
   {
     "model": "flip.typeofoutcome",
     "pk":6,
     "fields": {
-      "title": "Barriers in use of forward-looking information in policymaking"
+      "title": "Barriers in use of forward-looking information in policymaking",
+      "sort_id": 6
     }
   },
   {
     "model": "flip.typeofoutcome",
     "pk": 7,
     "fields": {
-      "title": "SWOT diagram"
+      "title": "SWOT diagram",
+      "sort_id": 7
     }
   },
   {
@@ -57,6 +64,7 @@
     "pk": 8,
     "fields": {
       "title": "Interviews and other participatory approaches",
+      "sort_id": 8,
       "doc_type": "assessment"
     }
   }

@@ -21,10 +21,12 @@
   {% if object_list %}
 
     <table id="settings" width="100%"
-           class="table table-condensed table-bordered table-hover">
+           class="table table-condensed table-bordered table-hover sortable"
+           data-url="{% url 'settings:update_order' setting_name='approach' %}">
 
       <thead>
         <tr>
+          <th class="handler"></th>
           <th>Title</th>
         </tr>
       </thead>
@@ -32,7 +34,10 @@
       <tbody>
         {% for object in object_list %}
           {% url 'settings:foresight_approaches_edit' pk=object.pk as edit_url %}
-          <tr>
+          <tr id="items-{{ object.pk }}">
+            <td class="handler" width="20">
+              <span class="glyphicon glyphicon-align-justify"></span>
+            </td>
             <td>
               <a href="{{ edit_url }}">{{ object.title }}</a>
             </td>
