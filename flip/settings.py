@@ -143,6 +143,8 @@ SKIP_EDIT_AUTH = False
 
 SITE_URL = ''
 
+METADATA_URL = ''
+
 try:
     from local_settings import *
 except ImportError:
