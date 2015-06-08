@@ -53,6 +53,13 @@ def do_is_admin(context):
     return True if is_admin(context['request']) else False
 
 
+@register.assignment_tag(name='get_metadata_url')
+def do_get_metadata_url():
+    if hasattr(settings, 'METADATA_URL'):
+        return settings.METADATA_URL
+    return None
+
+
 @register.assignment_tag(takes_context=True)
 def new_studies(context):
     request = context['request']

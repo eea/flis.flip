@@ -39,6 +39,7 @@
   </li>
 
   {% is_admin as is_admin %}
+  {% get_metadata_url as metadata_url %}
   {% if is_admin %}
   <li class="{% active 'settings/(.+)$' %} pull-right">
     <a class="dropdown-toggle" data-toggle="dropdown">
@@ -62,6 +63,14 @@
           Type of outputs
         </a>
       </li>
+
+      {% if metadata_url %}
+      <li>
+        <a href="{{ metadata_url }}">
+          Common Metadata
+        </a>
+      </li>
+      {% endif %}
 
     </ul>
 
