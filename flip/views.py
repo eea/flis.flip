@@ -9,9 +9,9 @@ from django.http import Http404, HttpResponse
 from django.db.models import Q
 
 from flip import forms, models
-from auth.views import LoginRequiredMixin, EditPermissionRequiredMixin
-from auth.views import AdminPermissionRequiredMixin
-from auth.views import is_admin
+from flip_auth.views import LoginRequiredMixin, EditPermissionRequiredMixin
+from flip_auth.views import AdminPermissionRequiredMixin
+from flip_auth.views import is_admin
 
 from flis_metadata.common.models import GeographicalScope
 

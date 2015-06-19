@@ -21,6 +21,8 @@ DEBUG = False
 
 TEMPLATE_DEBUG = False
 
+ASSETS_DEBUG = True
+
 ALLOWED_HOSTS = []
 
 
@@ -36,9 +38,8 @@ INSTALLED_APPS = (
     'frame',
     'django_assets',
     'widget_tweaks',
-    'south',
     'gunicorn',
-    'auth',
+    'flip_auth',
     'flis_metadata.common',
     'flis_metadata.client',
     'flip',

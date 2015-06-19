@@ -6,8 +6,8 @@ import os
 from django import template
 from django.conf import settings
 
-from auth.views import is_admin, _has_perm
-from auth.auth_settings import EDIT_GROUPS, EDIT_ROLES
+from flip_auth.views import is_admin, _has_perm
+from flip_auth.auth_settings import EDIT_GROUPS, EDIT_ROLES
 
 
 register = template.Library()
