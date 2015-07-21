@@ -1,10 +1,11 @@
+import os
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'flip',
-        'USER': 'edw',                      # Not used with sqlite3.
-        'PASSWORD': 'edw',                  # Not used with sqlite3.
+        'NAME': os.environ.get("DB_NAME"),
+        'USER': os.environ.get("DB_USER"),                     # Not used with sqlite3.
+        'PASSWORD': os.environ.get("DB_PASSWORD"),                  # Not used with sqlite3.
     }
 }
 
