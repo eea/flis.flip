@@ -26,11 +26,16 @@ WORKDIR flis.flip
 RUN pip install -U setuptools
 RUN pip install -r requirements-dev.txt
 COPY flip/local_settings.py.example flip/local_settings.py
+RUN ./manage.py collectstatic --noinput
 
 # Expose needed port
 
-EXPOSE ${APP_PORT} 
+EXPOSE 8001
+
+# Expose static volume
+
+VOLUME ./flip/static
 
 #Default command
 
-CMD python ./manage.py runserver 0.0.0.0:${APP_PORT}
+CMD python ./manage.py runserver 0.0.0.0:8001
