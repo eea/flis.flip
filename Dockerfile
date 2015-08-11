@@ -1,13 +1,16 @@
 FROM eeacms/python:2.7-slim
 
 # Copy code into image
-RUN mkdir flis.flip
-COPY . /flis.flip
-WORKDIR flis.flip
+RUN mkdir flip
+COPY requirements.txt requirements-dev.txt /flip/
+WORKDIR flip
 
 # Install requirements
 RUN pip install -U setuptools
 RUN pip install -r requirements-dev.txt
+
+# Copy code
+COPY . /flip
 COPY flip/local_settings.py.example flip/local_settings.py
 RUN ./manage.py collectstatic --noinput
 
@@ -15,7 +18,7 @@ RUN ./manage.py collectstatic --noinput
 EXPOSE 8001
 
 # Expose static volume
-VOLUME ./flip/static
+VOLUME ./flip/public/static
 
 #Default command
-CMD python ./manage.py runserver 0.0.0.0:8001
+CMD gunicorn flip.wsgi:application --bind 0.0.0.0:8001
