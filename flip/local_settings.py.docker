@@ -15,13 +15,8 @@ FRAME_URL = os.environ.get('FRAME_URL', '')
 METADATA_REMOTE_HOST = os.environ.get('METADATA_REMOTE_HOST', '')
 METADATA_REMOTE_PATH = os.environ.get('METADATA_REMOTE_PATH','')
 
-DEBUG = TEMPLATE_DEBUG = ASSETS_DEBUG = True
+DEBUG = TEMPLATE_DEBUG = ASSETS_DEBUG = os.environ.get('DEBUG', '')
 
-SECRET_KEY = 'secret'
-SKIP_EDIT_AUTH = True
+SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
-# not for production
-USER_ID = 'eionet user'
-USER_GROUPS = []
-USER_ROLES = ['Administrator']
 
