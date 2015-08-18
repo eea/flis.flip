@@ -11,13 +11,14 @@ DATABASES = {
     }
 }
 
+FRAME_URL = os.environ.get('FRAME_URL', '')
+METADATA_REMOTE_HOST = os.environ.get('METADATA_REMOTE_HOST', '')
+METADATA_REMOTE_PATH = os.environ.get('METADATA_REMOTE_PATH','')
+
 DEBUG = TEMPLATE_DEBUG = ASSETS_DEBUG = True
 
 SECRET_KEY = 'secret'
 SKIP_EDIT_AUTH = True
-
-# Do not use FRAME_URL in development
-# FRAME_URL = 'path/to/frame/url'
 
 # not for production
 USER_ID = 'eionet user'
