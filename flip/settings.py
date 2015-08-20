@@ -109,6 +109,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+SECRET_KEY = 'not so secret'
+
 # Dynamic config
 FORCE_SCRIPT_NAME = os.environ.get('FORCE_SCRIPT_NAME', '')
 if FORCE_SCRIPT_NAME:
