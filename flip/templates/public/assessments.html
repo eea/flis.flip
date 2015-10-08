@@ -2,6 +2,17 @@
 
 {% block content %}
 
+    <p>Show all:</p>
+    <ul>
+      {% for outcome in outcome_types %}
+      <li>
+        <a href="{% url 'public:assessments_outcomes' outcome=outcome.pk %}">
+          {{ outcome }}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+
     <table id="studies_listing" width="100%"
       class="table table-condensed table-bordered table-hover">
       <thead>

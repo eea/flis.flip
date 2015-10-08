@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from flip.models import Study
+from flip.models import Study, Outcome, TypeOfOutcome
 
 
 class StudiesList(ListView):
@@ -26,3 +26,24 @@ class AssessmentsList(ListView):
             study_type=Study.ASSESSMENT, draft=False
         )
 
+    def get_context_data(self, **kwargs):
+        context = super(AssessmentsList, self).get_context_data(**kwargs)
+        context['outcome_types'] = TypeOfOutcome.objects.all()
+        return context
+
+
+class OutcomesList(ListView):
+    model = Outcome
+    template_name = 'public/assessments_outcomes.html'
+
+    def get_queryset(self):
+        type_of_outcome = int(self.kwargs['outcome'])
+
+        return self.model.objects.filter(type_of_outcome_id=type_of_outcome)
+
+    def get_context_data(self, **kwargs):
+        context = super(OutcomesList, self).get_context_data(**kwargs)
+        context['type_of_outcome'] = TypeOfOutcome.objects.get(
+            id=self.kwargs['outcome']
+        )
+        return context

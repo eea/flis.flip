@@ -154,6 +154,9 @@ public_urls = patterns(
         name='assessments_list'),
     url(r'^assessments/(?P<pk>\d+)/detail$', public.StudiesDetail.as_view(),
         name='assessments_detail'),
+    url(r'^assessments/outcomes/(?P<outcome>\d+)$',
+        public.OutcomesList.as_view(),
+        name='assessments_outcomes'),
 )
 
 urlpatterns = patterns(

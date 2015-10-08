@@ -1,0 +1,11 @@
+{% extends 'public/_layout.html' %}
+
+{% block content %}
+
+<h1>{{ type_of_outcome }}</h1>
+
+{% for outcome in object_list %}
+  <h2>Report: {{ outcome.study }}</h2>
+  <p>{{ outcome.text }}</p>
+{% endfor %}
+{% endblock %}
