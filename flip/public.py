@@ -25,4 +25,4 @@ class AssessmentsList(ListView):
         return self.model.objects.filter(
             study_type=Study.ASSESSMENT, draft=False
         )
-3
+
