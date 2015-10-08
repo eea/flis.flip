@@ -1,0 +1,33 @@
+{% extends 'public/_layout.html' %}
+
+{% block content %}
+
+    <table id="studies_listing" width="100%"
+      class="table table-condensed table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Title</th>
+          <th>Lead organisation</th>
+          <th>Geographical scope</th>
+          <th>Policy cycle</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for source in object_list %}
+          <tr>
+            <td>{{ source.start_date }}</td>
+            <td>
+              <a href="{% url 'public:studies_detail' pk=source.pk %}">
+                  {{ source.title }}
+              </a>
+            </td>
+            <td>{{ source.lead_author }}</td>
+            <td>{{ source.geographical_scope }}</td>
+            <td>{{ source.phase_of_policy }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+{% endblock %}

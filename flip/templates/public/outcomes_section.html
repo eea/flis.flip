@@ -1,0 +1,39 @@
+{% load utils %}
+
+<div class="col-sm-12">
+  <h3>Outputs and Activities</h3>
+
+  <div class="panel panel-default">
+
+    <div class="panel-body">
+      <ul class="list-unstyled outcome-list">
+        {% for outcome in object.outcomes.all %}
+        <li>
+          <div class="row">
+            <div class="col-md-12">
+              <p><b>{{ outcome.document_title }}</b>
+                - {{ outcome.type_of_outcome }}</p>
+
+              <p>
+                {% if outcome.txt %}
+                {{ outcome.text|linebreaks }}
+                {%else %}
+
+              <p><i>No description</i></p>
+              {% endif %}
+              </p>
+            </div>
+            {# col-md-12 #}
+          </div>
+          {# row #}
+        </li>
+        {% empty %}
+        <li><p>No outputs for this study.</p></li>
+        {% endfor %}
+      </ul>
+    </div>
+    {# panel-body #}
+
+  </div>
+  {# panel #}
+</div>

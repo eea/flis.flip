@@ -4,11 +4,10 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 
-from flip import views
+from flip import views, public
 
 
 admin.autodiscover()
-
 
 settings_urls = patterns(
 
@@ -66,7 +65,6 @@ settings_urls = patterns(
         views.SettingsUpdateOrder.as_view(),
         name='update_order'),
 )
-
 
 study_urls = patterns(
 
@@ -146,6 +144,18 @@ study_urls = patterns(
 
 )
 
+public_urls = patterns(
+    '',
+
+    url(r'^policy-cycle$', public.StudiesList.as_view(), name='studies_list'),
+    url(r'^policy-cycle/(?P<pk>\d+)/detail$', public.StudiesDetail.as_view(),
+        name='studies_detail'),
+    url(r'^assessments$', public.AssessmentsList.as_view(),
+        name='assessments_list'),
+    url(r'^assessments/(?P<pk>\d+)/detail$', public.StudiesDetail.as_view(),
+        name='assessments_detail'),
+)
+
 urlpatterns = patterns(
 
     '',
@@ -163,6 +173,8 @@ urlpatterns = patterns(
         name='add_new'),
 
     url(r'^studies/', include(study_urls)),
+
+    url(r'^public/', include(public_urls, namespace='public')),
 
     url(r'^settings/', include(settings_urls, namespace='settings')),
 

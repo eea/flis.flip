@@ -1,0 +1,28 @@
+{% extends 'frame.html' %}
+{% load assets %}
+
+{% block head %}
+  {% assets "css" %}
+    <link href="{{ ASSET_URL }}" rel="stylesheet">
+  {% endassets %}
+
+  {% assets "js" %}
+    <script src="{{ ASSET_URL }}"></script>
+  {% endassets %}
+
+  <title>
+    {% block title %}
+      Uses of foresight in policymaking
+    {% endblock %}
+  </title>
+  {% block extra_head %}{% endblock %}
+{% endblock %}
+
+
+{% block zope_content %}
+  <div class="content clearfix">
+    {% block content %}{% endblock %}
+  </div>
+
+  {% block scripts %}{% endblock %}
+{% endblock %}
