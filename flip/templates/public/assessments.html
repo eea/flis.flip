@@ -33,7 +33,7 @@
                   {{ source.title }}
               </a>
             </td>
-            <td>{{ source.lead_author }}</td>
+            <td>{{ source.lead_author|truncatewords:15 }}</td>
             <td>{{ source.geographical_scope }}</td>
             <td>
               {% for outcome in source.outcomes.all %}
