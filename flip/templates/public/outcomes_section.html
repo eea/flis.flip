@@ -22,6 +22,18 @@
               <p><i>No description</i></p>
               {% endif %}
               </p>
+
+              {% if outcome.file_id %}
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <b>File attached:</b>
+                  <a href="{{ outcome.file_id.url }}" target="_blank">
+                    <i class="glyphicon glyphicon-file"></i>
+                    {{ outcome.file_id|filename }}</a>
+                </div>
+              </div>
+              {% endif %}
+
             </div>
             {# col-md-12 #}
           </div>
