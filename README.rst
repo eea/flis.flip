@@ -63,5 +63,6 @@ be run as an unprivileged user in the product directory::
 Create a migration after changes in models.py
 ---------------------------------------------
 ::
+
     ./manage.py schemamigration flip --auto
     ./manage.py migrate
