@@ -421,6 +421,7 @@ class SettingsPhasesOfPolicyAddView(LoginRequiredMixin,
                                     generic.CreateView):
 
     model = models.PhasesOfPolicy
+    fields = '__all__'
     template_name = 'settings/policy_edit.html'
     success_message = 'Policy added successfully'
 
@@ -434,6 +435,7 @@ class SettingsPhasesOfPolicyEditView(LoginRequiredMixin,
                                      generic.UpdateView):
 
     model = models.PhasesOfPolicy
+    fields = '__all__'
     template_name = 'settings/policy_edit.html'
     success_message = 'Policy updated successfully'
 
@@ -466,6 +468,7 @@ class SettingsForesightApproachesAddView(LoginRequiredMixin,
                                          generic.CreateView):
 
     model = models.ForesightApproaches
+    fields = '__all__'
     template_name = 'settings/foresight_approaches_edit.html'
     success_message = 'Approach updated successfully'
 
@@ -479,6 +482,7 @@ class SettingsForesightApproachesEditView(LoginRequiredMixin,
                                           generic.UpdateView):
 
     model = models.ForesightApproaches
+    fields = '__all__'
     template_name = 'settings/foresight_approaches_edit.html'
     success_message = 'Approach updated successfully'
 

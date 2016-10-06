@@ -49,7 +49,7 @@ class Study(Model):
 
     created_on = DateTimeField(auto_now_add=True)
 
-    last_updated = DateTimeField(auto_now_add=True, auto_now=True)
+    last_updated = DateTimeField(auto_now=True)
 
     user_id = CharField(max_length=64, blank=True)
 
@@ -232,7 +232,7 @@ class TypeOfOutcome(Model):
         choices=TYPE_CHOICES,
         max_length=128,
         null=True,
-        default = 'all'
+        default='all'
     )
     sort_id = IntegerField(default=0, null=True, blank=True)
 

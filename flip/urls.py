@@ -1,18 +1,17 @@
 from django.conf import settings
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
+
+from frame import utils
 
 from flip import views, public
 
 
 admin.autodiscover()
 
-settings_urls = patterns(
-
-    '',
-
+settings_urls = [
     url(r'^phases_of_policy/$',
         views.SettingsPhasesOfPolicyView.as_view(),
         name='phases_of_policy'),
@@ -64,12 +63,9 @@ settings_urls = patterns(
     url(r'^(?P<setting_name>[^/]+)/update_order$',
         views.SettingsUpdateOrder.as_view(),
         name='update_order'),
-)
+]
 
-study_urls = patterns(
-
-    '',
-
+study_urls = [
     url(r'^(?P<study_type>[^/]+)/overview/$',
         views.StudiesView.as_view(),
         name='studies_overview'),
@@ -142,11 +138,9 @@ study_urls = patterns(
         views.StudyOutcomesSectionView.as_view(),
         name='study_outcomes_section'),
 
-)
+]
 
-public_urls = patterns(
-    '',
-
+public_urls = [
     url(r'^policy-cycle$', public.StudiesList.as_view(), name='studies_list'),
     url(r'^policy-cycle/(?P<pk>\d+)/detail$', public.StudiesDetail.as_view(),
         name='studies_detail'),
@@ -157,12 +151,9 @@ public_urls = patterns(
     url(r'^assessments/outcomes/(?P<outcome>\d+)$',
         public.OutcomesList.as_view(),
         name='assessments_outcomes'),
-)
+]
 
-urlpatterns = patterns(
-
-    '',
-
+urlpatterns = [
     url(r'^$',
         TemplateView.as_view(template_name="home.html"),
         name='home_view'),
@@ -181,8 +172,8 @@ urlpatterns = patterns(
 
     url(r'^settings/', include(settings_urls, namespace='settings')),
 
-    url(r'^_lastseencount/$', 'frame.utils.get_objects_from_last_seen_count'),
+    url(r'^_lastseencount/$', utils.get_objects_from_last_seen_count),
 
     url(r'^admin/', include(admin.site.urls)),
 
-) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

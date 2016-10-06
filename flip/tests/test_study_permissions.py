@@ -538,6 +538,7 @@ class StudyOutcomePermissionTests(BaseWebTest):
         self.assertEqual(0, resp.pyquery('#outcome-add').length)
         self.assertIn('outcomes_detail.html', resp.templates[0].name)
 
+
 @override_settings(SKIP_EDIT_AUTH=False, FRAME_URL=True)
 class StudyHomePermissionTests(BaseWebTest):
 

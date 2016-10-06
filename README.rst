@@ -51,7 +51,6 @@ be run as an unprivileged user in the product directory::
 
 6. Sync and migrate the database::
 
-    ./manage.py syncdb
     ./manage.py migrate
 
 7. Load fixtures::
@@ -64,5 +63,5 @@ Create a migration after changes in models.py
 ---------------------------------------------
 ::
 
-    ./manage.py schemamigration flip --auto
+    ./manage.py makemigrations
     ./manage.py migrate

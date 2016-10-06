@@ -1,12 +1,10 @@
 from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
 
-from flip.models import (PhasesOfPolicy, ForesightApproaches,
-                         TypeOfOutcome)
+from flip.models import PhasesOfPolicy, ForesightApproaches
 
 from .base import BaseWebTest
-from .base import (PhasesOfPolicyFactory, ForesightApproachesFactory,
-                   TypeOfOutcomeFactory)
+from .base import PhasesOfPolicyFactory, ForesightApproachesFactory
 
 
 @override_settings(SKIP_EDIT_AUTH=True, FRAME_URL=None)

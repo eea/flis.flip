@@ -1,7 +1,7 @@
 from datetime import datetime, date, timedelta
 
+from django.apps import apps
 from django.db.models import Model
-from django.db.models.loading import get_model
 
 from django_webtest import WebTest
 from factory import Factory, DjangoModelFactory
@@ -10,7 +10,12 @@ from factory import RelatedFactory, SubFactory
 from mock import Mock
 from webtest.forms import Select, MultipleSelect
 
-from flip.models import Study
+from flip import models
+from flis_metadata.common import models as common_models
+
+import sys
+
+from django_assets import env as assets_env
 
 
 USER_ADMIN_DATA = {
@@ -51,33 +56,43 @@ END_DATE = START_DATE + 5 * timedelta(days=365)
 
 
 class LanguageFactory(DjangoModelFactory):
-    FACTORY_FOR = 'flip.Language'
-    FACTORY_DJANGO_GET_OR_CREATE = ('code', 'title')
+
+    class Meta:
+        model = models.Language
+        django_get_or_create = ('code', 'title')
 
     code = 'en'
     title = 'English'
 
 
 class PhasesOfPolicyFactory(DjangoModelFactory):
-    FACTORY_FOR = 'flip.PhasesOfPolicy'
+
+    class Meta:
+        model = models.PhasesOfPolicy
 
     title = fuzzy.FuzzyText()
 
 
 class ForesightApproachesFactory(DjangoModelFactory):
-    FACTORY_FOR = 'flip.ForesightApproaches'
+
+    class Meta:
+        model = models.ForesightApproaches
 
     title = fuzzy.FuzzyText()
 
 
 class EnvironmentalThemeFactory(DjangoModelFactory):
-    FACTORY_FOR = 'common.EnvironmentalTheme'
+
+    class Meta:
+        model = common_models.EnvironmentalTheme
 
     title = fuzzy.FuzzyText()
 
 
 class GeographicalScopeFactory(DjangoModelFactory):
-    FACTORY_FOR = 'common.GeographicalScope'
+
+    class Meta:
+        model = common_models.GeographicalScope
 
     title = fuzzy.FuzzyText()
 
@@ -87,7 +102,8 @@ class GeographicalScopeFactory(DjangoModelFactory):
 class StudyContextFactory(Factory):
     ABSTRACT_FACTORY = True
 
-    purpose_and_target = fuzzy.FuzzyChoice([Study.POLICY, Study.NON_POLICY])
+    purpose_and_target = fuzzy.FuzzyChoice([models.Study.POLICY,
+                                            models.Study.NON_POLICY])
 
     phase_of_policy = SubFactory(PhasesOfPolicyFactory)
 
@@ -97,7 +113,9 @@ class StudyContextFactory(Factory):
 
 
 class TypeOfOutcomeFactory(DjangoModelFactory):
-    FACTORY_FOR = 'flip.TypeOfOutcome'
+
+    class Meta:
+        model = models.TypeOfOutcome
 
     title = fuzzy.FuzzyText()
 
@@ -141,7 +159,7 @@ class BaseWebTest(WebTest):
         if isinstance(model, basestring):
             app = kwargs.pop('app', None)
             self.assertTrue(app)
-            Model = get_model(app, model)
+            Model = apps.get_model(app, model)
         else:
             Model = model
 
@@ -154,13 +172,24 @@ class BaseWebTest(WebTest):
                 model, str(kwargs)
             ))
 
+    def tearDown(self):
+        # This is a hack to fix this issue:
+        # https://github.com/miracle2k/django-assets/issues/44
+        assets_env.reset()
+        assets_env._ASSETS_LOADED = False
+        if 'flip.modules' in sys.modules:
+            del sys.modules['flip.assets']
+        super(BaseWebTest, self).tearDown()
+
 
 class StudyFactory(DjangoModelFactory):
-    FACTORY_FOR = 'flip.Study'
+
+    class Meta:
+        model = models.Study
 
     title = fuzzy.FuzzyText()
 
-    blossom = Study.NO
+    blossom = models.Study.NO
 
     end_date = fuzzy.FuzzyDate(START_DATE, END_DATE)
 
@@ -170,13 +199,16 @@ class StudyFactory(DjangoModelFactory):
 
     study_type = 'assessment'
 
-    purpose_and_target = fuzzy.FuzzyChoice([Study.POLICY, Study.NON_POLICY])
+    purpose_and_target = fuzzy.FuzzyChoice([models.Study.POLICY,
+                                            models.Study.NON_POLICY])
 
     geographical_scope = SubFactory(GeographicalScopeFactory)
 
 
 class StudyLanguageFactory(DjangoModelFactory):
-    FACTORY_FOR = 'flip.StudyLanguage'
+
+    class Meta:
+        model = models.StudyLanguage
 
     language = SubFactory(LanguageFactory)
 
@@ -186,7 +218,9 @@ class StudyLanguageFactory(DjangoModelFactory):
 
 
 class OutcomeFactory(DjangoModelFactory):
-    FACTORY_FOR = 'flip.Outcome'
+
+    class Meta:
+        model = models.Outcome
 
     study = SubFactory(StudyFactory)
 
