@@ -15,7 +15,7 @@ FRAME_URL = os.environ.get('FRAME_URL', '')
 METADATA_REMOTE_HOST = os.environ.get('METADATA_REMOTE_HOST', '')
 METADATA_REMOTE_PATH = os.environ.get('METADATA_REMOTE_PATH','')
 
-DEBUG = TEMPLATE_DEBUG = ASSETS_DEBUG = os.environ.get('DEBUG', '')
+DEBUG = TEMPLATE_DEBUG = ASSETS_DEBUG = eval(os.environ.get('DEBUG', ''))
 
 SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
