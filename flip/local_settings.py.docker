@@ -16,10 +16,10 @@ DEBUG = TEMPLATE_DEBUG = ASSETS_DEBUG = eval(os.environ.get('DEBUG', 'False'))
 FORCE_SCRIPT_NAME = os.environ.get('FORCE_SCRIPT_NAME', '')
 FRAME_COOKIES = eval(os.environ.get('FRAME_COOKIES', '[]'))
 FRAME_URL = os.environ.get('FRAME_URL', '')
-MEDIA_URL = os.environ.get('MEDIA_URL', '')
 METADATA_REMOTE_HOST = os.environ.get('METADATA_REMOTE_HOST', '')
 METADATA_REMOTE_PATH = os.environ.get('METADATA_REMOTE_PATH','')
 SECRET_KEY = os.environ.get('SECRET_KEY', '')
 SKIP_EDIT_AUTH = eval(os.environ.get('SKIP_EDIT_AUTH', 'False'))
 SITE_URL = os.environ.get('SITE_URL', '')
 STATIC_URL = SITE_URL + FORCE_SCRIPT_NAME + '/static/'
+MEDIA_URL = STATIC_URL + 'media/'

@@ -18,7 +18,7 @@ COPY flip/local_settings.py.docker flip/local_settings.py
 EXPOSE 8001
 
 # Expose static volume
-VOLUME ./flip/public/static
+VOLUME /flip/public/static
 
 #Default command
 CMD gunicorn flip.wsgi:application --bind 0.0.0.0:8001
