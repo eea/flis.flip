@@ -166,7 +166,3 @@ div.outcome {
 .form-group {
     clear: both;
 }
-/* some fix */
-#container #middle_port {
-    width: auto;
-}
