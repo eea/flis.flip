@@ -21,5 +21,6 @@ METADATA_REMOTE_PATH = os.environ.get('METADATA_REMOTE_PATH','')
 SECRET_KEY = os.environ.get('SECRET_KEY', '')
 SKIP_EDIT_AUTH = eval(os.environ.get('SKIP_EDIT_AUTH', 'False'))
 SITE_URL = os.environ.get('SITE_URL', '')
-STATIC_URL = SITE_URL + FORCE_SCRIPT_NAME + '/static/'
+HOST_NAME = os.environ.get('HOST_NAME', '')
+STATIC_URL = HOST_NAME + FORCE_SCRIPT_NAME + 'static/'
 MEDIA_URL = STATIC_URL + 'media/'
