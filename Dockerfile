@@ -15,9 +15,9 @@ COPY . /flip
 
 
 RUN ./manage.py migrate \
-  && RUN ./manage.py loadfixtures \
-  && RUN ./manage.py load_metadata_fixtures \
-  && RUN ./manage.py collectstatic --noinput
+  && ./manage.py loadfixtures \
+  && ./manage.py load_metadata_fixtures \
+  && ./manage.py collectstatic --noinput
 COPY flip/local_settings.py.docker flip/local_settings.py
 
 # Expose needed port
