@@ -12,12 +12,7 @@ RUN pip install -r requirements-dev.txt
 # Copy code
 COPY . /flip
 
-
-
-RUN ./manage.py migrate \
-  && ./manage.py loadfixtures \
-  && ./manage.py load_metadata_fixtures \
-  && ./manage.py collectstatic --noinput
+RUN ./manage.py collectstatic --noinput
 COPY flip/local_settings.py.docker flip/local_settings.py
 
 # Expose needed port
@@ -27,4 +22,4 @@ EXPOSE 8001
 VOLUME /flip/public/static
 
 #Default command
-CMD gunicorn flip.wsgi:application --bind 0.0.0.0:8001
+CMD ["./docker-entrypoint.sh"]
