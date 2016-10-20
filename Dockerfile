@@ -11,8 +11,6 @@ RUN pip install -r requirements-dev.txt
 
 # Copy code
 COPY . /flip
-
-RUN ./manage.py collectstatic --noinput
 COPY flip/local_settings.py.docker flip/local_settings.py
 
 # Expose needed port
