@@ -3,24 +3,29 @@ import os
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'HOST': os.environ.get('DB_HOST', ''),
+        'PORT': os.environ.get('DB_PORT', ''),
         'NAME': os.environ.get('DB_NAME', ''),
         'USER': os.environ.get('DB_USER', ''),
         'PASSWORD': os.environ.get('DB_PASSWORD', ''),
-        'HOST': os.environ.get('DB_HOST', ''),
-        'PORT': os.environ.get('DB_PORT', ''),
     }
 }
 
+
+HOST_NAME = METADATA_REMOTE_HOST = os.environ.get('HOST_NAME', '')
+SITE_ID = os.environ.get('SITE_ID', '')
+METADATA_ID = os.environ.get('METADATA_ID','')
+METADATA_REMOTE_PATH = os.path.join('/', SITE_ID, 'METADATA_ID')
+SITE_URL = os.path.join(HOST_NAME, SITE_ID)
+APP_ID = os.environ.get('APP_ID', '')
+FRAME_PATH = os.environ.get('FRAME_PATH', '')
+FRAME_URL = os.path.join(HOST_NAME, SITE_ID, FRAME_PATH, '')
+FORCE_SCRIPT_NAME = os.path.join('/', SITE_ID, APP_ID, '')
+STATIC_URL = os.path.join(HOST_NAME, SITE_ID, APP_ID, 'static', '')
+MEDIA_URL = os.path.join(HOST_NAME, SITE_ID, APP_ID, 'media', '')
+STATIC_ROOT = os.environ.get('STATIC_ROOT', '')
 ALLOWED_HOSTS = eval(os.environ.get('ALLOWED_HOSTS', "['*']"))
 DEBUG = TEMPLATE_DEBUG = ASSETS_DEBUG = eval(os.environ.get('DEBUG', 'False'))
-FORCE_SCRIPT_NAME = os.environ.get('FORCE_SCRIPT_NAME', '')
 FRAME_COOKIES = eval(os.environ.get('FRAME_COOKIES', '[]'))
-FRAME_URL = os.environ.get('FRAME_URL', '')
-METADATA_REMOTE_HOST = os.environ.get('METADATA_REMOTE_HOST', '')
-METADATA_REMOTE_PATH = os.environ.get('METADATA_REMOTE_PATH','')
+#FRAME_EXTRA_SUBSTITUTIONS = eval(os.environ.get('FRAME_EXTRA_SUBSTITUTIONS', '[()]')
 SECRET_KEY = os.environ.get('SECRET_KEY', '')
-SKIP_EDIT_AUTH = eval(os.environ.get('SKIP_EDIT_AUTH', 'False'))
-SITE_URL = os.environ.get('SITE_URL', '')
-HOST_NAME = os.environ.get('HOST_NAME', '')
-STATIC_URL = HOST_NAME + FORCE_SCRIPT_NAME + 'static/'
-MEDIA_URL = STATIC_URL + 'media/'
