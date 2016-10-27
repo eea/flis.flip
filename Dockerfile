@@ -6,8 +6,9 @@ COPY requirements.txt requirements-dev.txt /flip/
 WORKDIR flip
 
 # Install requirements
-RUN pip install -U setuptools
-RUN pip install -r requirements-dev.txt
+RUN apt-get -y install cron \
+ && pip install -U setuptools \
+ && pip install -r requirements-dev.txt
 
 # Copy code
 COPY . /flip
