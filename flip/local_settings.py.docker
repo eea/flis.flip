@@ -16,14 +16,18 @@ HOST_NAME = METADATA_REMOTE_HOST = os.environ.get('HOST_NAME', '')
 SITE_ID = os.environ.get('SITE_ID', '')
 METADATA_ID = os.environ.get('METADATA_ID','')
 METADATA_REMOTE_PATH = os.path.join('/', SITE_ID, METADATA_ID)
-SITE_URL = os.path.join(HOST_NAME, SITE_ID)
+SITE_URL = os.environ.get('SITE_URL', os.path.join(HOST_NAME, SITE_ID))
 APP_ID = os.environ.get('APP_ID', '')
 FRAME_PATH = os.environ.get('FRAME_PATH', '')
-FRAME_URL = os.path.join(HOST_NAME, SITE_ID, FRAME_PATH, '')
-FORCE_SCRIPT_NAME = os.path.join('/', SITE_ID, APP_ID, '')
-STATIC_URL = os.path.join(HOST_NAME, SITE_ID, APP_ID, 'static', '')
-MEDIA_URL = os.path.join(HOST_NAME, SITE_ID, APP_ID, 'media', '')
+FRAME_URL = os.environ.get('FRAME_URL',
+                           os.path.join(HOST_NAME, SITE_ID, FRAME_PATH, ''))
+FORCE_SCRIPT_NAME = os.environ.get('FORCE_SCRIPT_NAME',
+                                   os.path.join('/', SITE_ID, APP_ID, ''))
+MEDIA_URL = os.environ.get('MEDIA_URL',
+                           os.path.join(HOST_NAME, SITE_ID, APP_ID,
+                                        'media', ''))
 STATIC_ROOT = os.environ.get('STATIC_ROOT', '')
+STATIC_URL = os.path.join(HOST_NAME, SITE_ID, APP_ID, 'static', '')
 ALLOWED_HOSTS = eval(os.environ.get('ALLOWED_HOSTS', "['*']"))
 DEBUG = TEMPLATE_DEBUG = ASSETS_DEBUG = eval(os.environ.get('DEBUG', 'False'))
 FRAME_COOKIES = eval(os.environ.get('FRAME_COOKIES', '[]'))
