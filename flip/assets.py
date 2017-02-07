@@ -20,8 +20,8 @@ HOMEPAGE_CSS_ASSETS = (
 JS_ASSETS = (
     'js/lib/jquery.min.js',
     'js/lib/bootstrap.min.js',
-    'js/lib/moment-with-locales.js',
-    'js/lib/bootstrap-datetimepicker.js',
+    'js/lib/moment.js',
+    'js/lib/bootstrap-datetimepicker.min.js',
     'js/lib/jquery.dataTables.min.js',
     'js/lib/select2.min.js',
     'js/main.js',
