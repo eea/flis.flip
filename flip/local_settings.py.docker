@@ -30,9 +30,7 @@ MEDIA_URL = os.environ.get('MEDIA_URL',
 STATIC_ROOT = os.environ.get('STATIC_ROOT', '')
 STATIC_URL = os.path.join(HOST_NAME, SITE_ID, APP_ID, 'static', '')
 ALLOWED_HOSTS = ast.literal_eval(os.environ.get('ALLOWED_HOSTS', "['*']"))
-ASSETS_DEBUG = ast.literal_eval(os.environ.get('DEBUG', 'False'))
-#DEBUG = ASSETS_DEBUG = ast.literal_eval(os.environ.get('DEBUG', 'False'))
-DEBUG = False
+DEBUG = ASSETS_DEBUG = ast.literal_eval(os.environ.get('DEBUG', 'False'))
 FRAME_COOKIES = ast.literal_eval(os.environ.get('FRAME_COOKIES', '[]'))
 FRAME_EXTRA_SUBSTITUTIONS = ast.literal_eval(os.environ.get('FRAME_EXTRA_SUBSTITUTIONS', '[()]'))
 SECRET_KEY = os.environ.get('SECRET_KEY', '')
