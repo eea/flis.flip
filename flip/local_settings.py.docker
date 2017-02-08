@@ -27,6 +27,7 @@ FORCE_SCRIPT_NAME = os.environ.get('FORCE_SCRIPT_NAME',
 MEDIA_URL = os.environ.get('MEDIA_URL',
                            os.path.join(HOST_NAME, SITE_ID, APP_ID,
                                         'media', ''))
+MEDIA_ROOT = os.environ.get('MEDIA_ROOT', '/flip/public/media/')
 STATIC_ROOT = os.environ.get('STATIC_ROOT', '')
 STATIC_URL = os.path.join(HOST_NAME, SITE_ID, APP_ID, 'static', '')
 ALLOWED_HOSTS = ast.literal_eval(os.environ.get('ALLOWED_HOSTS', "['*']"))
