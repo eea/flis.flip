@@ -118,6 +118,8 @@ class TypeOfOutcomeFactory(DjangoModelFactory):
         model = models.TypeOfOutcome
 
     title = fuzzy.FuzzyText()
+    doc_type = fuzzy.FuzzyChoice([models.Study.ACTIVITY,
+                                  models.Study.ASSESSMENT])
 
 
 class BaseWebTest(WebTest):

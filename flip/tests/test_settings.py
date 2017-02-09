@@ -1,10 +1,11 @@
 from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
 
-from flip.models import PhasesOfPolicy, ForesightApproaches
+from flip.models import PhasesOfPolicy, ForesightApproaches, TypeOfOutcome
 
 from .base import BaseWebTest
 from .base import PhasesOfPolicyFactory, ForesightApproachesFactory
+from .base import TypeOfOutcomeFactory
 
 
 @override_settings(SKIP_EDIT_AUTH=True, FRAME_URL=None)
@@ -91,3 +92,46 @@ class SettingsForesightApproachesTests(BaseWebTest):
         resp = self.app.delete(url)
         self.assertEqual(302, resp.status_int)
         self.assertEqual(0, ForesightApproaches.objects.count())
+
+
+@override_settings(SKIP_EDIT_AUTH=True, FRAME_URL=None)
+class SettingsTypeOfOutcodeTests(BaseWebTest):
+
+    def test_type_of_outcome_new(self):
+        data = TypeOfOutcomeFactory.attributes()
+        url = reverse('settings:outcomes_edit')
+        resp = self.app.get(url)
+        form = resp.forms['outcomes-form']
+        self.populate_fields(form, self.normalize_data(data))
+        form.submit().follow()
+        self.assertObjectInDatabase(TypeOfOutcome, title=data['title'])
+
+    def test_policy_edit(self):
+        type_of_outcome = TypeOfOutcomeFactory()
+        data = TypeOfOutcomeFactory.attributes()
+        data['title'] = 'new title'
+        url = reverse('settings:outcomes_edit',
+                      kwargs={'pk': type_of_outcome.pk})
+        resp = self.app.get(url)
+        form = resp.forms['outcomes-form']
+        self.populate_fields(form, self.normalize_data(data))
+        form.submit().follow()
+        self.assertEqual(1, TypeOfOutcome.objects.count())
+        self.assertObjectInDatabase(TypeOfOutcome, title=data['title'])
+
+    def test_policy_delete_confirm(self):
+        type_of_outcome = TypeOfOutcomeFactory()
+        url = reverse('settings:outcomes_delete',
+                      kwargs={'pk': type_of_outcome.pk})
+        resp = self.app.get(url)
+        self.assertEqual(200, resp.status_int)
+        self.assertIn('settings/outcomes_confirm_delete.html',
+                      resp.templates[0].name)
+
+    def test_policy_delete(self):
+        type_of_outcome = TypeOfOutcomeFactory()
+        url = reverse('settings:outcomes_delete',
+                      kwargs={'pk': type_of_outcome.pk})
+        resp = self.app.delete(url)
+        self.assertEqual(302, resp.status_int)
+        self.assertEqual(0, TypeOfOutcome.objects.count())
