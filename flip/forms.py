@@ -1,4 +1,3 @@
-
 from django.forms import BooleanField, ModelMultipleChoiceField
 from django.forms import DateField, DateInput, ChoiceField, ModelChoiceField
 from django.forms import ModelForm, Form
@@ -31,7 +30,8 @@ class StudyMetadataForm(ModelForm):
                   'lead_author', 'other', 'purpose_and_target',
                   'additional_information', 'phase_of_policy',
                   'additional_information_phase', 'foresight_approaches',
-                  'additional_information_foresight', 'stakeholder_participation',
+                  'additional_information_foresight',
+                  'stakeholder_participation',
                   'additional_information_stakeholder', 'environmental_themes',
                   'geographical_scope', 'countries')
 
@@ -49,7 +49,10 @@ class StudyMetadataForm(ModelForm):
         self.fields['countries'].queryset = (
             Country.objects.filter(is_deleted=False))
         self.fields['environmental_themes'].queryset = (
-            EnvironmentalTheme.objects.filter(is_deleted=False).order_by('title'))
+            EnvironmentalTheme.objects
+            .filter(is_deleted=False)
+            .order_by('title')
+        )
 
     def clean(self):
         cleaned_data = super(StudyMetadataForm, self).clean()
@@ -77,7 +80,7 @@ class StudyMetadataForm(ModelForm):
         countries = self.fields['countries']
 
         if (geographical_scope_data and
-            geographical_scope_data.require_country):
+                geographical_scope_data.require_country):
             if len(countries_data) == 0:
                 self._errors['countries'] = self.error_class(
                     [countries.error_messages['required']])

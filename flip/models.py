@@ -1,4 +1,3 @@
-
 from django.db.models import BooleanField, IntegerField
 from django.db.models import CharField, URLField, TextField, FileField
 from django.db.models import DateField, DateTimeField
