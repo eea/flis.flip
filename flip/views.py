@@ -15,6 +15,7 @@ from flip_auth.views import is_admin
 
 from flis_metadata.common.models import GeographicalScope
 
+
 class StudyLanguageFormMixin(object):
 
     def get_context_data(self, *args, **kwargs):
@@ -50,7 +51,7 @@ class ParametersMixin(object):
         pk = kwargs.get('pk', None)
 
         if study_type:
-            if not study_type in dict(models.Study.TYPE_CHOICES).keys():
+            if study_type not in dict(models.Study.TYPE_CHOICES).keys():
                 raise Http404
             self.study_type = study_type
         if pk:
@@ -78,7 +79,7 @@ class StudyMetadataAddView(LoginRequiredMixin,
     def get_context_data(self, **kwargs):
         self.request.session['first_time_edit'] = True
         require_country = [str(scope.id) for scope in GeographicalScope.
-            objects.filter(require_country=True)]
+                           objects.filter(require_country=True)]
         context = {'cancel_url': reverse('studies_overview'),
                    'require_country': require_country}
 
@@ -138,7 +139,7 @@ class StudyMetadataEditView(LoginRequiredMixin,
 
     def get_context_data(self, **kwargs):
         require_country = [str(scope.id) for scope in GeographicalScope.
-            objects.filter(require_country=True)]
+                           objects.filter(require_country=True)]
         context = {'cancel_url': reverse('study_metadata_detail',
                                          kwargs={'pk': self.object.pk}),
                    'edit_mode': True,
@@ -330,8 +331,7 @@ class StudyOutcomeEditModalView(StudyOutcomeEditView):
         return reverse('study_outcomes_detail', kwargs={'pk': self.study.pk})
 
 
-class UserEntriesView(LoginRequiredMixin,
-                  generic.ListView):
+class UserEntriesView(LoginRequiredMixin, generic.ListView):
 
     model = models.Study
     template_name = 'user_entries.html'
@@ -515,6 +515,7 @@ class SettingsOutcomesAddView(LoginRequiredMixin,
                               generic.CreateView):
 
     model = models.TypeOfOutcome
+    fields = ['title', 'doc_type']
     template_name = 'settings/outcomes_edit.html'
     success_message = 'Outcome updated successfully'
 
@@ -528,6 +529,7 @@ class SettingsOutcomesEditView(LoginRequiredMixin,
                                generic.UpdateView):
 
     model = models.TypeOfOutcome
+    fields = ['title', 'doc_type']
     template_name = 'settings/outcomes_edit.html'
     success_message = 'Outcome updated successfully'
 
@@ -560,7 +562,7 @@ class SettingsUpdateOrder(LoginRequiredMixin,
         setting_name = kwargs.get('setting_name', None)
         items = self.request.POST.getlist('items[]')
 
-        if not setting_name in self.SETTING_NAME_TO_MODEL:
+        if setting_name not in self.SETTING_NAME_TO_MODEL:
             return Http404
 
         for sort_idx, pk in enumerate(items):
