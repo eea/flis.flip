@@ -19,6 +19,6 @@ pytz==2014.2
 raven==5.1.1
 requests==2.11.1
 six==1.10.0
-supervisor==3.0
+supervisor==3.0.1
 webassets==0.12.0
 wmctrl==0.1
